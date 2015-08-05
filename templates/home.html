@@ -3,16 +3,24 @@
     <div class="col-sm-12">
         <h1 class="title">SAMS</h1>
     </div>
-    <div class="col-sm-12">
-        <p style="text-align:center">Some AWESOME memory scheduler</p>
+    <div class="col-sm-12 text-center">
+      <h2 class="subtitle">Some AWESOME memory scheduler</h2>
+      <!-- app + about buttons -->
+      <div class="btn-group group-spaceless" role="group" aria-label="...">
+        <a class="btn btn-large btn-info" ui-sref="step.requirements">TRY</a>
+        <div class="btn-group" role="group" ng-hide="isDesktopApp">
+          <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Download
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="#">Dropdown link</a></li>
+            <li><a href="#">Dropdown link</a></li>
+          </ul>
+        </div>
+        <a class="btn btn-primary" ui-sref="about">ABOUT</a>
+      </div>
     </div>
 
-    <!-- app + about buttons -->
-    <div class="col-sm-6">
-      <a class="btn btn-primary pull-right" ui-sref="step.requirements"> <span class="glyphicon glyphicon-console"></span> APP</a>
-    </div>
-    <div class="col-sm-6">
-      <a class="btn btn-primary" ui-sref="about"> <span class="glyphicon glyphicon-info-sign"></span> About</a>
-    </div>
   </div>
 </div>

@@ -11,20 +11,17 @@
   </head>
   <body ng-controller="MainController">
 
-    <!-- home shortcut -->
-
     <div class="container-fluid">
 
       <div class="col-xs-12" ng-hide="is('home')">
         <a id="button-home" class="pull-left" ui-sref="home">
           <span class="glyphicon glyphicon-home icon"></span>
         </a>
-      </div>
+      </div><!-- home shortcut -->
 
       <!-- here render compiled templates -->
       <div class="col-xs-12" ui-view></div>
       <!-- /content -->
-
     </div>
   </body>
 </html>

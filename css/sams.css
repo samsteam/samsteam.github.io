@@ -59,6 +59,19 @@ New classes
   font-family: Helvetica, arial, sans-serif;
 }
 
+#home .title {
+  line-height: 180px;
+  margin: 10px auto;
+}
+
+#home .subtitle {
+  margin: 10px auto 30px auto;
+}
+
+.group-spaceless > * {
+  margin: 0 1px !important;
+}
+
 #button-home {
   margin: 10px;
 }

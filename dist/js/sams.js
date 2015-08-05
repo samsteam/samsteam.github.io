@@ -8,7 +8,6 @@ var app = angular.module('sams', ['sams.controllers', 'ui.router']);
 
 app.config(function($stateProvider, $urlRouterProvider){
 
-
   if ( navigator.userAgent === 'samsteam-app-agent' ) {
     $urlRouterProvider.otherwise('/step/requirements');
   } else {
@@ -86,6 +85,8 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   $scope.is = function(routeName) {
     return $state.is(routeName);
   }
+
+  $scope.isDesktopApp = (navigator.userAgent === 'samsteam-app-agent');
 })
 
 /*

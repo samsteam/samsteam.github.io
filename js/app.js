@@ -7,7 +7,6 @@ var app = angular.module('sams', ['sams.controllers', 'ui.router']);
 
 app.config(function($stateProvider, $urlRouterProvider){
 
-
   if ( navigator.userAgent === 'samsteam-app-agent' ) {
     $urlRouterProvider.otherwise('/step/requirements');
   } else {
