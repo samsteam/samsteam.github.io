@@ -86,9 +86,9 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 .controller('RequirementsController', function($scope, $state, SamsService, SchedulerService){
   console.info('In Requirements Controller');
   $scope.modes = SchedulerService.getModes();
+  $scope.requirements = SchedulerService.getRequirements();
   $scope.inputProcesses = ['a','b','c'];
   $scope.processes = ['a','b','c'];
-  $scope.requirements = SchedulerService.getRequirements();
   $scope.pages = {
     a:'1,2,3,4',
     b:'5,6,7,8',

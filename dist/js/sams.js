@@ -157,9 +157,9 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 .controller('RequirementsController', function($scope, $state, SamsService, SchedulerService){
   console.info('In Requirements Controller');
   $scope.modes = SchedulerService.getModes();
+  $scope.requirements = SchedulerService.getRequirements();
   $scope.inputProcesses = ['a','b','c'];
   $scope.processes = ['a','b','c'];
-  $scope.requirements = SchedulerService.getRequirements();
   $scope.pages = {
     a:'1,2,3,4',
     b:'5,6,7,8',
@@ -455,7 +455,7 @@ angular.module('sams.services', [])
 | -----------------------------------------------------------------------------
 |
 */
-.factory('SamsService', function(SchedulerService){
+.factory('SamsService', function(){
 
   return {
     areCompatiblePolicies: function(replacement, assigment){
@@ -491,7 +491,11 @@ angular.module('sams.services', [])
       return reqs;
     },
     createEmptyRequirement: function() {
-      return { process: null, cantPages: null, mode: modes[0]}
+      return {
+        process: null,
+        cantPages: null,
+        mode: 'read'
+      };
     },
     stringToArray: function(array, stringValue, delimiter) {
       delimiter = delimiter || ','

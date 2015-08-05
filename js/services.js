@@ -35,7 +35,7 @@ angular.module('sams.services', [])
 | -----------------------------------------------------------------------------
 |
 */
-.factory('SamsService', function(SchedulerService){
+.factory('SamsService', function(){
 
   return {
     areCompatiblePolicies: function(replacement, assigment){
@@ -71,7 +71,11 @@ angular.module('sams.services', [])
       return reqs;
     },
     createEmptyRequirement: function() {
-      return { process: null, cantPages: null, mode: modes[0]}
+      return {
+        process: null,
+        cantPages: null,
+        mode: 'read'
+      };
     },
     stringToArray: function(array, stringValue, delimiter) {
       delimiter = delimiter || ','
