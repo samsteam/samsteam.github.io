@@ -9,8 +9,11 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 | Main Controller (contains below controllers as childrens)
 | ---------------------------------------------------------------------------
 */
-.controller('MainController', function($scope){
+.controller('MainController', function($scope, $state){
   console.info('In Main Controller');
+  $scope.is = function(routeName) {
+    return $state.is(routeName);
+  }
 })
 
 /*

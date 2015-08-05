@@ -49,6 +49,25 @@ Existing classes
 New classes
 -------------------------------------------------------------------*/
 
+#home {
+  margin-top: 40px;
+}
+
+.title {
+  font-size: 200px;
+  text-align: center;
+  font-family: Helvetica, arial, sans-serif;
+}
+
+#button-home {
+  margin: 10px;
+}
+
+#button-home .icon {
+  font-size: 25px;
+  color: white;
+}
+
 .pages-per-process .input-group {
   margin: 5px auto;
 }
