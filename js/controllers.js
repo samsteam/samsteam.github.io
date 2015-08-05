@@ -9,7 +9,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 | Main Controller (contains below controllers as childrens)
 | ---------------------------------------------------------------------------
 */
-.controller('MainController', function($scope, SchedulerService){
+.controller('MainController', function($scope){
   console.info('In Main Controller');
 })
 
@@ -80,7 +80,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 */
 .controller('RequirementsController', function($scope, $state, SamsService, SchedulerService){
   console.info('In Requirements Controller');
-  $scope.modes = SamsService.getModes();
+  $scope.modes = SchedulerService.getModes();
   $scope.inputProcesses = ['a','b','c'];
   $scope.processes = ['a','b','c'];
   $scope.requirements = SchedulerService.getRequirements();
@@ -169,10 +169,10 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 | Algorithm Selection
 | ---------------------------------------------------------------------------
 */
-.controller('AlgorithmController', function($scope, SamsService, SchedulerService){
+.controller('AlgorithmController', function($scope, SchedulerService){
   console.info('In Algorithm Controller');
 
-  $scope.algorithms = SamsService.getAlgorithms();
+  $scope.algorithms = SchedulerService.getAlgorithms();
 
   $scope.algorithmSelected = SchedulerService.getAlgorithm();
 
@@ -208,7 +208,6 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 
   $scope.changeMemorySize = function(){
     if ( typeof $scope.memorySize == 'number'){
-      console.log($scope.memorySize + ' as memory size');
       SchedulerService.setMemorySize( $scope.memorySize );
     }
   }
@@ -228,7 +227,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     SchedulerService.setFixedEvenAssignmentPolicy( isFixedEven );
   }
 
-  $scope.assignmentOptions = SamsService.getAssigmentPolicies();
+  $scope.assignmentOptions = SchedulerService.getAssigmentPolicies();
 
   if ( SchedulerService.isFixedEvenAssignmentPolicy() ) {
     $scope.selectedAssignmentOption = 'fixed';
@@ -244,7 +243,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   | isLocalReplacementPolicy
   | ---------------------------------------------------------------------------
   */
-  $scope.replacementOptions = SamsService.getReplacementPolicies();
+  $scope.replacementOptions = SchedulerService.getReplacementPolicies();
 
   $scope.setReplacementOption = function(r){
     $scope.selectedReplacementOption = r;
@@ -265,7 +264,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   | isAsyncFlushReplacementPolicy and isSecondChanceReplacementPolicy
   | ---------------------------------------------------------------------------
   */
-  $scope.queueOptions = SamsService.getQueuePolicies();
+  $scope.queueOptions = SchedulerService.getQueuePolicies();
 
   $scope.changeOptions = function(){
     // TODO: check if algorithm is FIFO or LRU (for 2nd chance)
@@ -279,12 +278,18 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 | Show results
 | ---------------------------------------------------------------------------
 */
-.controller('ResolutionController', function($scope, SchedulerService){
+.controller('ResolutionController', function($scope, $state, SchedulerService, checkData){
   console.info('In Resolution Controller');
+  if (!checkData)
+    return $state.go('step.requirements');
 
-  $scope.framesTotal = SchedulerService.getMemorySize() - 1;
-  $scope.results = SchedulerService.run();
-  console.log($scope.results);
-  $scope.instants = $scope.results.length - 1;
-
+  try {
+    $scope.framesTotal = SchedulerService.getMemorySize() - 1;
+    $scope.results = SchedulerService.run();
+    $scope.instants = $scope.results.length - 1;
+  } catch (err) {
+    console.log(err);
+    alert(err);
+    return $state.go('step.requirements');
+  }
 })

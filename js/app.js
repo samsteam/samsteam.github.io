@@ -52,7 +52,12 @@ app.config(function($stateProvider, $urlRouterProvider){
       .state('step.resolution', {
         url: '/resolution',
         templateUrl: 'templates/resolution.html',
-        controller: 'ResolutionController'
+        controller: 'ResolutionController',
+        resolve: {
+          checkData: function( SchedulerService ){
+            return SchedulerService.isValidData();
+          }
+        }
       })
       .state('fifo', {
         url: '/algorithms/fifo',

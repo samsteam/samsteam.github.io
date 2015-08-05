@@ -35,13 +35,7 @@ angular.module('sams.services', [])
 | -----------------------------------------------------------------------------
 |
 */
-.factory('SamsService', function(){
-
-  var algorithms = ['fifo', 'lru', 'nru', 'optimal'];
-  var modes = ['read', 'write', 'finish'];
-  var assigmentPolicies = ['fixed', 'dynamic'];
-  var replacementPolicies = ['local', 'global'];
-  var queuePolicies = {'second-chance': false, 'async-flush':false};
+.factory('SamsService', function(SchedulerService){
 
   return {
     areCompatiblePolicies: function(replacement, assigment){
@@ -58,21 +52,6 @@ angular.module('sams.services', [])
         }
         return true;
       }
-    },
-    getAlgorithms: function() {
-      return algorithms;
-    },
-    getAssigmentPolicies: function() {
-      return assigmentPolicies;
-    },
-    getReplacementPolicies: function() {
-      return replacementPolicies;
-    },
-    getQueuePolicies: function() {
-      return queuePolicies;
-    },
-    getModes: function() {
-      return modes;
     },
     createRequirements: function(pages, secuences){
       var reqs = []
@@ -113,7 +92,13 @@ angular.module('sams.services', [])
 | -----------------------------------------------------------------------------
 |
 */
-.factory('SchedulerService', function(ValidationService, SamsService){
+.factory('SchedulerService', function(ValidationService){
+
+  var algorithms = ['fifo', 'lru', 'nru', 'optimal'];
+  var modes = ['read', 'write', 'finish'];
+  var assigmentPolicies = ['fixed', 'dynamic'];
+  var replacementPolicies = ['local', 'global'];
+  var queuePolicies = {'second-chance': false, 'async-flush':false};
 
   var scheduler = new Scheduler();
 
@@ -124,7 +109,7 @@ angular.module('sams.services', [])
     | ---------------------------------------
     */
     setAlgorithm: function(algorithm) {
-      if ( ! ValidationService.inArray(SamsService.getAlgorithms(), algorithm) )
+      if ( ! ValidationService.inArray(this.getAlgorithms(), algorithm) )
         throw new Error("Algorithm doesn't exists");
 
       scheduler.setAlgorithm(algorithm);
@@ -145,7 +130,7 @@ angular.module('sams.services', [])
     | ---------------------------------------
     */
     getMemorySize: function() {
-      return scheduler.getMemorySize();
+      return scheduler.getMemorySize() || 0;
     },
     /*
     | ---------------------------------------
@@ -248,6 +233,38 @@ angular.module('sams.services', [])
     */
     getRequirements: function(){
       return scheduler.getRequirements() || [];
+    },
+    /*
+    | ---------------------------------------
+    | verify if all data is completed
+    | ---------------------------------------
+    */
+    isValidData: function(){
+      var memSize = scheduler.getMemorySize();
+      var algorithm = scheduler.getAlgorithm();
+      var reqs = scheduler.getRequirements();
+
+      return memSize && algorithm && (reqs && reqs.length);
+    },
+    /*
+    | ---------------------------------------
+    | Helpers
+    | ---------------------------------------
+    */
+    getAlgorithms: function() {
+      return algorithms;
+    },
+    getAssigmentPolicies: function() {
+      return assigmentPolicies;
+    },
+    getReplacementPolicies: function() {
+      return replacementPolicies;
+    },
+    getQueuePolicies: function() {
+      return queuePolicies;
+    },
+    getModes: function() {
+      return modes;
     },
     /*
     | ---------------------------------------
