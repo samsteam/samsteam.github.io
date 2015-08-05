@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    clean: [ "dist/desktop-app" ],
     nodewebkit: {
       options: {
         build_dir: './dist/desktop-app',
@@ -10,7 +11,7 @@ module.exports = function(grunt) {
         linux32: false,
         linux64: true
       },
-      src: ['*','dist/**/*', 'templates/**/*']
+      src: ['*','dist/**/*', 'templates/**/*', 'images/**/*']
     },
     concat:{
       options: {
@@ -23,7 +24,7 @@ module.exports = function(grunt) {
     },
     browserify:{
       project:{
-        src:['js/**/*.js'],
+        src:['node_modules/jquery/dist/jquery.js', 'node_modules/bootstrap/dist/js/bootstrap.js', 'js/**/*.js'],
         dest:'dist/js/sams.js'
       }
     },
@@ -63,10 +64,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-node-webkit-builder');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   // The default tasks to run when you type: grunt
   grunt.registerTask('default', ['concat', 'browserify', 'cssmin']);
-  grunt.registerTask('nw-export', ['concat', 'browserify', 'cssmin', 'nodewebkit']);
+  grunt.registerTask('nw-export', ['clean', 'concat', 'browserify', 'cssmin', 'nodewebkit']);
 
   grunt.registerTask('watches', [
     'watch:dependencesJS',

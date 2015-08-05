@@ -29,7 +29,7 @@
 			</div>
 			<div class="input-group">
 				<span class="input-group-addon">Processes</span>
-				<input type="text" class="form-control" placeholder="Processes' names" name="name" ng-model="inputProcesses">
+				<input type="text" class="form-control grey-color" placeholder="Processes' names" name="name" ng-model="inputProcesses">
 			</div>
 
 			<div ng-hide="!processes.length" class="pages-per-process">
@@ -38,7 +38,7 @@
 			  </div>
 				<div class="input-group" ng-repeat="p in processes">
 				  <span class="input-group-addon">{{p}}</span>
-				  <input name="name" ng-model="pages[p]" type="text" class="form-control">
+				  <input name="name" ng-model="pages[p]" type="text" class="form-control grey-color">
 				</div>
 			</div>
 		</div><!-- data input -->
@@ -48,7 +48,7 @@
 				<h3>Request's sequence: </h3>
 			</div>
 			<div class="secuences-container">
-			  <div class="col-xs-2 well requirementsWell" ng-repeat="s in secuences">
+			  <div class="col-xs-2 well grey-color" ng-repeat="s in secuences">
 					<div class="input-group">
 						<label for="process">Process:</label>
 				    <select class="form-control" ng-model="s.process" name="process">
@@ -70,23 +70,23 @@
 			  </div><!-- /secuences -->
 
 				<!-- button add (simil to requirement) -->
-				<div class="col-xs-2 well requirementsWell fake-requirementsWell">
+				<div class="col-xs-2 well grey-color fake-requirementsWell">
 					<div class="button-add" ng-click="add()"></div>
 					<div class="input-group">
 						<label for="process">Process:</label>
-				    <select class="form-control" name="process" disabled>
+				    <select class="form-control grey-color" name="process" disabled>
 				      <option></option>
 				    </select>
 					</div>
 
 					<div class="input-group">
 						<label for="name">Nº Pages:</label>
-						<input class="form-control" type="number" name="name" placeholder="cant" disabled>
+						<input class="form-control grey-color" type="number" name="name" placeholder="cant" disabled>
 					</div>
 
 					<div class="input-group">
 						<label for="mode">Mode:</label>
-				    <select class="form-control" name="mode" disabled>
+				    <select class="form-control grey-color" name="mode" disabled>
 				      <option></option>
 				    </select>
 					</div>
@@ -98,7 +98,7 @@
 	  	<input type="button" class="btn btn-sm btn-danger pull-right" name="name" value="Preview page requirements" ng-click="processRequirements()">
 		</div><!-- add sequence -->
 
-	  <div class="row well requirementsWell">
+	  <div class="row well grey-color">
 			<p class="text-muted">Generated page requirements</p>
       <div class="col-xs-2" ng-repeat="r in requirements">
         <div ng-class="{'read':'panel-primary', 'write':'panel-danger', 'finish':'panel-success' }[r.mode]" class="panel">

@@ -3,7 +3,6 @@
 
   <!-- devteam -->
   <div class="container-fluid" style="padding-top:20px">
-
     <div class="row">
 
       <div class="col-xs-2" ng-repeat="dev in devteam">
@@ -19,34 +18,117 @@
       </div>
 
       <div class="col-xs-2">
-        <div class="well requirementsWell" style="width:150px;height:250px" ng-onClick="">
-          <img src="../images/resources/plus.png" style="width:100px;padding-bottom:10px">
-          <img src="../images/resources/about-info.png" style="width:100px">
+        <button class="btn" style="padding:0px" type="button" data-toggle="collapse" data-target="#infoWell" aria-expanded="false" aria-controls="infoWell">
+          <div class="well grey-color" style="width:150px;height:250px" ng-onClick="">
+            <img src="images/resources/plus.png" style="width:100px;padding-bottom:10px">
+            <br>
+            <img src="images/resources/about-info.png" style="width:100px">
+          </div>
+        </button>
+      </div>
 
+      <div class="col-xs-offset-1 col-xs-10">
+        <div class="page-header" style="border-top:1px solid #ddd;border-bottom:0px;margin-top:0px">
+          <h1 style="text-align:center; "><small><< </small>Devteam<small> >></small></h1>
         </div>
       </div>
 
-    </div>
+      <!-- about section -->
+      <div class="col-xs-12">
+        <div class="collapse" id="infoWell">
+          <div class="well grey-color">
+            <!-- about content -->
 
+            <!-- Nav tabs -->
+            <ul class="nav nav-pills" role="tablist">
+              <li role="presentation" class="active"><button class="btn btn-primary" data-target="#samsInfo" aria-controls="samsInfo" role="tab" data-toggle="tab">About SAMS</button></li>
+              <li role="presentation"><button class="btn btn-primary" data-target="#tutorial" aria-controls="tutorial" role="tab" data-toggle="tab">Tutorial</button></li>
+              <li role="presentation"><button class="btn btn-primary" data-target="#samsGit" aria-controls="samsGit" role="tab" data-toggle="tab">GitHub</button></li>
+            </ul>
+            <!-- /Nav tabs -->
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <!-- about the project and its roots -->
+              <div role="tabpanel" class="tab-pane fade in active" id="samsInfo">
+                <div class="panel panel-body panel-about">
+                  <div class="page-header">
+                    <h1>About SAMS <small style="color:#488FE7">and it's roots</small></h1>
+                  </div>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare lobortis posuere. Aliquam sem leo, dignissim vel nunc non, iaculis molestie eros. Nam elementum sem sit amet sapien porta, id fermentum libero ultricies. Aliquam erat volutpat. Morbi semper sem in quam pellentesque scelerisque. Morbi at nisl at nunc faucibus faucibus id sed nunc. Nulla imperdiet magna in finibus varius. Sed gravida ex quis sapien venenatis, pellentesque dictum tortor placerat. Praesent elementum augue sed erat dictum interdum. Pellentesque porttitor tortor sit amet diam pulvinar elementum. Nunc venenatis suscipit massa vel dictum.
+                  </p>
+                  <p>
+                    Sed rutrum risus sit amet ligula laoreet, vel commodo velit tincidunt. Maecenas at mattis turpis. Ut suscipit massa pellentesque, finibus velit sit amet, hendrerit ipsum. Suspendisse sollicitudin nulla vel sapien rhoncus, eu vehicula diam pretium. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla in lorem ex. Pellentesque rutrum sit amet magna in pharetra. Suspendisse eros quam, euismod eget purus et, pharetra scelerisque mauris. Vestibulum tincidunt, diam a porta congue, dolor risus porta libero, eget dapibus purus ipsum eu arcu. Curabitur eu odio ut tellus accumsan lobortis. Aenean molestie consectetur enim mattis porttitor. Nam porttitor neque erat, vitae tincidunt felis rhoncus vitae.
+                  </p>
+                  <p>
+                    Nunc non sollicitudin augue, ut pulvinar erat. Aenean nisi metus, dictum in ipsum quis, ornare semper nisi. Pellentesque ut ex ultricies, consectetur tortor ut, faucibus lectus. In vel mattis neque. Maecenas vel elit eget est varius finibus nec a leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed ut elit consequat, luctus ligula et, pretium ex. Phasellus consequat eros quis dolor malesuada consectetur sed ut turpis. Nullam faucibus dignissim tellus, et congue ante scelerisque vitae. Fusce malesuada, ligula in condimentum suscipit, orci neque suscipit erat, at finibus neque metus quis neque. Quisque maximus felis quam, quis cursus mauris pulvinar ac.
+                  </p>
+                  <p>
+                    Curabitur suscipit est vel turpis mattis vestibulum. Aenean accumsan ultrices ipsum sed suscipit. Suspendisse et lacus sed felis lobortis viverra quis nec tellus. Vivamus vehicula sapien eu turpis ultrices, ac mattis odio tristique. Curabitur fermentum pretium elit. Curabitur odio mi, lacinia a tempor eget, commodo a tortor. Vivamus cursus odio quam, ut gravida nulla bibendum ac. Nam iaculis vulputate aliquet. Duis eros erat, auctor eu posuere bibendum, hendrerit laoreet ligula. Pellentesque pharetra urna sed orci porttitor consectetur. Nam sed felis dolor. Aenean sit amet malesuada justo, vel semper odio. Mauris quis dapibus odio. Proin at augue non neque accumsan suscipit. Phasellus diam quam, molestie eu nibh lobortis, semper facilisis dui. Sed imperdiet felis ac tellus maximus, eget rutrum enim rhoncus.
+                  </p>
+                  <p>
+                    Nullam molestie eros quis risus ullamcorper lobortis. Nulla molestie leo tincidunt mi mattis, a consectetur lacus congue. Phasellus augue lectus, porta at lacinia ut, rutrum sit amet ligula. Praesent vitae ultrices lectus, ac iaculis sapien. Integer euismod efficitur arcu et posuere. Aliquam in gravida velit, vitae pellentesque nunc. Ut elementum in orci a vestibulum.
+                  </p>
+                </div>
+              </div>
+
+              <!-- tutorial on how to use the app -->
+              <div role="tabpanel" class="tab-pane fade" id="tutorial">
+                <div class="panel panel-body panel-about">
+                  <div class="page-header">
+                    <h1>Tutorial <small style="color:#488FE7">for the slows learners</small></h1>
+                  </div>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare lobortis posuere. Aliquam sem leo, dignissim vel nunc non, iaculis molestie eros. Nam elementum sem sit amet sapien porta, id fermentum libero ultricies. Aliquam erat volutpat. Morbi semper sem in quam pellentesque scelerisque. Morbi at nisl at nunc faucibus faucibus id sed nunc. Nulla imperdiet magna in finibus varius. Sed gravida ex quis sapien venenatis, pellentesque dictum tortor placerat. Praesent elementum augue sed erat dictum interdum. Pellentesque porttitor tortor sit amet diam pulvinar elementum. Nunc venenatis suscipit massa vel dictum.
+                  </p>
+                  <p>
+                    Sed rutrum risus sit amet ligula laoreet, vel commodo velit tincidunt. Maecenas at mattis turpis. Ut suscipit massa pellentesque, finibus velit sit amet, hendrerit ipsum. Suspendisse sollicitudin nulla vel sapien rhoncus, eu vehicula diam pretium. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla in lorem ex. Pellentesque rutrum sit amet magna in pharetra. Suspendisse eros quam, euismod eget purus et, pharetra scelerisque mauris. Vestibulum tincidunt, diam a porta congue, dolor risus porta libero, eget dapibus purus ipsum eu arcu. Curabitur eu odio ut tellus accumsan lobortis. Aenean molestie consectetur enim mattis porttitor. Nam porttitor neque erat, vitae tincidunt felis rhoncus vitae.
+                  </p>
+                  <p>
+                    Nunc non sollicitudin augue, ut pulvinar erat. Aenean nisi metus, dictum in ipsum quis, ornare semper nisi. Pellentesque ut ex ultricies, consectetur tortor ut, faucibus lectus. In vel mattis neque. Maecenas vel elit eget est varius finibus nec a leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed ut elit consequat, luctus ligula et, pretium ex. Phasellus consequat eros quis dolor malesuada consectetur sed ut turpis. Nullam faucibus dignissim tellus, et congue ante scelerisque vitae. Fusce malesuada, ligula in condimentum suscipit, orci neque suscipit erat, at finibus neque metus quis neque. Quisque maximus felis quam, quis cursus mauris pulvinar ac.
+                  </p>
+                  <p>
+                    Curabitur suscipit est vel turpis mattis vestibulum. Aenean accumsan ultrices ipsum sed suscipit. Suspendisse et lacus sed felis lobortis viverra quis nec tellus. Vivamus vehicula sapien eu turpis ultrices, ac mattis odio tristique. Curabitur fermentum pretium elit. Curabitur odio mi, lacinia a tempor eget, commodo a tortor. Vivamus cursus odio quam, ut gravida nulla bibendum ac. Nam iaculis vulputate aliquet. Duis eros erat, auctor eu posuere bibendum, hendrerit laoreet ligula. Pellentesque pharetra urna sed orci porttitor consectetur. Nam sed felis dolor. Aenean sit amet malesuada justo, vel semper odio. Mauris quis dapibus odio. Proin at augue non neque accumsan suscipit. Phasellus diam quam, molestie eu nibh lobortis, semper facilisis dui. Sed imperdiet felis ac tellus maximus, eget rutrum enim rhoncus.
+                  </p>
+                  <p>
+                    Nullam molestie eros quis risus ullamcorper lobortis. Nulla molestie leo tincidunt mi mattis, a consectetur lacus congue. Phasellus augue lectus, porta at lacinia ut, rutrum sit amet ligula. Praesent vitae ultrices lectus, ac iaculis sapien. Integer euismod efficitur arcu et posuere. Aliquam in gravida velit, vitae pellentesque nunc. Ut elementum in orci a vestibulum.
+                  </p>
+                </div>
+              </div>
+
+              <!-- project's github info -->
+              <div role="tabpanel" class="tab-pane fade" id="samsGit">
+                <div class="panel panel-body panel-about">
+                  <div class="page-header">
+                    <h1>Project's Github Information <small style="color:#488FE7">Fork it!</small></h1>
+                  </div>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare lobortis posuere. Aliquam sem leo, dignissim vel nunc non, iaculis molestie eros. Nam elementum sem sit amet sapien porta, id fermentum libero ultricies. Aliquam erat volutpat. Morbi semper sem in quam pellentesque scelerisque. Morbi at nisl at nunc faucibus faucibus id sed nunc. Nulla imperdiet magna in finibus varius. Sed gravida ex quis sapien venenatis, pellentesque dictum tortor placerat. Praesent elementum augue sed erat dictum interdum. Pellentesque porttitor tortor sit amet diam pulvinar elementum. Nunc venenatis suscipit massa vel dictum.
+                  </p>
+                  <p>
+                    Sed rutrum risus sit amet ligula laoreet, vel commodo velit tincidunt. Maecenas at mattis turpis. Ut suscipit massa pellentesque, finibus velit sit amet, hendrerit ipsum. Suspendisse sollicitudin nulla vel sapien rhoncus, eu vehicula diam pretium. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla in lorem ex. Pellentesque rutrum sit amet magna in pharetra. Suspendisse eros quam, euismod eget purus et, pharetra scelerisque mauris. Vestibulum tincidunt, diam a porta congue, dolor risus porta libero, eget dapibus purus ipsum eu arcu. Curabitur eu odio ut tellus accumsan lobortis. Aenean molestie consectetur enim mattis porttitor. Nam porttitor neque erat, vitae tincidunt felis rhoncus vitae.
+                  </p>
+                  <p>
+                    Nunc non sollicitudin augue, ut pulvinar erat. Aenean nisi metus, dictum in ipsum quis, ornare semper nisi. Pellentesque ut ex ultricies, consectetur tortor ut, faucibus lectus. In vel mattis neque. Maecenas vel elit eget est varius finibus nec a leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed ut elit consequat, luctus ligula et, pretium ex. Phasellus consequat eros quis dolor malesuada consectetur sed ut turpis. Nullam faucibus dignissim tellus, et congue ante scelerisque vitae. Fusce malesuada, ligula in condimentum suscipit, orci neque suscipit erat, at finibus neque metus quis neque. Quisque maximus felis quam, quis cursus mauris pulvinar ac.
+                  </p>
+                  <p>
+                    Curabitur suscipit est vel turpis mattis vestibulum. Aenean accumsan ultrices ipsum sed suscipit. Suspendisse et lacus sed felis lobortis viverra quis nec tellus. Vivamus vehicula sapien eu turpis ultrices, ac mattis odio tristique. Curabitur fermentum pretium elit. Curabitur odio mi, lacinia a tempor eget, commodo a tortor. Vivamus cursus odio quam, ut gravida nulla bibendum ac. Nam iaculis vulputate aliquet. Duis eros erat, auctor eu posuere bibendum, hendrerit laoreet ligula. Pellentesque pharetra urna sed orci porttitor consectetur. Nam sed felis dolor. Aenean sit amet malesuada justo, vel semper odio. Mauris quis dapibus odio. Proin at augue non neque accumsan suscipit. Phasellus diam quam, molestie eu nibh lobortis, semper facilisis dui. Sed imperdiet felis ac tellus maximus, eget rutrum enim rhoncus.
+                  </p>
+                  <p>
+                    Nullam molestie eros quis risus ullamcorper lobortis. Nulla molestie leo tincidunt mi mattis, a consectetur lacus congue. Phasellus augue lectus, porta at lacinia ut, rutrum sit amet ligula. Praesent vitae ultrices lectus, ac iaculis sapien. Integer euismod efficitur arcu et posuere. Aliquam in gravida velit, vitae pellentesque nunc. Ut elementum in orci a vestibulum.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- /Tab panes -->
+
+            <!-- /about content -->
+          </div>
+        </div>
+      </div>
+      <!-- /about section -->
+    </div>
   </div>
   <!-- /devteam -->
-
-
 </div>
 <!-- /main panel -->
-
-
-<!-- script para info de fotos -->
-<script type="text/javascript">
-  $(window).load(function(){
-
-    $('.thumbnail').hover(
-          function(){
-              $(this).find('.caption').slideDown(250); //.fadeIn(250)
-          },
-          function(){
-              $(this).find('.caption').slideUp(250); //.fadeOut(205)
-          }
-      );
-  })
-</script>

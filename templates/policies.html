@@ -25,7 +25,7 @@
 			<div class="page-header">
       	<h3>Select memory size <small>(frames' amount)</small></h3>
       </div>
-      <input class="form-control" type="number"
+      <input class="form-control grey-color" type="number"
 							value="{{memorySize}}"
 							ng-change="changeMemorySize()"
 							ng-model="memorySize"
@@ -37,7 +37,7 @@
       <div class="row">
 
         <div class="col-sm-4">
-					<div class="well requirementsWell">
+					<div class="well grey-color">
             <h4>Assignment Policy</h4>
             <div class="radio" ng-repeat="a in assignmentOptions">
               <label>
@@ -49,7 +49,7 @@
         </div>
 
         <div class="col-sm-4">
-					<div class="well requirementsWell">
+					<div class="well grey-color">
           <h4>Replacement Policy</h4>
 						<div class="radio" ng-repeat="r in replacementOptions">
               <label>
@@ -65,7 +65,7 @@
         </div>
 
         <div class="col-sm-4">
-					<div class="well requirementsWell">
+					<div class="well grey-color">
 
             <h4>Options</h4>
             <div class="checkbox" ng-repeat="(k,v) in queueOptions">

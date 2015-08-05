@@ -38,21 +38,21 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
       'location' : 'La Plata, Buenos Aires, Argentina',
       'mail' : 'ignababbini@gmail.com',
       'github' : 'https://github.com/inbabbini',
-      'photo' : '../images/portraits/iron_portrait.png'
+      'photo' : 'images/portraits/iron_portrait.png'
     },
     {
       'name' : 'Babbini, Ignacio N',
       'location' : 'La Plata, Buenos Aires, Argentina',
       'mail' : 'ignababbini@gmail.com',
       'github' : 'https://github.com/inbabbini',
-      'photo' : '../images/portraits/iron_portrait.png'
+      'photo' : 'images/portraits/iron_portrait.png'
     },
     {
       'name' : 'Babbini, Ignacio N',
       'location' : 'La Plata, Buenos Aires, Argentina',
       'mail' : 'ignababbini@gmail.com',
       'github' : 'https://github.com/inbabbini',
-      'photo' : '../images/portraits/iron_portrait.png'
+      'photo' : 'images/portraits/iron_portrait.png'
     },
 
     {
@@ -60,14 +60,14 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
       'location' : 'La Plata, Buenos Aires, Argentina',
       'mail' : 'ignababbini@gmail.com',
       'github' : 'https://github.com/inbabbini',
-      'photo' : '../images/portraits/iron_portrait.png'
+      'photo' : 'images/portraits/iron_portrait.png'
     },
     {
       'name' : 'Babbini, Ignacio N',
       'location' : 'La Plata, Buenos Aires, Argentina',
       'mail' : 'ignababbini@gmail.com',
       'github' : 'https://github.com/inbabbini',
-      'photo' : '../images/portraits/iron_portrait.png'
+      'photo' : 'images/portraits/iron_portrait.png'
     }
   ];
 })
