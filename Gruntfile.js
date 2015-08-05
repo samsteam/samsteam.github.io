@@ -6,9 +6,9 @@ module.exports = function(grunt) {
       options: {
         build_dir: './dist/desktop-app',
         // choose what platforms to compile for here
-        mac: false,
-        win: false,
-        linux32: false,
+        mac: true,
+        win: true,
+        linux32: true,
         linux64: true
       },
       src: ['*','dist/**/*', 'templates/**/*', 'images/**/*']
