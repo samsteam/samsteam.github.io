@@ -1,0 +1,52 @@
+<!-- main panel -->
+<div class="panel panel-body panel-default">
+
+  <!-- devteam -->
+  <div class="container-fluid" style="padding-top:20px">
+
+    <div class="row">
+
+      <div class="col-xs-2" ng-repeat="dev in devteam">
+        <div class="thumbnail" style="width:150px;height:250px">
+          <img alt="..." ng-src="{{dev.photo}}"/>
+          <div class="caption">
+            <h4>{{dev.name}}</h4>
+            <p>{{dev.location}}</p>
+            <p><a class="label label-danger" href="{{dev.github}}">Github</a></p>
+            <p>{{dev.mail}}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-2">
+        <div class="well requirementsWell" style="width:150px;height:250px" ng-onClick="">
+          <img src="../images/resources/plus.png" style="width:100px;padding-bottom:10px">
+          <img src="../images/resources/about-info.png" style="width:100px">
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <!-- /devteam -->
+
+
+</div>
+<!-- /main panel -->
+
+
+<!-- script para info de fotos -->
+<script type="text/javascript">
+  $(window).load(function(){
+
+    $('.thumbnail').hover(
+          function(){
+              $(this).find('.caption').slideDown(250); //.fadeIn(250)
+          },
+          function(){
+              $(this).find('.caption').slideUp(250); //.fadeOut(205)
+          }
+      );
+  })
+</script>

@@ -1,0 +1,114 @@
+
+<div class="panel panel-default col-xs-12">
+	<div class="panel-body">
+
+		<div class="row">
+			<!--Breadcrumb, position: 1  | /REQUIREMENTES/algorithm/policies/resolution -->
+			<nav>
+				<ol class="cd-multi-steps text-top">
+					<li class="current"><em>Requirement</em></li>
+					<li><em>Algorithm</em></li>
+					<li><em>Policies</em></li>
+					<li><em>Resolution</em></li>
+				</ol>
+			</nav>
+		</div><!-- /breacrumbs -->
+
+		<div class="row back-forward-buttons">
+			<div class="col-sm-6">
+				<!-- nothing -->
+			</div>
+		  <div class="col-sm-6">
+		    <a class="btn btn-primary btn" ng-click="next()"><span class="glyphicon glyphicon-chevron-right"></span> </a>
+		  </div>
+		</div><!-- /Back-Forward buttons -->
+
+		<div class="row data-input">
+			<div class="page-header">
+				<h3>Processes:</h3>
+			</div>
+			<div class="input-group">
+				<span class="input-group-addon">Processes</span>
+				<input type="text" class="form-control" placeholder="Processes' names" name="name" ng-model="inputProcesses">
+			</div>
+
+			<div ng-hide="!processes.length" class="pages-per-process">
+			  <div class="page-header">
+					<h3>Requested pages for each process:</h3>
+			  </div>
+				<div class="input-group" ng-repeat="p in processes">
+				  <span class="input-group-addon">{{p}}</span>
+				  <input name="name" ng-model="pages[p]" type="text" class="form-control">
+				</div>
+			</div>
+		</div><!-- data input -->
+
+		<div class="row" ng-show="hasPages()">
+			<div class="page-header">
+				<h3>Request's sequence: </h3>
+			</div>
+			<div class="secuences-container">
+			  <div class="col-xs-2 well requirementsWell" ng-repeat="s in secuences">
+					<div class="input-group">
+						<label for="process">Process:</label>
+				    <select class="form-control" ng-model="s.process" name="process">
+				      <option ng-repeat="p in processes" value="{{p}}" ng-selected="s.process==p">{{p}}</option>
+				    </select>
+					</div>
+
+					<div class="input-group">
+						<label for="name">Nº Pages:</label>
+						<input class="form-control" type="number" name="name" placeholder="cant"  ng-model="s.cantPages">
+					</div>
+
+					<div class="input-group">
+						<label for="mode">Mode:</label>
+				    <select class="form-control" ng-model="s.mode" name="mode">
+				      <option ng-repeat="m in modes" value="{{m}}" ng-selected="s.mode==m">{{m}}</option>
+				    </select>
+					</div>
+			  </div><!-- /secuences -->
+
+				<!-- button add (simil to requirement) -->
+				<div class="col-xs-2 well requirementsWell fake-requirementsWell">
+					<div class="button-add" ng-click="add()"></div>
+					<div class="input-group">
+						<label for="process">Process:</label>
+				    <select class="form-control" name="process" disabled>
+				      <option></option>
+				    </select>
+					</div>
+
+					<div class="input-group">
+						<label for="name">Nº Pages:</label>
+						<input class="form-control" type="number" name="name" placeholder="cant" disabled>
+					</div>
+
+					<div class="input-group">
+						<label for="mode">Mode:</label>
+				    <select class="form-control" name="mode" disabled>
+				      <option></option>
+				    </select>
+					</div>
+				</div>
+			</div><!-- secuences-container -->
+		</div>
+
+		<div class="row buttons-sequence">
+	  	<input type="button" class="btn btn-sm btn-danger pull-right" name="name" value="Preview page requirements" ng-click="processRequirements()">
+		</div><!-- add sequence -->
+
+	  <div class="row well requirementsWell">
+			<p class="text-muted">Generated page requirements</p>
+      <div class="col-xs-2" ng-repeat="r in requirements">
+        <div ng-class="{'read':'panel-primary', 'write':'panel-danger', 'finish':'panel-success' }[r.mode]" class="panel">
+          <div class="panel-heading requirement">
+            <p> {{r.process}} </p>
+						<p> {{r.pageNumber}} </p>
+						<p> {{r.mode}} </p>
+					</div>
+        </div>
+    	</div>
+	  </div>
+	</div><!-- /panel body -->
+</div>

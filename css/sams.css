@@ -1,0 +1,119 @@
+/*-------------------------------------------------------------------
+Existing elements
+-------------------------------------------------------------------*/
+
+body {
+  background-color: #6265B1;
+  color: white;
+}
+
+/*-------------------------------------------------------------------
+Existing classes
+-------------------------------------------------------------------*/
+
+.btn {
+  border: 0px;
+}
+
+.btn-primary {
+  background-color: #6265B1;
+}
+
+.panel-default {
+  background-color: #3E3F5A;
+  color: white;
+  border: 0;
+}
+
+.form-control {
+  border: 0px;
+  background-color:#292929;
+  color: #92C5E4;
+}
+
+.input-group-addon {
+  border: 0px;
+  background-color: #232323;
+  color: #4AACE8;
+  /*text-shadow:  #CCC 1px 0 10px;*/
+}
+
+.thumbnail {
+  position:relative;
+  overflow:hidden;
+  padding: 0;
+  border: 0;
+}
+
+/*-------------------------------------------------------------------
+New classes
+-------------------------------------------------------------------*/
+
+.pages-per-process .input-group {
+  margin: 5px auto;
+}
+
+.requirement {
+  box-shadow: 1px 1px 1px 1px #1f1f1f;
+}
+
+.requirementsWell {
+  background-color: #363942;
+  border: 1px solid #333;
+  font-size: 14px;
+  margin-bottom: 0 !important;
+}
+
+.panel-about {
+  background-color:#363942;
+  color: #B1BDC3;
+}
+
+.caption {
+  position:absolute;
+  top:0;
+  right:0;
+  background:rgba(66, 139, 202, 0.75);
+  width:100%;
+  height:100%;
+  padding:2%;
+  display: none;
+  text-align:center;
+  color:#fff !important;
+  z-index:2;
+}
+
+.buttons-sequence {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.fake-requirementsWell {
+  opacity: 0.7;
+}
+
+.button-add::before{
+  content: '+';
+  font-weight: bolder;
+  font-size: 30px;
+  top: 42%;
+  left: 45%;
+  position: absolute;
+}
+
+.button-add:hover{
+  background: rgba(0,0,0,0.70);
+}
+
+.button-add {
+  transition: .5s;
+  cursor: pointer;
+  color: white;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: rgba(0,0,0,0.95);
+  top:0;
+  left:0;
+  z-index:9;
+}

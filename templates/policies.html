@@ -1,0 +1,85 @@
+<div class="panel panel-default">
+	<div class="panel-body">
+			<!--Breadcrumb, step: 3  -->
+				<nav>
+					<ol class="cd-multi-steps text-top">
+						<li class="visited"><em>Requirement</em></li>
+						<li class="visited"><em>Algorithm</em></li>
+						<li class="current"><em>Policies</em></li>
+						<li><em>Resolution</em></li>
+					</ol>
+				</nav>
+			<!-- /breacrumbs -->
+			<!-- Back-Forward buttons -->
+			<div class="row">
+				<div class="col-sm-6">
+					<a class="btn btn-primary btn pull-right" ui-sref="step.selectAlgorithm"><span class="glyphicon glyphicon-chevron-left"></span></a>
+				</div>
+				<div class="col-sm-6">
+					<a class="btn btn-primary btn" ui-sref="step.resolution"><span class="glyphicon glyphicon-chevron-right"></span></a>
+				</div>
+			</div>
+			<!-- /Back-Forward buttons -->
+
+			<!-- memory size and options -->
+			<div class="page-header">
+      	<h3>Select memory size <small>(frames' amount)</small></h3>
+      </div>
+      <input class="form-control" type="number"
+							value="{{memorySize}}"
+							ng-change="changeMemorySize()"
+							ng-model="memorySize"
+							placeholder="Memory Size" />
+
+      <div class="page-header">
+        <h3> Algorithm options </h3>
+      </div>
+      <div class="row">
+
+        <div class="col-sm-4">
+					<div class="well requirementsWell">
+            <h4>Assignment Policy</h4>
+            <div class="radio" ng-repeat="a in assignmentOptions">
+              <label>
+								<input type="radio" name="optionAssigment" ng-checked="selectedAssignmentOption==a" ng-click="setAssignmentOption(a)" />
+								{{a|capitalize}}
+							</label>
+            </div>
+					</div>
+        </div>
+
+        <div class="col-sm-4">
+					<div class="well requirementsWell">
+          <h4>Replacement Policy</h4>
+						<div class="radio" ng-repeat="r in replacementOptions">
+              <label>
+								<input type="radio"
+												name="optionReplacement"
+												ng-disabled="isAvailable(r)"
+												ng-click="setReplacementOption(r)"
+												ng-checked="selectedReplacementOption==r"/>
+								{{r|capitalize}}
+							</label>
+            </div>
+					</div>
+        </div>
+
+        <div class="col-sm-4">
+					<div class="well requirementsWell">
+
+            <h4>Options</h4>
+            <div class="checkbox" ng-repeat="(k,v) in queueOptions">
+              <label>
+                <input type="checkbox" ng-change="changeOptions()" ng-model="queueOptions[k]" value="{{v}}" ng-checked="{{v}}" />
+                {{k}}
+              </label>
+            </div>
+
+					</div>
+        </div>
+      </div>
+			<!-- /memory size and options -->
+
+  </div>
+</div>
+<!-- /content -->

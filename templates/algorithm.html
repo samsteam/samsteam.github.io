@@ -1,0 +1,34 @@
+<!-- content -->
+<div class="panel panel-default">
+	<div class="panel-body">
+			<!--Breadcrumb, step: 2 -->
+			<nav>
+				<ol class="cd-multi-steps text-top">
+					<li class="visited"><em>Requirement</em></li>
+					<li class="current"><em>Algorithm</em></li>
+					<li><em>Policies</em></li>
+					<li><em>Resolution</em></li>
+				</ol>
+			</nav>
+		<!-- /breacrumbs -->
+		<!-- Back-Forward buttons -->
+		<div class="row">
+			<div class="col-sm-6">
+		    <a class="btn btn-primary btn pull-right" ui-sref="step.requirements"> <span class="glyphicon glyphicon-chevron-left"></span></a>
+			</div>
+		  <div class="col-sm-6">
+		    <a class="btn btn-primary btn" ui-sref="step.policies"><span class="glyphicon glyphicon-chevron-right"></span></a>
+		  </div>
+		</div>
+		<!-- /Back-Forward buttons -->
+
+		<!-- algorithm selection -->
+    <div class="page-header">
+      <h3> Select algorithm: </h3>
+    </div>
+    <select class="form-control" ng-model="algorithmSelected" ng-change="changeAlgorithm()">
+      <option ng-repeat="a in algorithms" value="{{a|lowercase}}" ng-selected="algorithmSelected==a">{{a|uppercase}}</option>
+    </select>
+		<!-- /algorithm selection -->
+  </div>
+</div>

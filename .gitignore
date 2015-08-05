@@ -1,0 +1,7 @@
+node_modules/*
+nw/*
+.DS_Store
+dist/js/*
+dist/css/*
+dist/desktop*
+cache/*
