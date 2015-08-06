@@ -98,11 +98,10 @@ angular.module('sams.services', [])
 */
 .factory('SchedulerService', function(ValidationService){
 
-  var algorithms = ['fifo', 'lru', 'nru', 'optimal'];
+  var algorithms = ['fifo', 'fifo2', 'lru', 'nru', 'optimal'];
   var modes = ['read', 'write', 'finish'];
   var assigmentPolicies = ['fixed', 'dynamic'];
-  var replacementPolicies = ['local', 'global'];
-  var queuePolicies = {'second-chance': false, 'async-flush':false};
+  var queuePolicies = {'async-flush':false};
 
   var scheduler = new Scheduler();
 
@@ -116,7 +115,12 @@ angular.module('sams.services', [])
       if ( ! ValidationService.inArray(this.getAlgorithms(), algorithm) )
         throw new Error("Algorithm doesn't exists");
 
-      scheduler.setAlgorithm(algorithm);
+      if (algorithm === 'fifo2') {
+        scheduler.setAlgorithm('fifo');
+        this.setSecondChanceReplacementPolicy(true);
+      } else {
+        scheduler.setAlgorithm(algorithm);
+      }
 
       return this;
     },
@@ -260,9 +264,6 @@ angular.module('sams.services', [])
     },
     getAssigmentPolicies: function() {
       return assigmentPolicies;
-    },
-    getReplacementPolicies: function() {
-      return replacementPolicies;
     },
     getQueuePolicies: function() {
       return queuePolicies;

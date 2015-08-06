@@ -38,11 +38,6 @@ app.config(function($stateProvider, $urlRouterProvider){
         templateUrl: 'templates/requirements.html',
         controller: 'RequirementsController'
       })
-      .state('step.selectAlgorithm', {
-        url: '/algorithm',
-        templateUrl: 'templates/algorithm.html',
-        controller: 'AlgorithmController'
-      })
       .state('step.policies', {
         url: '/policies',
         templateUrl: 'templates/policies.html',

@@ -39,11 +39,6 @@ app.config(function($stateProvider, $urlRouterProvider){
         templateUrl: 'templates/requirements.html',
         controller: 'RequirementsController'
       })
-      .state('step.selectAlgorithm', {
-        url: '/algorithm',
-        templateUrl: 'templates/algorithm.html',
-        controller: 'AlgorithmController'
-      })
       .state('step.policies', {
         url: '/policies',
         templateUrl: 'templates/policies.html',
@@ -178,7 +173,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 
   $scope.next = function() {
     $scope.processRequirements();
-    $state.go('step.selectAlgorithm');
+    $state.go('step.policies');
   }
 
   $scope.__needClean = function(){
@@ -242,28 +237,25 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 
 /*
 | ---------------------------------------------------------------------------
-| Algorithm Selection
-| ---------------------------------------------------------------------------
-*/
-.controller('AlgorithmController', function($scope, SchedulerService){
-  console.info('In Algorithm Controller');
-
-  $scope.algorithms = SchedulerService.getAlgorithms();
-
-  $scope.algorithmSelected = SchedulerService.getAlgorithm();
-
-  $scope.changeAlgorithm = function(){
-    SchedulerService.setAlgorithm( $scope.algorithmSelected );
-  }
-})
-
-/*
-| ---------------------------------------------------------------------------
 | Policies
 | ---------------------------------------------------------------------------
 */
 .controller('PoliciesController', function($scope, SamsService, SchedulerService){
   console.info('In Policies Controller');
+
+  /*
+  | ---------------------------------------------------------------------------
+  | Algorithm Selection
+  | ---------------------------------------------------------------------------
+  */
+
+    $scope.algorithms = SchedulerService.getAlgorithms();
+
+    $scope.algorithmSelected = SchedulerService.getAlgorithm();
+
+    $scope.changeAlgorithm = function(){
+      SchedulerService.setAlgorithm( $scope.algorithmSelected );
+    }
 
   /*
   | ---------------------------------------------------------------------------
@@ -299,45 +291,25 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     $scope.selectedReplacementOption = null;
     $scope.selectedAssignmentOption = a;
     var isFixedEven = ($scope.selectedAssignmentOption === 'fixed');
-
     SchedulerService.setFixedEvenAssignmentPolicy( isFixedEven );
+    SchedulerService.setLocalReplacementPolicy(isFixedEven);
   }
 
   $scope.assignmentOptions = SchedulerService.getAssigmentPolicies();
 
   if ( SchedulerService.isFixedEvenAssignmentPolicy() ) {
     $scope.selectedAssignmentOption = 'fixed';
+    SchedulerService.setLocalReplacementPolicy(true);
   } else {
     $scope.selectedAssignmentOption = 'dynamic';
     // update if is not setted
     $scope.setAssignmentOption($scope.selectedAssignmentOption);
-  }
-
-
-  /*
-  | ---------------------------------------------------------------------------
-  | isLocalReplacementPolicy
-  | ---------------------------------------------------------------------------
-  */
-  $scope.replacementOptions = SchedulerService.getReplacementPolicies();
-
-  $scope.setReplacementOption = function(r){
-    $scope.selectedReplacementOption = r;
-    var isLocal = ($scope.selectedReplacementOption === 'local');
-
-    SchedulerService.setLocalReplacementPolicy(isLocal);
-  }
-
-  if ( SchedulerService.isLocalReplacementPolicy() ) {
-    $scope.selectedReplacementOption = 'local';
-  } else {
-    $scope.selectedReplacementOption = 'global';
-    $scope.setReplacementOption( $scope.selectedReplacementOption );
+    SchedulerService.setLocalReplacementPolicy(false);
   }
 
   /*
   | ---------------------------------------------------------------------------
-  | isAsyncFlushReplacementPolicy and isSecondChanceReplacementPolicy
+  | isAsyncFlushReplacementPolicy
   | ---------------------------------------------------------------------------
   */
   $scope.queueOptions = SchedulerService.getQueuePolicies();
@@ -345,7 +317,6 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   $scope.changeOptions = function(){
     // TODO: check if algorithm is FIFO or LRU (for 2nd chance)
     SchedulerService.setAsyncFlushReplacementPolicy($scope.queueOptions['async-flush']);
-    SchedulerService.setSecondChanceReplacementPolicy($scope.queueOptions['second-chance']);
   }
 })
 
@@ -518,11 +489,10 @@ angular.module('sams.services', [])
 */
 .factory('SchedulerService', function(ValidationService){
 
-  var algorithms = ['fifo', 'lru', 'nru', 'optimal'];
+  var algorithms = ['fifo', 'fifo2', 'lru', 'nru', 'optimal'];
   var modes = ['read', 'write', 'finish'];
   var assigmentPolicies = ['fixed', 'dynamic'];
-  var replacementPolicies = ['local', 'global'];
-  var queuePolicies = {'second-chance': false, 'async-flush':false};
+  var queuePolicies = {'async-flush':false};
 
   var scheduler = new Scheduler();
 
@@ -536,7 +506,12 @@ angular.module('sams.services', [])
       if ( ! ValidationService.inArray(this.getAlgorithms(), algorithm) )
         throw new Error("Algorithm doesn't exists");
 
-      scheduler.setAlgorithm(algorithm);
+      if (algorithm === 'fifo2') {
+        scheduler.setAlgorithm('fifo');
+        this.setSecondChanceReplacementPolicy(true);
+      } else {
+        scheduler.setAlgorithm(algorithm);
+      }
 
       return this;
     },
@@ -680,9 +655,6 @@ angular.module('sams.services', [])
     },
     getAssigmentPolicies: function() {
       return assigmentPolicies;
-    },
-    getReplacementPolicies: function() {
-      return replacementPolicies;
     },
     getQueuePolicies: function() {
       return queuePolicies;
