@@ -86,20 +86,27 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 .controller('RequirementsController', function($scope, $state, SamsService, SchedulerService){
   console.info('In Requirements Controller');
   $scope.modes = SchedulerService.getModes();
+  $scope.inputProcesses = [];
+  $scope.processes = [];
+  $scope.pages = {};
+  $scope.secuences = [];
   $scope.requirements = SchedulerService.getRequirements();
-  $scope.inputProcesses = ['a','b','c'];
-  $scope.processes = ['a','b','c'];
-  $scope.pages = {
-    a:'1,2,3,4',
-    b:'5,6,7,8',
-    c:'9,10,11'
-  };
-  $scope.secuences = [
-    {'process': $scope.processes[0], 'cantPages': 1, 'mode': 'read'},
-    {'process': $scope.processes[1], 'cantPages': 2, 'mode': 'read'},
-    {'process': $scope.processes[2], 'cantPages': 1, 'mode': 'write'},
-    {'process': $scope.processes[1], 'cantPages': 1, 'mode': 'read'}
-  ];
+
+  $scope.loadDefault = function(){
+    $scope.inputProcesses = ['a','b','c'];
+    $scope.processes = ['a','b','c'];
+    $scope.pages = {
+      a:'1,2,3,4',
+      b:'5,6,7,8',
+      c:'9,10,11'
+    };
+    $scope.secuences = [
+      {'process': $scope.processes[0], 'cantPages': 1, 'mode': 'read'},
+      {'process': $scope.processes[1], 'cantPages': 2, 'mode': 'read'},
+      {'process': $scope.processes[2], 'cantPages': 1, 'mode': 'write'},
+      {'process': $scope.processes[1], 'cantPages': 1, 'mode': 'read'}
+    ];
+  }
 
   $scope.hasPages = function(){
     return ($scope.pages && Object.keys($scope.pages).length);
