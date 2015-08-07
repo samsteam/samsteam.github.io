@@ -12,7 +12,7 @@ Description? meh...
 
 ## How to use
 
-	git clone https://github.com/samsteam/sams-webapp
+	git clone https://github.com/samsteam/samsteam.github.io
 
 	npm install
 
