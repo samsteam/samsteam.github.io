@@ -24,7 +24,7 @@
   "single-instance": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/samsteam/sams-webapp.git"
+    "url": "git+https://github.com/samsteam/samsteam.github.io.git"
   },
   "keywords": [
     "memory",
@@ -35,9 +35,9 @@
   "author": "Samsteam <dev.samsjs@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/samsteam/sams-webapp/issues"
+    "url": "https://github.com/samsteam/samsteam.github.io/issues"
   },
-  "homepage": "https://github.com/samsteam/sams-webapp#readme",
+  "homepage": "https://github.com/samsteam/samsteam.github.io#readme",
   "dependencies": {
     "jquery": "^2.1.4",
     "angular": "^1.4.3",
