@@ -321,8 +321,12 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   */
   $scope.queueOptions = SchedulerService.getQueuePolicies();
 
+  $scope.hasAlgorithm = function () {
+    return $scope.algorithmSelected;
+  }
+
   $scope.changeOptions = function(){
-    // TODO: check if algorithm is FIFO or LRU (for 2nd chance)
+    // TODO: check if algorithm is FIFO
     SchedulerService.setAsyncFlushReplacementPolicy($scope.queueOptions['async-flush']);
   }
 })
@@ -499,7 +503,7 @@ angular.module('sams.services', [])
   var algorithms = ['fifo', 'fifo2', 'lru', 'nru', 'optimal'];
   var modes = ['read', 'write', 'finish'];
   var assigmentPolicies = ['fixed', 'dynamic'];
-  var queuePolicies = {'async-flush':false};
+  var queuePolicies = {'async-flush': false};
 
   var scheduler = new Scheduler();
 

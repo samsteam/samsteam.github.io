@@ -157,3 +157,17 @@ New classes
   left:0;
   z-index:9;
 }
+
+.preview p {
+  font-size: 20px;
+}
+
+.preview .table tr td {
+    border-color: #333;
+}
+
+.preview .badge {
+  padding: 5px 10px;
+  font-weight: 400;
+  background: #006687;
+}

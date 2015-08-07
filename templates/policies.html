@@ -1,79 +1,120 @@
 <div class="panel panel-default">
 	<div class="panel-body">
-			<!--Breadcrumb, step: 3  -->
-				<nav>
-					<ol class="cd-multi-steps text-top">
-						<li class="visited"><em>Requirement</em></li>
-						<li class="current"><em>Policies</em></li>
-						<li><em>Resolution</em></li>
-					</ol>
-				</nav>
-			<!-- /breacrumbs -->
-			<!-- Back-Forward buttons -->
-			<div class="row">
-				<div class="col-sm-6">
-					<a class="btn btn-primary btn pull-right" ui-sref="step.requirements"><span class="glyphicon glyphicon-chevron-left"></span></a>
-				</div>
-				<div class="col-sm-6">
-					<a class="btn btn-primary btn" ui-sref="step.resolution"><span class="glyphicon glyphicon-chevron-right"></span></a>
-				</div>
+		<!--Breadcrumb, step: 3  -->
+		<nav>
+			<ol class="cd-multi-steps text-top">
+				<li class="visited"><em>Requirement</em></li>
+				<li class="current"><em>Policies</em></li>
+				<li><em>Resolution</em></li>
+			</ol>
+		</nav>
+		<!-- /breacrumbs -->
+		<!-- Back-Forward buttons -->
+		<div class="row">
+			<div class="col-sm-6">
+				<a class="btn btn-primary btn pull-right" ui-sref="step.requirements"><span class="glyphicon glyphicon-chevron-left"></span></a>
 			</div>
-			<!-- /Back-Forward buttons -->
+			<div class="col-sm-6">
+				<a class="btn btn-primary btn" ui-sref="step.resolution"><span class="glyphicon glyphicon-chevron-right"></span></a>
+			</div>
+		</div>
+		<!-- /Back-Forward buttons -->
 
-			<div class="row">
-			  	<div class="col-md-6">
+		<div class="row">
+	  	<div class="col-md-2">
 
-						<!-- algorithm selection -->
-						<div class="page-header">
-							<h3> Select algorithm: </h3>
-						</div>
-						<select class="form-control grey-color" ng-model="algorithmSelected" ng-change="changeAlgorithm()">
-							<option ng-repeat="a in algorithms" value="{{a|lowercase}}" ng-selected="algorithmSelected==a">{{a|uppercase}}</option>
-						</select>
-						<!-- /algorithm selection -->
+				<!-- algorithm selection -->
+				<div class="page-header">
+					<h4>Select algorithm: </h4>
+				</div>
+				<select class="form-control grey-color" ng-model="algorithmSelected" ng-change="changeAlgorithm()">
+					<option ng-repeat="a in algorithms" value="{{a|lowercase}}" ng-selected="algorithmSelected==a">{{a|uppercase}}</option>
+				</select>
+				<!-- /algorithm selection -->
 
-						<!-- memory size and options -->
-						<div class="page-header">
-							<h3>Select memory size <small>(frames' amount)</small></h3>
-						</div>
-						<input class="form-control grey-color" type="number"
-										value="{{memorySize}}"
-										ng-change="changeMemorySize()"
-										ng-model="memorySize"
-										placeholder="Memory Size" />
-			  	</div>
-					<div class="col-md-6">
-						<div class="page-header">
-			        <h3> Algorithm options </h3>
-			      </div>
+				<!-- memory size and options -->
+				<div class="page-header">
+					<h4>Memory size</h4>
+				</div>
+				<input class="form-control grey-color" type="number"
+								value="{{memorySize}}"
+								ng-change="changeMemorySize()"
+								ng-model="memorySize"
+								min="2"
+								max="50"
+								placeholder="Memory Size" />
+	  	</div>
 
-			        <div class="col-sm-12">
-								<div class="well grey-color">
-			            <h4>Assignment and Replacement Policies</h4>
-			            <div class="radio" ng-repeat="a in assignmentOptions">
-			              <label>
-											<input type="radio" name="optionAssigment" ng-checked="selectedAssignmentOption==a" ng-click="setAssignmentOption(a)" />
-											{{ a === 'fixed' ?  'Equitative Fixed Local' : 'Dynamic Global'}}
-										</label>
-			            </div>
-							
-
-			            <h4>Options</h4>
-			            <div class="checkbox" ng-repeat="(k,v) in queueOptions">
-			              <label>
-			                <input type="checkbox" ng-change="changeOptions()" ng-model="queueOptions[k]" value="{{v}}" ng-checked="{{v}}" />
-			                {{k}}
-			              </label>
-			            </div>
-
-								</div>
-			      	</div>
-							<!-- /memory size and options -->
+			<div class="col-md-4">
+				<div class="page-header">
+	        <h4>Algorithm options</h4>
+	      </div>
+        <div class="col-sm-12">
+					<div class="well grey-color">
+            <h4>Assignment and Replacement Policies</h4>
+            <div class="radio" ng-repeat="a in assignmentOptions">
+              <label>
+								<input type="radio" name="optionAssigment" ng-checked="selectedAssignmentOption==a" ng-click="setAssignmentOption(a)" />
+								{{ a === 'fixed' ?  'Equitative Fixed Local' : 'Dynamic Global'}}
+							</label>
+            </div>
+            <h4>Options</h4>
+            <div class="checkbox" ng-repeat="(k,v) in queueOptions">
+              <label>
+                <input type="checkbox"
+											ng-change="changeOptions()"
+											ng-model="queueOptions[k]"
+											value="{{v}}"
+											ng-checked="{{v}}"
+											ng-disabled="!hasAlgorithm()"/>
+                {{k}}
+              </label>
+            </div>
 					</div>
+      	</div><!-- /memory size and options -->
+			</div><!-- /col-md-4 -->
+
+			<div class="col-md-6">
+				<div class="page-header">
+					<h4>Preview</h4>
+	      </div>
+				<div class="preview well grey-color">
+					<table class="table table-bordered">
+						<tr>
+							<td>Algorithm Selected:</td>
+							<td>
+								<span class="badge">{{ algorithmSelected || '-' | uppercase }}</span>
+							</td>
+						</tr>
+						<tr>
+							<td>Memory Size:</td>
+							<td>
+								<span class="badge">{{ memorySize || 0 }} <small> frame's</small></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Replacement & Assigment:
+							</td>
+							<td>
+								<span class="badge">
+									{{ selectedAssignmentOption === 'fixed' ?  'Equitative Fixed Local' : 'Dynamic Global'}}
+								</span>
+							</td>
+						</tr>
+						<tr ng-repeat="(k,v) in queueOptions">
+							<td>{{k|capitalize}}:</td>
+							<td>
+								<span class="badge">
+									{{v ? 'YES' : 'NO'}}
+								</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div><!-- /preview -->
 			</div>
-
-
-
+		</div>
   </div>
 </div>
 <!-- /content -->

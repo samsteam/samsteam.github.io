@@ -101,7 +101,7 @@ angular.module('sams.services', [])
   var algorithms = ['fifo', 'fifo2', 'lru', 'nru', 'optimal'];
   var modes = ['read', 'write', 'finish'];
   var assigmentPolicies = ['fixed', 'dynamic'];
-  var queuePolicies = {'async-flush':false};
+  var queuePolicies = {'async-flush': false};
 
   var scheduler = new Scheduler();
 
