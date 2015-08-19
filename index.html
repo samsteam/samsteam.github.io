@@ -17,6 +17,9 @@
         <a id="button-home" class="pull-left" ui-sref="home">
           <span class="glyphicon glyphicon-home icon"></span>
         </a>
+        <select class="grey-color pull-left" ng-model="locale" ng-change="changeLocale()">
+					<option ng-repeat="l in locales" value="{{l}}" ng-selected="locale==l">{{l|uppercase}}</option>
+				</select>
       </div><!-- home shortcut -->
 
       <!-- here render compiled templates -->

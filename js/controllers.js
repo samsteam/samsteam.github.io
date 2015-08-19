@@ -9,8 +9,12 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 | Main Controller (contains below controllers as childrens)
 | ---------------------------------------------------------------------------
 */
-.controller('MainController', function($scope, $state){
+.controller('MainController', function($scope, $state, SamsService){
   console.info('In Main Controller');
+
+  $scope.locales = SamsService.getLocales();
+  $scope.locale = SamsService.getDefaultLocale();
+
   $scope.is = function(routeName) {
     return $state.is(routeName);
   }

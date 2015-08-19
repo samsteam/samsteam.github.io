@@ -38,6 +38,12 @@ angular.module('sams.services', [])
 .factory('SamsService', function(){
 
   return {
+    getLocales: function(){
+      return ['es', 'en'];
+    },
+    getDefaultLocale: function() {
+      return 'es';
+    },
     areCompatiblePolicies: function(replacement, assigment){
       // Dynamic should be only global
       if ( assigment === 'dynamic'){
