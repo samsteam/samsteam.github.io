@@ -98,6 +98,16 @@ New classes
   margin: 10px;
 }
 
+#locale-select {
+  margin: 8px 0;
+  height: 30px;
+  background: white;
+  color: #333;
+  border: 0;
+  padding: 0;
+  width: 60%;
+}
+
 #button-home .icon {
   font-size: 25px;
   color: white;
