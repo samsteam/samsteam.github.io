@@ -26,7 +26,7 @@ app.config(function($translateProvider){
     HOME_DOWNLOAD: 'DOWNLOAD',
     HOME_ABOUT: 'ABOUT',
     BREADCRUMB_REQUIREMENTS: 'Requirements',
-    BREADCRUM_POLICIES: 'Policies',
+    BREADCRUMB_POLICIES: 'Policies',
     BREADCRUMB_RESOLUTION: 'Resolution',
   });
 
@@ -42,7 +42,7 @@ app.config(function($translateProvider){
     HOME_DOWNLOAD: 'DESCARGAR',
     HOME_ABOUT: 'ACERCA DE',
     BREADCRUMB_REQUIREMENTS: 'Requerimientos',
-    BREADCRUM_POLICIES: 'Políticas',
+    BREADCRUMB_POLICIES: 'Políticas',
     BREADCRUMB_RESOLUTION: 'Resolución',
   });
 
