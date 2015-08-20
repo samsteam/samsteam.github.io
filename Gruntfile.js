@@ -18,13 +18,19 @@ module.exports = function(grunt) {
         separator: ';'
       },
       deps:{
-        src:['node_modules/jquery/dist/jquery.js','deps/js/**/*.js'],
+        src:[
+          'node_modules/jquery/dist/jquery.js',
+          'node_modules/bootstrap/dist/js/bootstrap.js',
+          'deps/js/**/*.js'
+        ],
         dest: 'dist/js/deps.js'
       }
     },
     browserify:{
       project:{
-        src:['node_modules/jquery/dist/jquery.js', 'node_modules/bootstrap/dist/js/bootstrap.js', 'js/**/*.js'],
+        src:[
+          'js/**/*.js'
+        ],
         dest:'dist/js/sams.js'
       }
     },

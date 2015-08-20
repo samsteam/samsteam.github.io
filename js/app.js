@@ -3,9 +3,10 @@
 var angular = require('angular');
 var angularRouter = require('angular-ui-router');
 
-var app = angular.module('sams', ['sams.controllers', 'ui.router']);
+var app = angular.module('sams', ['sams.controllers', 'sams.locales', 'ui.router']);
 
 app.config(function($stateProvider, $urlRouterProvider){
+
 
   if ( navigator.userAgent === 'samsteam-app-agent' ) {
     $urlRouterProvider.otherwise('/step/requirements');
@@ -13,6 +14,11 @@ app.config(function($stateProvider, $urlRouterProvider){
     $urlRouterProvider.otherwise('/home');
   }
 
+  /*
+  | ---------------------------------------------------------------------------
+  | Routes
+  | ---------------------------------------------------------------------------
+  */
   $stateProvider
     .state('home', {
       url: '/home',
@@ -58,6 +64,4 @@ app.config(function($stateProvider, $urlRouterProvider){
         templateUrl: 'templates/fifo.html',
         controller: 'FifoController'
       });
-
-
-})
+});

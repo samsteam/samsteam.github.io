@@ -38,6 +38,16 @@ angular.module('sams.services', [])
 .factory('SamsService', function(){
 
   return {
+    getLocales: function(){
+      return ['es', 'en'];
+    },
+    getDefaultLocale: function() {
+      var locale = window.localStorage.getItem('locale');
+      return (!locale || locale === '') ? 'es' : locale;
+    },
+    setDefaultLocale: function(val) {
+      window.localStorage.setItem('locale', val);
+    },
     areCompatiblePolicies: function(replacement, assigment){
       // Dynamic should be only global
       if ( assigment === 'dynamic'){
