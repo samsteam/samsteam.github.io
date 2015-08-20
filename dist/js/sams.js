@@ -425,13 +425,13 @@ app.config(function($translateProvider){
   | ---------------------------------------------------------------------------
   */
 
-  $translateProvider.useSanitizeValueStrategy(null);
+  $translateProvider.useSanitizeValueStrategy('escaped');
 
   $translateProvider.translations('en', {
     ABOUT_TITLE: 'Devteam',
-    ABOUT_ABOUTSAMS_TITLE: 'About SAMS <small style="color:#488FE7">and it\'s roots</small>',
-    ABOUT_TUTORIAL_TITLE: 'Tutorial<small style="color:#488FE7"></small>',
-    ABOUT_GITHUB_TITLE: 'Project\'s Github Information <small style="color:#488FE7">Fork it!</small>',
+    ABOUT_ABOUTSAMS_TITLE: 'About SAMS', //<small style="color:#488FE7">and it\'s roots</small>',
+    ABOUT_TUTORIAL_TITLE: 'Tutorial', //<small style="color:#488FE7"></small>',
+    ABOUT_GITHUB_TITLE: 'Project\'s Github Information', //<small style="color:#488FE7">Fork it!</small>',
     ABOUT_SAMS: 'About SAMS',
     TUTORIAL: 'Tutorial',
     GITHUB: 'GitHub',
@@ -445,9 +445,9 @@ app.config(function($translateProvider){
 
   $translateProvider.translations('es', {
     ABOUT_TITLE: 'Desarrolladores',
-    ABOUT_ABOUTSAMS_TITLE: 'Acerca de SAMS <small style="color:#488FE7">y sus comienzos</small>',
-    ABOUT_TUTORIAL_TITLE: 'Tutorial<small style="color:#488FE7"></small>',
-    ABOUT_GITHUB_TITLE: 'Información del Github del proyecto <small style="color:#488FE7">¡Forkealo!</small>',
+    ABOUT_ABOUTSAMS_TITLE: 'Acerca de SAMS', // <small style="color:#488FE7">y sus comienzos</small>',
+    ABOUT_TUTORIAL_TITLE: 'Tutorial', //<small style="color:#488FE7"></small>',
+    ABOUT_GITHUB_TITLE: 'Información del Github del proyecto', // <small style="color:#488FE7">¡Forkealo!</small>',
     ABOUT_SAMS: 'Acerca de SAMS',
     TUTORIAL: 'Tutorial',
     GITHUB: 'GitHub',
