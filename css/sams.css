@@ -98,14 +98,12 @@ New classes
   margin: 10px;
 }
 
-#locale-select {
-  margin: 8px 0;
+.locale-select {
+  margin: 8px;
   height: 30px;
-  background: white;
+  background: white !important;
   color: #333;
-  border: 0;
-  padding: 0;
-  width: 60%;
+  border: 0 !important;
 }
 
 #button-home .icon {

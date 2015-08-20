@@ -42,7 +42,11 @@ angular.module('sams.services', [])
       return ['es', 'en'];
     },
     getDefaultLocale: function() {
-      return 'es';
+      var locale = window.localStorage.getItem('locale');
+      return (!locale || locale === '') ? 'es' : locale;
+    },
+    setDefaultLocale: function(val) {
+      window.localStorage.setItem('locale', val);
     },
     areCompatiblePolicies: function(replacement, assigment){
       // Dynamic should be only global

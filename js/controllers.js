@@ -14,13 +14,18 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 
   $scope.locales = SamsService.getLocales();
   $scope.locale = SamsService.getDefaultLocale();
+  $translate.use($scope.locale);
+  
+  console.log($scope.locale)
 
   $scope.is = function(routeName) {
     return $state.is(routeName);
   }
 
-  $scope.changeLocale = function(){
-    $translate.use( $scope.locale );
+  $scope.changeLocale = function(val){
+    $scope.locale = val;
+    $translate.use($scope.locale);
+    SamsService.setDefaultLocale($scope.locale)
   }
 
   $scope.isDesktopApp = (navigator.userAgent === 'samsteam-app-agent');

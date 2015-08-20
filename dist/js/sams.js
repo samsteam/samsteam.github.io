@@ -84,13 +84,18 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 
   $scope.locales = SamsService.getLocales();
   $scope.locale = SamsService.getDefaultLocale();
+  $translate.use($scope.locale);
+  
+  console.log($scope.locale)
 
   $scope.is = function(routeName) {
     return $state.is(routeName);
   }
 
-  $scope.changeLocale = function(){
-    $translate.use( $scope.locale );
+  $scope.changeLocale = function(val){
+    $scope.locale = val;
+    $translate.use($scope.locale);
+    SamsService.setDefaultLocale($scope.locale)
   }
 
   $scope.isDesktopApp = (navigator.userAgent === 'samsteam-app-agent');
@@ -511,7 +516,11 @@ angular.module('sams.services', [])
       return ['es', 'en'];
     },
     getDefaultLocale: function() {
-      return 'es';
+      var locale = window.localStorage.getItem('locale');
+      return (!locale || locale === '') ? 'es' : locale;
+    },
+    setDefaultLocale: function(val) {
+      window.localStorage.setItem('locale', val);
     },
     areCompatiblePolicies: function(replacement, assigment){
       // Dynamic should be only global
