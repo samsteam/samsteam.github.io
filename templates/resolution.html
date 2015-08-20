@@ -15,34 +15,79 @@
 			<div class="col-sm-6">
 		    <a class="btn btn-primary btn pull-right" ui-sref="step.policies"><span class="glyphicon glyphicon-chevron-left"></span></a>
 			</div>
-		  <div class="col-sm-12">
-		    <!-- results memory-->
-				<table class="table table-bordered">
+		</div>
+		<!-- /Back-Forward buttons -->
+
+		<div class="row">
+		<!-- general info panel -->
+			<div class="col-xs-offset-1 col-xs-10">
+				<div class="panel panel-default panel-body grey-color">
+				    general info panel
+				</div>
+			</div>
+		<!-- Rendered Table -->
+			<div class="col-sm-12">
+				<!-- results memory-->
+				<table  style="table-layout:fixed; margin-top:30px; margin-bottom:30px" class="center-table">
 					<thead>
 						<!-- render nº instant-->
 						<tr>
-							<td>nº Frame</td>
-							<td ng-repeat="i in [0, instants] | makeRange">{{i}}</td>
+							<td class="rtable rtable-default">Instant #</td>
+							<td class="rtable rtable-space"></td>
+							<td class="rtable rtable-default" ng-repeat="instant in [0, instants] | makeRange">{{instant}}</td>
+						</tr>
+						<!-- specify the required page for the instant-->
+						<tr>
+							<td class="rtable rtable-default">Requirement</td>
+							<td class="rtable rtable-space"></td>
+							<td class="rtable rtable-default" ng-repeat="p in results"> {{p.requirement.process}}{{p.requirement.pageNumber}}</td>
 						</tr>
 					</thead>
 					<tbody>
 						<!-- render nº frames-->
 						<tr ng-repeat="n in [0, framesTotal] | makeRange">
-							<td>{{n}}</td>
-							<td ng-repeat="p in results">
-								{{ p.frames[n].process }}-{{ p.frames[n].pageNumber }}
+							<td class="rtable rtable-frame">Frame {{n}}</td>
+							<td class="rtable rtable-space"></td>
+							<td class="rtable rtable-frame" ng-repeat="p in results"
+							ng-class="{true: 'rtable-async', false: ''}[p.frames[n].reservedForAsyncFlush]"
+							ng-class="{true: 'rtable-newinmemory', false:''}[p.frames[n].process == p.requirement.process && p.frames[n].pageNumber == p.requirement.pageNumber]">
+								{{ p.frames[n].process }}{{ p.frames[n].pageNumber }}
 							</td>
 						</tr>
+						<!-- render page faults -->
 						<tr>
-							<td>PF</td>
-							<td ng-repeat="p in results">
+							<td class="rtable rtable-default rtable-pf">PF</td>
+							<td class="rtable rtable-space"></td>
+							<td class="rtable rtable-default rtable-pf" ng-repeat="p in results">
 								{{ p.pageFault ? 'X' : ''}}
+							</td>
+						</tr>
+						<!-- render victim for this instant -->
+						<tr>
+							<td class="rtable rtable-default">Victim</td>
+							<td class="rtable rtable-space"></td>
+							<td class="rtable rtable-default" ng-repeat="p in results">
+								{{ {true: p.victim.process + p.victim.pageNumber, false:''}[p.victim != undefinded] }}
+							</td>
+						</tr>
+						<!-- render victims queue buttons -->
+						<tr>
+							<td class="rtable rtable-default">Victims' Queue</td>
+							<td class="rtable rtable-space"></td>
+							<td class="rtable rtable-default" ng-repeat="p in results">
+								<button type="button" name="button" class="btn btn-primary"> \/ </button>
 							</td>
 						</tr>
 					</tbody>
 				</table>
-		  </div>
+			</div>
+		<!-- /Rendered Table -->
+		<!-- leyend panel -->
+			<div class="col-xs-offset-1 col-xs-10">
+				<div class="panel panel-default panel-body grey-color">
+				    leyend panel
+				</div>
+			</div>
 		</div>
-		<!-- /Back-Forward buttons -->
   </div>
 </div>

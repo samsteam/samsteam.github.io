@@ -1,0 +1,3 @@
+<select class="grey-color locale-select" ng-model="locale" ng-change="changeLocale(locale)">
+  <option ng-repeat="l in locales" value="{{l}}" ng-selected="locale==l">{{l|uppercase}}</option>
+</select>

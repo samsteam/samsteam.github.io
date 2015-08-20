@@ -17,11 +17,7 @@
         <a id="button-home" class="pull-left" ui-sref="home">
           <span class="glyphicon glyphicon-home icon"></span>
         </a>
-        <div class="col-xs-1">
-          <select id="locale-select" class="grey-color pull-left form-control" ng-model="locale" ng-change="changeLocale()">
-  					<option ng-repeat="l in locales" value="{{l}}" ng-selected="locale==l">{{l|uppercase}}</option>
-  				</select>
-        </div>
+        <div ng-include src="'templates/partials/locale-button.html'"></div>
       </div><!-- home shortcut -->
 
       <!-- here render compiled templates -->

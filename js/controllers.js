@@ -9,14 +9,23 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 | Main Controller (contains below controllers as childrens)
 | ---------------------------------------------------------------------------
 */
-.controller('MainController', function($scope, $state, SamsService){
+.controller('MainController', function($scope, $state, SamsService, $translate){
   console.info('In Main Controller');
 
   $scope.locales = SamsService.getLocales();
   $scope.locale = SamsService.getDefaultLocale();
+  $translate.use($scope.locale);
+  
+  console.log($scope.locale)
 
   $scope.is = function(routeName) {
     return $state.is(routeName);
+  }
+
+  $scope.changeLocale = function(val){
+    $scope.locale = val;
+    $translate.use($scope.locale);
+    SamsService.setDefaultLocale($scope.locale)
   }
 
   $scope.isDesktopApp = (navigator.userAgent === 'samsteam-app-agent');
