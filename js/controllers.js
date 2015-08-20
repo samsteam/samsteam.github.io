@@ -38,47 +38,38 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 | ---------------------------------------------------------------------------
 */
 
-.controller('AboutController', function($scope){
+.controller('AboutController', function($scope, $filter){
   console.info('In AboutController');
-  $scope.devteam = [
-
+  var devTeam = [
     {
-      'name' : 'Babbini, Ignacio N',
-      'location' : 'La Plata, Buenos Aires, Argentina',
-      'mail' : 'ignababbini@gmail.com',
+      'name' : 'Babbini, Ignacio',
       'github' : 'https://github.com/inbabbini',
-      'photo' : 'images/portraits/iron_portrait.png'
+      'photo' : 'images/portraits/ignacio_babbini.png'
     },
     {
-      'name' : 'Babbini, Ignacio N',
-      'location' : 'La Plata, Buenos Aires, Argentina',
-      'mail' : 'ignababbini@gmail.com',
-      'github' : 'https://github.com/inbabbini',
-      'photo' : 'images/portraits/iron_portrait.png'
+      'name' : 'Eusebi, Cirano',
+      'github' : 'https://github.com/magodopado',
+      'photo' : 'images/portraits/cirano_eusebi.jpg'
     },
     {
-      'name' : 'Babbini, Ignacio N',
-      'location' : 'La Plata, Buenos Aires, Argentina',
-      'mail' : 'ignababbini@gmail.com',
-      'github' : 'https://github.com/inbabbini',
-      'photo' : 'images/portraits/iron_portrait.png'
+      'name' : 'Sottile, Cristian',
+      'github' : 'https://github.com/cristian-s',
+      'photo' : 'images/portraits/cristian_sottile.jpg'
     },
 
     {
-      'name' : 'Babbini, Ignacio N',
-      'location' : 'La Plata, Buenos Aires, Argentina',
-      'mail' : 'ignababbini@gmail.com',
-      'github' : 'https://github.com/inbabbini',
-      'photo' : 'images/portraits/iron_portrait.png'
+      'name' : 'Aparicio, Natalia',
+      'github' : 'https://github.com/natiidc',
+      'photo' : 'images/portraits/natalia_aparicio.jpg'
     },
     {
-      'name' : 'Babbini, Ignacio N',
-      'location' : 'La Plata, Buenos Aires, Argentina',
-      'mail' : 'ignababbini@gmail.com',
-      'github' : 'https://github.com/inbabbini',
-      'photo' : 'images/portraits/iron_portrait.png'
+      'name' : 'Cascio, Bruno',
+      'github' : 'https://github.com/brunocascio',
+      'photo' : 'images/portraits/bruno_cascio.jpg'
     }
   ];
+
+  $scope.devteam = $filter('shuffle')(devTeam);
 })
 
 

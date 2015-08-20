@@ -11,6 +11,28 @@ body {
 Existing classes
 -------------------------------------------------------------------*/
 
+
+.thumbnail-cover {
+  height: 250px;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.developer.col-md-3 {
+  width: 20%;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.developer .metadata {
+  margin: 75px auto;
+}
+
+.developer h4 {
+  font-size: 25px;
+}
+
 .btn {
   border: 0px;
 }
@@ -74,6 +96,16 @@ New classes
 
 #button-home {
   margin: 10px;
+}
+
+#locale-select {
+  margin: 8px 0;
+  height: 30px;
+  background: white;
+  color: #333;
+  border: 0;
+  padding: 0;
+  width: 60%;
 }
 
 #button-home .icon {
