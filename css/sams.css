@@ -171,3 +171,48 @@ New classes
   font-weight: 400;
   background: #006687;
 }
+
+/*
+  Table Frames
+*/
+
+.rtable {
+  width: 50px !important;
+  height: 50px !important;
+  text-align: center;
+  border: 2px solid #212121 !important;
+  font-size: 20px;
+}
+
+.rtable-default {
+  color: #69BEE8;
+  background-color: #363942;
+}
+
+.rtable-pf {
+  color: #f04124;
+}
+
+.rtable-async {
+  background-color: #FDD54B !important;
+  color: #FDD54B !important;
+}
+
+.rtable-newinmemory{
+  background-color: #f04124 !important;
+}
+
+.rtable-frame {
+  color: black;
+  background-color: grey;
+}
+
+.rtable-space {
+  border: 0px !important;
+}
+
+.center-table {
+  margin-left: auto;
+  margin-right: auto;
+  display: table;
+}
