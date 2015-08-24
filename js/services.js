@@ -201,7 +201,7 @@ angular.module('sams.services', [])
       if ( ! ValidationService.checkBooleanType(enabled) )
         throw new Error("value should be a boolean value");
 
-      scheduler.setAsyncFlushReplacementPolicy(enabled);
+      scheduler.setPageBufferingFilter(enabled);
 
       return this;
     },
@@ -214,7 +214,7 @@ angular.module('sams.services', [])
       if ( ! ValidationService.checkBooleanType(enabled) )
         throw new Error("value should be a boolean value");
 
-      scheduler.setSecondChanceReplacementPolicy(enabled);
+      scheduler.setSecondChanceFilter(enabled);
 
       return this;
     },
