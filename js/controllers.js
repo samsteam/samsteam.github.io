@@ -15,7 +15,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   $scope.locales = SamsService.getLocales();
   $scope.locale = SamsService.getDefaultLocale();
   $translate.use($scope.locale);
-  
+
   console.log($scope.locale)
 
   $scope.is = function(routeName) {
@@ -265,7 +265,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 
   $scope.changeOptions = function(){
     // TODO: check if algorithm is FIFO
-    SchedulerService.setAsyncFlushReplacementPolicy($scope.queueOptions['async-flush']);
+    SchedulerService.setPageBufferingFilter($scope.queueOptions['async-flush']);
   }
 })
 

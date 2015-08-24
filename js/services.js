@@ -127,7 +127,7 @@ angular.module('sams.services', [])
 
       if (algorithm === 'fifo2') {
         scheduler.setAlgorithm('fifo');
-        this.setSecondChanceReplacementPolicy(true);
+        this.setSecondChanceFilter(true);
       } else {
         scheduler.setAlgorithm(algorithm);
       }
@@ -140,7 +140,11 @@ angular.module('sams.services', [])
     | ---------------------------------------
     */
     getAlgorithm: function() {
-      return scheduler.getAlgorithm();
+      var algorithm = scheduler.getAlgorithm();
+      if (algorithm === 'fifo' && this.isSecondChange() ){
+        return 'fifo2';
+      }
+      return algorithm;
     },
     /*
     | ---------------------------------------
@@ -165,6 +169,22 @@ angular.module('sams.services', [])
     */
     isLocalReplacementPolicy: function() {
       return scheduler.isLocalReplacementPolicy();
+    },
+    /*
+    | ---------------------------------------
+    | is Second Chane Replacement
+    | ---------------------------------------
+    */
+    isSecondChange: function() {
+      return scheduler.isSecondChance();
+    },
+    /*
+    | ---------------------------------------
+    | is Async
+    | ---------------------------------------
+    */
+    isPageBuffering: function() {
+      return scheduler.isPageBuffering();
     },
     /*
     | ---------------------------------------
@@ -197,7 +217,7 @@ angular.module('sams.services', [])
     | set if is async flush
     | ---------------------------------------
     */
-    setAsyncFlushReplacementPolicy: function(enabled){
+    setPageBufferingFilter: function(enabled){
       if ( ! ValidationService.checkBooleanType(enabled) )
         throw new Error("value should be a boolean value");
 
@@ -210,7 +230,7 @@ angular.module('sams.services', [])
     | set if is second chance
     | ---------------------------------------
     */
-    setSecondChanceReplacementPolicy: function(enabled){
+    setSecondChanceFilter: function(enabled){
       if ( ! ValidationService.checkBooleanType(enabled) )
         throw new Error("value should be a boolean value");
 
