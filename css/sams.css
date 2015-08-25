@@ -202,6 +202,10 @@ New classes
   background: #006687;
 }
 
+.btn-close {
+  padding: 0px 5px;
+}
+
 /*
   Table Frames
 */

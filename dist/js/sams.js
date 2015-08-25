@@ -248,6 +248,11 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 
     SchedulerService.addRequirements($scope.requirements);
   }
+
+
+  $scope.deleteRequest = function(index){
+    $scope.secuences.splice(index, 1);
+  }
 })
 
 /*
@@ -38336,7 +38341,8 @@ cocktail.mix({
 	},
 
 	initialize: function(requirements) {
-		this.callSuper("initialize", requirements);
+		this._requirements = requirements;
+		this._finalized = new Queue();
 	  this._victims = new Queue();
 	},
 
@@ -38350,12 +38356,27 @@ cocktail.mix({
 
 	update: function(requirement) {
 
-		this.callSuper("update", requirement);
-
-		//A finish requirement doesn't need any other update.
 		if (requirement.getMode() === "finish") {
+
+			var context = {
+				requirement: requirement,
+				finalized: this._finalized
+			};
+
+			this.log("Adding all the frames of process " + requirement.getProcess() + " to the finalized Queue.")
+			this._victims.forEach(function(page, index, victims) {
+			  if (this.requirement.getProcess() === page.getProcess()) {
+					victims.pageOf(page).setFinished(true);
+			  	this.finalized.add(page.clone());
+			  }
+			}, context);
+
 			return;
 		}
+		//A finish requirement doesn't need any other update.
+		// if (requirement.getMode() === "finish") {
+		// 	return;
+		// }
 
 		if (this._victims.contains(requirement)) {
 			this.addPage(requirement);
@@ -38385,6 +38406,7 @@ var cocktail = require('cocktail');
 var Logger = require('../annotations/Logger');
 var AlgorithmInterface = require('./AlgorithmInterface');
 var Fifo = require('./Fifo');
+var Queue = require('../common/VictimsStructures/Queue');
 var ReQueueQueue = require('../common/VictimsStructures/ReQueueQueue');
 
 cocktail.use(Logger);
@@ -38403,12 +38425,13 @@ cocktail.mix({
 	},
 
 	initialize: function(requirements) {
-		this.callSuper("initialize", requirements);
+		this._requirements = requirements;
+		this._finalized = new Queue();
 	  this._victims = new ReQueueQueue();
 	}
 });
 
-},{"../annotations/Logger":31,"../common/VictimsStructures/ReQueueQueue":37,"./AlgorithmInterface":28,"./Fifo":29,"cocktail":13}],31:[function(require,module,exports){
+},{"../annotations/Logger":31,"../common/VictimsStructures/Queue":36,"../common/VictimsStructures/ReQueueQueue":37,"./AlgorithmInterface":28,"./Fifo":29,"cocktail":13}],31:[function(require,module,exports){
 var cocktail = require('cocktail');
 var config = require('../../config');
 

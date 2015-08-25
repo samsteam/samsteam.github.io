@@ -49,6 +49,7 @@
 			</div>
 			<div class="secuences-container">
 			  <div class="col-xs-2 well grey-color" ng-repeat="s in secuences">
+					<button class="btn btn-small btn-danger pull-right btn-close" ng-click="deleteRequest($index)">X</button>
 					<div class="input-group">
 						<label for="process">Process:</label>
 				    <select class="form-control" ng-model="s.process" name="process">

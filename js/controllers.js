@@ -178,6 +178,11 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 
     SchedulerService.addRequirements($scope.requirements);
   }
+
+
+  $scope.deleteRequest = function(index){
+    $scope.secuences.splice(index, 1);
+  }
 })
 
 /*
