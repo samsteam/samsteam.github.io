@@ -159,12 +159,15 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 */
 .controller('RequirementsController', function($scope, $state, SamsService, SchedulerService){
   console.info('In Requirements Controller');
-  $scope.modes = SchedulerService.getModes();
-  $scope.inputProcesses = [];
-  $scope.processes = [];
-  $scope.pages = {};
-  $scope.secuences = [];
-  $scope.requirements = SchedulerService.getRequirements();
+
+  $scope.init = function(){
+    $scope.modes = SchedulerService.getModes();
+    $scope.inputProcesses = [];
+    $scope.processes = [];
+    $scope.pages = {};
+    $scope.secuences = [];
+    $scope.requirements = SchedulerService.getRequirements();
+  }
 
   $scope.loadDefault = function(){
     $scope.inputProcesses = ['a','b','c'];
@@ -175,10 +178,10 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
       c:'9,10,11'
     };
     $scope.secuences = [
-      {'process': $scope.processes[0], 'cantPages': 1, 'mode': 'read'},
-      {'process': $scope.processes[1], 'cantPages': 2, 'mode': 'read'},
-      {'process': $scope.processes[2], 'cantPages': 1, 'mode': 'write'},
-      {'process': $scope.processes[1], 'cantPages': 1, 'mode': 'read'}
+      // {'process': $scope.processes[0], 'cantPages': 1, 'mode': 'read'},
+      // {'process': $scope.processes[1], 'cantPages': 2, 'mode': 'read'},
+      // {'process': $scope.processes[2], 'cantPages': 1, 'mode': 'write'},
+      // {'process': $scope.processes[1], 'cantPages': 1, 'mode': 'read'}
     ];
   }
 
@@ -249,9 +252,27 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     SchedulerService.addRequirements($scope.requirements);
   }
 
-
   $scope.deleteRequest = function(index){
     $scope.secuences.splice(index, 1);
+  }
+
+  $scope.remainingRequeriments = function(pName){
+    var total = $scope.pages[pName].split(',').length;
+    var actual = 0;
+    angular.forEach($scope.secuences, function(s, i){
+      if (s.process === pName ) {
+        actual += s.cantPages;
+      }
+    });
+    return total - actual;
+  }
+
+  $scope.checkMaxPages = function(secuence) {
+    var total = $scope.pages[secuence.process].split(',').length;
+    var remaining = $scope.remainingRequeriments(secuence.process);
+    if ( remaining < 0 ) {
+      secuence.cantPages = 0;
+    }
   }
 })
 

@@ -1,5 +1,5 @@
 
-<div class="panel panel-default col-xs-12">
+<div class="panel panel-default col-xs-12" ng-init="init()">
 	<div class="panel-body">
 
 		<div class="row">
@@ -53,13 +53,13 @@
 					<div class="input-group">
 						<label for="process">Process:</label>
 				    <select class="form-control" ng-model="s.process" name="process">
-				      <option ng-repeat="p in processes" value="{{p}}" ng-selected="s.process==p">{{p}}</option>
+				      <option ng-repeat="p in processes" ng-class="{'hidden':remainingRequeriments(p)<=0}" value="{{p}}" ng-selected="s.process==p">{{p}}</option>
 				    </select>
 					</div>
 
 					<div class="input-group">
 						<label for="name">Nº Pages:</label>
-						<input class="form-control" type="number" name="name" placeholder="cant"  ng-model="s.cantPages">
+						<input class="form-control" min="0" type="number" name="name" placeholder="cant"  ng-model="s.cantPages" ng-change="checkMaxPages(s)">
 					</div>
 
 					<div class="input-group">
