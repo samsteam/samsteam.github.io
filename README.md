@@ -24,4 +24,4 @@ Description? meh...
 
 	npm start
 
-`npm start` will run a http server listening in port 8001, and execute grunt.
+`npm start` will run a http server listening in port 8000, and execute grunt.
