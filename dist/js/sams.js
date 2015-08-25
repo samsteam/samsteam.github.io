@@ -455,6 +455,7 @@ app.config(function($translateProvider){
     BREADCRUMB_REQUIREMENTS: 'Requirements',
     BREADCRUMB_POLICIES: 'Policies',
     BREADCRUMB_RESOLUTION: 'Resolution',
+    EXAMPLE: 'Example'
   });
 
   $translateProvider.translations('es', {
@@ -471,6 +472,7 @@ app.config(function($translateProvider){
     BREADCRUMB_REQUIREMENTS: 'Requerimientos',
     BREADCRUMB_POLICIES: 'Políticas',
     BREADCRUMB_RESOLUTION: 'Resolución',
+    EXAMPLE: 'Ejemplo'
   });
 
   $translateProvider.preferredLanguage( 'es' );
