@@ -5,6 +5,64 @@ Existing elements
 body {
   background-color: #6265B1;
   color: white;
+  font-size: 16px;
+}
+
+
+/*-------------------------------------------------------------------
+Loading
+-------------------------------------------------------------------*/
+#loading {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index:1;
+    background: #6265B1;
+}
+
+.spinner {
+  width: 155px;
+  height: 155px;
+  border-radius: 100%;
+  background-color: #D8D8D8;
+  border: 10px solid #575757;;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%) translateZ(0);
+  background-image: url('../../images/resources/cubes.jpg');
+  background-size: 200%;
+  -webkit-animation: gridLoop 10s infinite linear;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+}
+@-webkit-keyframes gridLoop{
+  0%{background-position: -5px 0%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(0deg);}
+  10%{background-position: -5px 50%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(0deg);}
+  15%{background-position: -5px 50%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(0deg);}
+ 17%{background-position: -305px 50%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(0deg);}
+  19%{background-position: -305px 50%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(0deg);}
+  25%{background-position: -305px 00%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(0deg);}
+  27%{background-position: -305px 00%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(90deg);}
+  35%{background-position: -305px 200%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(90deg);}
+  40%{background-position: -305px 200%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(90deg);}
+  45%{background-position: -305px 100%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(90deg);}
+  55%{background-position: -105px 100%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(90deg);}
+  60%{background-position: -105px 100%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(270deg);}
+  63%{background-position: -105px 100%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(270deg);}
+  70%{background-position: 105px 0%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(270deg);}
+  73%{background-position: 105px 0%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(270deg);}
+  75%{background-position: 205px 0%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(270deg);}
+  78%{background-position: 205px 50%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(270deg);}
+  82%{background-position: 105px 150%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(270deg);}
+  86%{background-position: 105px 150%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(270deg);}
+  88%{background-position: 105px 120%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(360deg);}
+  94%{background-position: 105px 180%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(360deg);}
+  98%{background-position: 105px 180%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(360deg);}
+  100%{background-position: -5px 0%;transform: translateX(-50%) translateY(-50%) translateZ(0) rotate(360deg);}
 }
 
 /*-------------------------------------------------------------------
