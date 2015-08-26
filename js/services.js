@@ -24,6 +24,7 @@ angular.module('sams.services', [])
       return angular.isObject(obj);
     },
     inArray: function(arr, value) {
+      if(!value) return false;
       return $filter('inArray')(arr, value);
     }
   }
@@ -83,8 +84,8 @@ angular.module('sams.services', [])
     createEmptyRequirement: function() {
       return {
         process: null,
-        cantPages: null,
-        mode: 'read'
+        cantPages: 0,
+        mode: null
       };
     },
     stringToArray: function(array, stringValue, delimiter) {
@@ -283,6 +284,17 @@ angular.module('sams.services', [])
       var reqs = scheduler.getRequirements();
 
       return memSize && algorithm && (reqs && reqs.length);
+    },
+    isValidRequirement: function(req) {
+      var isValid = req !== null;
+      isValid = isValid && typeof req == 'object';
+      isValid = isValid && req.process && req.process !== '';
+      isValid = isValid && typeof req.cantPages == 'number';
+      if ( isValid && req.cantPages == 0) {
+        isValid = isValid && req.mode == 'finish';
+      }
+      isValid = isValid && ValidationService.inArray(this.getModes(), req.mode);;
+      return isValid;
     },
     /*
     | ---------------------------------------

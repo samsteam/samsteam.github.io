@@ -160,14 +160,12 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 .controller('RequirementsController', function($scope, $state, SamsService, SchedulerService){
   console.info('In Requirements Controller');
 
-  $scope.init = function(){
-    $scope.modes = SchedulerService.getModes();
-    $scope.inputProcesses = [];
-    $scope.processes = [];
-    $scope.pages = {};
-    $scope.secuences = [];
-    $scope.requirements = SchedulerService.getRequirements();
-  }
+  $scope.modes = SchedulerService.getModes();
+  $scope.inputProcesses = [];
+  $scope.processes = [];
+  $scope.pages = {};
+  $scope.secuences = [];
+  $scope.requirements = SchedulerService.getRequirements();
 
   $scope.loadDefault = function(){
     $scope.inputProcesses = ['a','b','c'];
@@ -236,8 +234,15 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 
   // add a new box for future requirements
   $scope.add = function() {
-    var req = SamsService.createEmptyRequirement();
-    $scope.secuences.push(req);
+    var totalReqs = $scope.secuences.length;
+    var lastSeq = (totalReqs > 0) ? $scope.secuences[totalReqs-1] : null;
+    var isValidLastReq = SchedulerService.isValidRequirement(lastSeq);
+    if ( totalReqs === 0 || isValidLastReq ) {
+      var newReq = SamsService.createEmptyRequirement();
+      $scope.secuences.push(newReq);
+    } else {
+      alert('The last element in the sequence is invalid or empy');
+    }
   }
 
   // parsing user data input and send to scheduler.
@@ -257,14 +262,16 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   }
 
   $scope.remainingRequeriments = function(pName){
-    var total = $scope.pages[pName].split(',').length;
-    var actual = 0;
-    angular.forEach($scope.secuences, function(s, i){
-      if (s.process === pName ) {
-        actual += s.cantPages;
-      }
-    });
-    return total - actual;
+    if (pName){
+      var total = $scope.pages[pName].split(',').length;
+      var actual = 0;
+      angular.forEach($scope.secuences, function(s, i){
+        if (s.process === pName ) {
+          actual += s.cantPages;
+        }
+      });
+      return total - actual;
+    }
   }
 
   $scope.checkMaxPages = function(secuence) {
@@ -526,6 +533,7 @@ angular.module('sams.services', [])
       return angular.isObject(obj);
     },
     inArray: function(arr, value) {
+      if(!value) return false;
       return $filter('inArray')(arr, value);
     }
   }
@@ -585,8 +593,8 @@ angular.module('sams.services', [])
     createEmptyRequirement: function() {
       return {
         process: null,
-        cantPages: null,
-        mode: 'read'
+        cantPages: 0,
+        mode: null
       };
     },
     stringToArray: function(array, stringValue, delimiter) {
@@ -785,6 +793,17 @@ angular.module('sams.services', [])
       var reqs = scheduler.getRequirements();
 
       return memSize && algorithm && (reqs && reqs.length);
+    },
+    isValidRequirement: function(req) {
+      var isValid = req !== null;
+      isValid = isValid && typeof req == 'object';
+      isValid = isValid && req.process && req.process !== '';
+      isValid = isValid && typeof req.cantPages == 'number';
+      if ( isValid && req.cantPages == 0) {
+        isValid = isValid && req.mode == 'finish';
+      }
+      isValid = isValid && ValidationService.inArray(this.getModes(), req.mode);;
+      return isValid;
     },
     /*
     | ---------------------------------------

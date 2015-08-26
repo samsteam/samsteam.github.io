@@ -1,5 +1,5 @@
 
-<div class="panel panel-default col-xs-12" ng-init="init()">
+<div class="panel panel-default col-xs-12">
 	<div class="panel-body">
 
 		<div class="row">
@@ -53,20 +53,35 @@
 					<div class="input-group">
 						<label for="process">Process:</label>
 				    <select class="form-control" ng-model="s.process" name="process">
-				      <option ng-repeat="p in processes" ng-class="{'hidden':remainingRequeriments(p)<=0}" value="{{p}}" ng-selected="s.process==p">{{p}}</option>
+				      <option ng-repeat="p in processes"
+											ng-class="{'hidden':remainingRequeriments(p)<0}"
+											value="{{p}}"
+											ng-selected="s.process==p">{{p}}
+							</option>
 				    </select>
-					</div>
-
-					<div class="input-group">
-						<label for="name">Nº Pages:</label>
-						<input class="form-control" min="0" type="number" name="name" placeholder="cant"  ng-model="s.cantPages" ng-change="checkMaxPages(s)">
 					</div>
 
 					<div class="input-group">
 						<label for="mode">Mode:</label>
 				    <select class="form-control" ng-model="s.mode" name="mode">
-				      <option ng-repeat="m in modes" value="{{m}}" ng-selected="s.mode==m">{{m}}</option>
+				      <option ng-repeat="m in modes"
+											value="{{m}}"
+											ng-selected="s.mode==m"
+											ng-show="remainingRequeriments(s.process) > 0 || m == 'finish'">{{m}}
+							</option>
 				    </select>
+					</div>
+
+					<div class="input-group">
+						<label for="name">Nº Pages:</label>
+						<input class="form-control"
+									min="0"
+									type="number"
+									name="name"
+									placeholder="cant"
+									ng-model="s.cantPages"
+									ng-change="checkMaxPages(s)"
+									ng-disable="!s.mode">
 					</div>
 			  </div><!-- /secuences -->
 

@@ -90,14 +90,12 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 .controller('RequirementsController', function($scope, $state, SamsService, SchedulerService){
   console.info('In Requirements Controller');
 
-  $scope.init = function(){
-    $scope.modes = SchedulerService.getModes();
-    $scope.inputProcesses = [];
-    $scope.processes = [];
-    $scope.pages = {};
-    $scope.secuences = [];
-    $scope.requirements = SchedulerService.getRequirements();
-  }
+  $scope.modes = SchedulerService.getModes();
+  $scope.inputProcesses = [];
+  $scope.processes = [];
+  $scope.pages = {};
+  $scope.secuences = [];
+  $scope.requirements = SchedulerService.getRequirements();
 
   $scope.loadDefault = function(){
     $scope.inputProcesses = ['a','b','c'];
@@ -166,8 +164,15 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 
   // add a new box for future requirements
   $scope.add = function() {
-    var req = SamsService.createEmptyRequirement();
-    $scope.secuences.push(req);
+    var totalReqs = $scope.secuences.length;
+    var lastSeq = (totalReqs > 0) ? $scope.secuences[totalReqs-1] : null;
+    var isValidLastReq = SchedulerService.isValidRequirement(lastSeq);
+    if ( totalReqs === 0 || isValidLastReq ) {
+      var newReq = SamsService.createEmptyRequirement();
+      $scope.secuences.push(newReq);
+    } else {
+      alert('The last element in the sequence is invalid or empy');
+    }
   }
 
   // parsing user data input and send to scheduler.
@@ -187,14 +192,16 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   }
 
   $scope.remainingRequeriments = function(pName){
-    var total = $scope.pages[pName].split(',').length;
-    var actual = 0;
-    angular.forEach($scope.secuences, function(s, i){
-      if (s.process === pName ) {
-        actual += s.cantPages;
-      }
-    });
-    return total - actual;
+    if (pName){
+      var total = $scope.pages[pName].split(',').length;
+      var actual = 0;
+      angular.forEach($scope.secuences, function(s, i){
+        if (s.process === pName ) {
+          actual += s.cantPages;
+        }
+      });
+      return total - actual;
+    }
   }
 
   $scope.checkMaxPages = function(secuence) {
