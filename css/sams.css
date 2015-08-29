@@ -8,6 +8,9 @@ body {
   font-size: 16px;
 }
 
+.form-control[disabled] {
+  background: #3E3F5A;
+}
 
 /*-------------------------------------------------------------------
 Loading
@@ -28,7 +31,7 @@ Loading
   height: 155px;
   border-radius: 100%;
   background-color: #D8D8D8;
-  border: 10px solid #575757;;
+  border: 10px solid #575757;
   position: absolute;
   top: 50%;
   left: 50%;

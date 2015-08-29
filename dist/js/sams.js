@@ -278,7 +278,6 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     var isFinished = false;
     angular.forEach($scope.secuences, function(s, i){
       if (s.process === pName && s.mode === 'finish') {
-        console.log('isFinish')
         isFinished = true;
         return true;
       }

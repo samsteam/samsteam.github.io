@@ -67,7 +67,7 @@
 				      <option ng-repeat="m in modes"
 											value="{{m}}"
 											ng-selected="s.mode==m"
-											ng-show="remainingRequeriments(s.process) > 0 || m == 'finish'">{{m}}
+											ng-show="(remainingRequeriments(s.process) > 0 || m == 'finish')">{{m}}
 							</option>
 				    </select>
 					</div>
@@ -81,7 +81,7 @@
 									placeholder="cant"
 									ng-model="s.cantPages"
 									ng-change="checkMaxPages(s)"
-									ng-disable="!s.mode">
+									ng-disabled="!s.mode || s.mode=='finish'">
 					</div>
 			  </div><!-- /secuences -->
 
