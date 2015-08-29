@@ -63,7 +63,7 @@
 
 					<div class="input-group">
 						<label for="mode">Mode:</label>
-				    <select class="form-control" ng-model="s.mode" name="mode">
+				    <select class="form-control" ng-model="s.mode" name="mode" ng-change="changeMode(s)">
 				      <option ng-repeat="m in modes"
 											value="{{m}}"
 											ng-selected="s.mode==m"

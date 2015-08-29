@@ -215,6 +215,10 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     return isFinished;
   }
 
+  $scope.changeMode = function(s){
+    s.cantPages = 0;
+  }
+
   $scope.checkMaxPages = function(secuence) {
     var total = $scope.pages[secuence.process].split(',').length;
     var remaining = $scope.remainingRequeriments(secuence.process);
