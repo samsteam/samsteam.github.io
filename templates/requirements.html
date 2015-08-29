@@ -54,7 +54,7 @@
 						<label for="process">Process:</label>
 				    <select class="form-control" ng-model="s.process" name="process">
 				      <option ng-repeat="p in processes"
-											ng-class="{'hidden':remainingRequeriments(p)<0}"
+											ng-class="{'hidden':(remainingRequeriments(p)<0||isFinished(p))}"
 											value="{{p}}"
 											ng-selected="s.process==p">{{p}}
 							</option>

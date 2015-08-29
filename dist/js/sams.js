@@ -274,6 +274,18 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     }
   }
 
+  $scope.isFinished = function(pName) {
+    var isFinished = false;
+    angular.forEach($scope.secuences, function(s, i){
+      if (s.process === pName && s.mode === 'finish') {
+        console.log('isFinish')
+        isFinished = true;
+        return true;
+      }
+    });
+    return isFinished;
+  }
+
   $scope.checkMaxPages = function(secuence) {
     var total = $scope.pages[secuence.process].split(',').length;
     var remaining = $scope.remainingRequeriments(secuence.process);
