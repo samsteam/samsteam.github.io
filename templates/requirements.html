@@ -116,12 +116,12 @@
 		</div>
 
 		<div class="row buttons-sequence">
-	  	<input type="button" class="btn btn-sm btn-danger pull-right" name="name" value="Preview page requirements" ng-click="processRequirements()">
+	  	<input type="button" class="btn btn-sm btn-danger pull-right" name="name" value="Preview page requirements" ng-click="previewRequirements()">
 		</div><!-- add sequence -->
 
 	  <div class="row well grey-color">
 			<p class="text-muted">Generated page requirements</p>
-      <div class="col-xs-2" ng-repeat="r in requirements">
+      <div class="col-xs-2" ng-repeat="r in previewRequirements">
         <div ng-class="{'read':'panel-primary', 'write':'panel-danger', 'finish':'panel-success' }[r.mode]" class="panel">
           <div class="panel-heading requirement">
             <p> {{r.process}} </p>

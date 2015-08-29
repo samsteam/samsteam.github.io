@@ -71,12 +71,20 @@ angular.module('sams.services', [])
       });
       // create requirements
       secuences.forEach(function(obj, index){
-        for (var i = 0; i < obj.cantPages; i++) {
+        if (obj.mode == 'finish') {
           var req = {};
           req['process'] = obj.process;
-          req['pageNumber'] = pages[obj.process].shift();
-          req['mode'] = obj.mode;
+          req['pageNumber'] = 0;
+          req['mode'] = 'finish';
           reqs.push(req);
+        } else {
+          for (var i = 0; i < obj.cantPages; i++) {
+            var req = {};
+            req['process'] = obj.process;
+            req['pageNumber'] = pages[obj.process].shift();
+            req['mode'] = obj.mode;
+            reqs.push(req);
+          }
         }
       });
       return reqs;

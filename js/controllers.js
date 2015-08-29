@@ -106,10 +106,10 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
       c:'9,10,11'
     };
     $scope.secuences = [
-      // {'process': $scope.processes[0], 'cantPages': 1, 'mode': 'read'},
-      // {'process': $scope.processes[1], 'cantPages': 2, 'mode': 'read'},
-      // {'process': $scope.processes[2], 'cantPages': 1, 'mode': 'write'},
-      // {'process': $scope.processes[1], 'cantPages': 1, 'mode': 'read'}
+      {'process': $scope.processes[0], 'cantPages': 1, 'mode': 'read'},
+      {'process': $scope.processes[1], 'cantPages': 2, 'mode': 'read'},
+      {'process': $scope.processes[2], 'cantPages': 1, 'mode': 'write'},
+      {'process': $scope.processes[1], 'cantPages': 1, 'mode': 'read'}
     ];
   }
 
@@ -187,14 +187,28 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     SchedulerService.addRequirements($scope.requirements);
   }
 
+  $scope.previewRequirements = function() {
+    //clean old requirements
+    $scope.previewRequirements = [];
+    // clone pages
+    var pages = angular.copy($scope.pages);
+    // create requeriments
+    $scope.previewRequirements = SamsService.createRequirements(pages, $scope.secuences);
+    console.log($scope.previewRequirements)
+  }
+
   $scope.deleteRequest = function(index){
     $scope.secuences.splice(index, 1);
   }
 
   $scope.remainingRequeriments = function(pName){
     if (pName){
-      var total = $scope.pages[pName].split(',').length;
+      var total = 0;
       var actual = 0;
+      var pages = $scope.pages[pName];
+      if ( pages ){
+        total = pages.split(',').length;
+      }
       angular.forEach($scope.secuences, function(s, i){
         if (s.process === pName ) {
           actual += s.cantPages;
