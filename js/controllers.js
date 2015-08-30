@@ -28,6 +28,14 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     SamsService.setDefaultLocale($scope.locale)
   }
 
+  $scope.$on('processing', function(event, args) {
+    SamsService.showLoading();
+  });
+
+  $scope.$on('processed', function(event, args) {
+    SamsService.hideLoading();
+  });
+
   $scope.isDesktopApp = (navigator.userAgent === 'samsteam-app-agent');
 })
 
@@ -87,7 +95,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 | Data input
 | ---------------------------------------------------------------------------
 */
-.controller('RequirementsController', function($scope, $state, $translate, SamsService, SchedulerService){
+.controller('RequirementsController', function($rootScope, $scope, $state, $translate, SamsService, SchedulerService){
 
   $scope.init = function(){
     console.info('Init Requirements Controller');
@@ -98,6 +106,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     $scope.pages = SamsService.getPages();
     $scope.secuences = SamsService.getSequence();
     $scope.requirements = SchedulerService.getRequirements();
+    $rootScope.$broadcast('processed');
   }
 
   $scope.loadDefault = function(){
@@ -145,6 +154,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   }
 
   $scope.next = function() {
+    $rootScope.$broadcast('processing');
     $scope.processRequirements();
     $state.go('step.policies');
   }
@@ -280,7 +290,12 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 | Policies
 | ---------------------------------------------------------------------------
 */
-.controller('PoliciesController', function($scope, SamsService, SchedulerService){
+.controller('PoliciesController', function($rootScope, $scope, $state, SamsService, SchedulerService){
+
+  $scope.next = function(){
+    $rootScope.$broadcast('processing');
+    $state.go('step.resolution');
+  }
 
   $scope.init = function(){
     console.info('Init Policies Controller');
@@ -300,6 +315,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
       $scope.setAssignmentOption($scope.selectedAssignmentOption);
       SchedulerService.setLocalReplacementPolicy(false);
     }
+    $rootScope.$broadcast('processed');
   }
 
   $scope.changeAlgorithm = function(){
@@ -343,7 +359,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 | Show results
 | ---------------------------------------------------------------------------
 */
-.controller('ResolutionController', function($scope, $state, SchedulerService, checkData){
+.controller('ResolutionController', function($rootScope, $scope, $state, SchedulerService, checkData){
   console.info('In Resolution Controller');
   if (!checkData)
     return $state.go('step.requirements');
@@ -356,5 +372,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     console.log(err);
     alert(err);
     return $state.go('step.requirements');
+  } finally {
+    $rootScope.$broadcast('processed');
   }
 })

@@ -44,6 +44,12 @@ angular.module('sams.services', [])
   var sequence = [];
 
   return {
+    showLoading: function(){
+      document.getElementById("loading").style.display = 'block';
+    },
+    hideLoading: function(){
+      document.getElementById("loading").style.display = 'none';
+    },
     getLocales: function(){
       return ['es', 'en'];
     },
