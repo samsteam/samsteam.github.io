@@ -81,7 +81,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 */
 .controller('MainController', function($scope, $state, SamsService, $translate){
 
-  $scope.init = function(){
+  $scope.initMain = function(){
     console.info('Init Main Controller');
     $scope.locales = SamsService.getLocales();
     $scope.locale = SamsService.getDefaultLocale();
@@ -161,6 +161,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 
   $scope.init = function(){
     console.info('Init Requirements Controller');
+    $scope.previewRequirements = [];
     $scope.modes = SchedulerService.getModes();
     $scope.inputProcesses = SamsService.getInputProcesses();
     $scope.processes = SamsService.getProcesses();
@@ -170,6 +171,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   }
 
   $scope.loadDefault = function(){
+    $scope.previewRequirements = [];
     $scope.inputProcesses = ['a','b','c'];
     $scope.processes = ['a','b','c'];
     $scope.pages = {
@@ -184,13 +186,14 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
       {'process': $scope.processes[1], 'cantPages': 1, 'mode': 'read'}
     ];
 
-    $scope.__refresh();
+    $scope.__refreshData();
   }
 
   /*
   * Resend data to the service
   */
-  $scope.__refresh = function(){
+  $scope.__refreshData = function(){
+    $scope.previewRequirements = [];
     SamsService.setInputProcesses($scope.inputProcesses);
     SamsService.setProcesses($scope.processes);
     SamsService.setPages($scope.pages);
@@ -199,11 +202,12 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   }
 
   $scope.resetAll = function() {
+    $scope.previewRequirements = [];
     $scope.inputProcesses = [];
     $scope.processes = [];
     $scope.pages = {};
     $scope.secuences = [];
-    $scope.__refresh();
+    $scope.__refreshData();
   }
 
   $scope.hasPages = function(){
@@ -287,7 +291,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     SchedulerService.addRequirements($scope.requirements);
   }
 
-  $scope.previewRequirements = function() {
+  $scope.previewAllRequirements = function() {
     //clean old requirements
     $scope.previewRequirements = [];
     // clone pages
