@@ -28,7 +28,8 @@ app.config(function($translateProvider){
     BREADCRUMB_REQUIREMENTS: 'Requirements',
     BREADCRUMB_POLICIES: 'Policies',
     BREADCRUMB_RESOLUTION: 'Resolution',
-    EXAMPLE: 'Example'
+    EXAMPLE: 'Example',
+    ERROR_LAST_REQ: 'ERROR: The last element in the sequence is invalid or empty.',
   });
 
   $translateProvider.translations('es', {
@@ -45,7 +46,8 @@ app.config(function($translateProvider){
     BREADCRUMB_REQUIREMENTS: 'Requerimientos',
     BREADCRUMB_POLICIES: 'Políticas',
     BREADCRUMB_RESOLUTION: 'Resolución',
-    EXAMPLE: 'Ejemplo'
+    EXAMPLE: 'Ejemplo',
+    ERROR_LAST_REQ: 'ERROR: El último requerimiento de la secuencia es inválido o vacío.',
   });
 
   $translateProvider.preferredLanguage( 'es' );

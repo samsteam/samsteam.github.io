@@ -38,6 +38,11 @@ angular.module('sams.services', [])
 */
 .factory('SamsService', function(){
 
+  var inputProcesses = [];
+  var processes = [];
+  var pages = {};
+  var sequence = [];
+
   return {
     getLocales: function(){
       return ['es', 'en'];
@@ -105,7 +110,31 @@ angular.module('sams.services', [])
         }
       }
       return array;
-    }
+    },
+    setInputProcesses: function(arr){
+      this.inputProcesses = arr;
+    },
+    getInputProcesses: function(){
+      return this.inputProcesses;
+    },
+    setProcesses: function(arr){
+      this.processes = arr;
+    },
+    getProcesses: function(){
+      return this.processes;
+    },
+    setPages: function(dict){
+      this.pages = dict;
+    },
+    getPages: function(){
+      return this.pages;
+    },
+    setSequence: function(arr){
+      this.sequence = arr;
+    },
+    getSequence: function(){
+      return this.sequence;
+    },
   }
 })
 

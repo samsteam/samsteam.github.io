@@ -80,15 +80,15 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 | ---------------------------------------------------------------------------
 */
 .controller('MainController', function($scope, $state, SamsService, $translate){
-  console.info('In Main Controller');
 
-  $scope.locales = SamsService.getLocales();
-  $scope.locale = SamsService.getDefaultLocale();
-  $translate.use($scope.locale);
+  $scope.init = function(){
+    console.info('Init Main Controller');
+    $scope.locales = SamsService.getLocales();
+    $scope.locale = SamsService.getDefaultLocale();
+    $translate.use($scope.locale);
+  }
 
-  console.log($scope.locale)
-
-  $scope.is = function(routeName) {
+  $scope.is = function(routeName){
     return $state.is(routeName);
   }
 
@@ -157,15 +157,17 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 | Data input
 | ---------------------------------------------------------------------------
 */
-.controller('RequirementsController', function($scope, $state, SamsService, SchedulerService){
-  console.info('In Requirements Controller');
+.controller('RequirementsController', function($scope, $state, $translate, SamsService, SchedulerService){
 
-  $scope.modes = SchedulerService.getModes();
-  $scope.inputProcesses = [];
-  $scope.processes = [];
-  $scope.pages = {};
-  $scope.secuences = [];
-  $scope.requirements = SchedulerService.getRequirements();
+  $scope.init = function(){
+    console.info('Init Requirements Controller');
+    $scope.modes = SchedulerService.getModes();
+    $scope.inputProcesses = SamsService.getInputProcesses();
+    $scope.processes = SamsService.getProcesses();
+    $scope.pages = SamsService.getPages();
+    $scope.secuences = SamsService.getSequence();
+    $scope.requirements = SchedulerService.getRequirements();
+  }
 
   $scope.loadDefault = function(){
     $scope.inputProcesses = ['a','b','c'];
@@ -181,6 +183,12 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
       {'process': $scope.processes[2], 'cantPages': 1, 'mode': 'write'},
       {'process': $scope.processes[1], 'cantPages': 1, 'mode': 'read'}
     ];
+
+    SamsService.setInputProcesses($scope.inputProcesses);
+    SamsService.setProcesses($scope.processes);
+    SamsService.setPages($scope.pages);
+    SamsService.setSequence($scope.secuences);
+    $scope.processRequirements();
   }
 
   $scope.hasPages = function(){
@@ -234,18 +242,25 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 
   // add a new box for future requirements
   $scope.add = function() {
+    // get len of sequence
     var totalReqs = $scope.secuences.length;
+    // get last req of the sequence or null
     var lastSeq = (totalReqs > 0) ? $scope.secuences[totalReqs-1] : null;
+    // check if the last requirement added is valid.
     var isValidLastReq = SchedulerService.isValidRequirement(lastSeq);
     if ( totalReqs === 0 || isValidLastReq ) {
       var newReq = SamsService.createEmptyRequirement();
       $scope.secuences.push(newReq);
     } else {
-      alert('The last element in the sequence is invalid or empy');
+      $translate('ERROR_LAST_REQ').then(function(translatedError){
+        alert(translatedError);
+      });
     }
   }
 
-  // parsing user data input and send to scheduler.
+  /*
+  * Parsing user data input and send to scheduler.
+  */
   $scope.processRequirements = function(){
     //clean old requirements
     $scope.requirements = [];
@@ -253,7 +268,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     var pages = angular.copy($scope.pages);
     // create requeriments
     $scope.requirements = SamsService.createRequirements(pages, $scope.secuences);
-
+    // send to service
     SchedulerService.addRequirements($scope.requirements);
   }
 
@@ -264,7 +279,6 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     var pages = angular.copy($scope.pages);
     // create requeriments
     $scope.previewRequirements = SamsService.createRequirements(pages, $scope.secuences);
-    console.log($scope.previewRequirements)
   }
 
   $scope.deleteRequest = function(index){
@@ -318,52 +332,45 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 | ---------------------------------------------------------------------------
 */
 .controller('PoliciesController', function($scope, SamsService, SchedulerService){
-  console.info('In Policies Controller');
 
-  /*
-  | ---------------------------------------------------------------------------
-  | Algorithm Selection
-  | ---------------------------------------------------------------------------
-  */
-
+  $scope.init = function(){
+    console.info('Init Policies Controller');
     $scope.algorithms = SchedulerService.getAlgorithms();
-
     $scope.algorithmSelected = SchedulerService.getAlgorithm();
+    $scope.memorySize = SchedulerService.getMemorySize() || 4;
+    SchedulerService.setMemorySize($scope.memorySize) // prevent 0
+    $scope.assignmentOptions = SchedulerService.getAssigmentPolicies();
+    $scope.queueOptions = SchedulerService.getQueuePolicies();
 
-    $scope.changeAlgorithm = function(){
-      SchedulerService.setAlgorithm( $scope.algorithmSelected );
+    if ( SchedulerService.isFixedEvenAssignmentPolicy() ) {
+      $scope.selectedAssignmentOption = 'fixed';
+      SchedulerService.setLocalReplacementPolicy(true);
+    } else {
+      $scope.selectedAssignmentOption = 'dynamic';
+      // update if is not setted
+      $scope.setAssignmentOption($scope.selectedAssignmentOption);
+      SchedulerService.setLocalReplacementPolicy(false);
     }
+  }
+
+  $scope.changeAlgorithm = function(){
+    SchedulerService.setAlgorithm( $scope.algorithmSelected );
+  }
 
   /*
-  | ---------------------------------------------------------------------------
-  | Helper, validate assign with replace policy
-  | ---------------------------------------------------------------------------
+    * Helper, validate assign with replace policy
   */
   $scope.isAvailable = function(replaceOption) {
     var assignOption = $scope.selectedAssignmentOption;
     return SamsService.areCompatiblePolicies(replaceOption, assignOption);
   }
 
-  /*
-  | ---------------------------------------------------------------------------
-  | Memory
-  | ---------------------------------------------------------------------------
-  */
-  $scope.memorySize = SchedulerService.getMemorySize() || 4; // input
-
   $scope.changeMemorySize = function(){
     if ( typeof $scope.memorySize == 'number'){
       SchedulerService.setMemorySize( $scope.memorySize );
     }
   }
-  // run when load (UX: prevent memory 0)
-  $scope.changeMemorySize();
 
-  /*
-  | ---------------------------------------------------------------------------
-  | isFixedEvenAssignmentPolicy
-  | ---------------------------------------------------------------------------
-  */
   $scope.setAssignmentOption = function(a){
     $scope.selectedReplacementOption = null;
     $scope.selectedAssignmentOption = a;
@@ -371,25 +378,6 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     SchedulerService.setFixedEvenAssignmentPolicy( isFixedEven );
     SchedulerService.setLocalReplacementPolicy(isFixedEven);
   }
-
-  $scope.assignmentOptions = SchedulerService.getAssigmentPolicies();
-
-  if ( SchedulerService.isFixedEvenAssignmentPolicy() ) {
-    $scope.selectedAssignmentOption = 'fixed';
-    SchedulerService.setLocalReplacementPolicy(true);
-  } else {
-    $scope.selectedAssignmentOption = 'dynamic';
-    // update if is not setted
-    $scope.setAssignmentOption($scope.selectedAssignmentOption);
-    SchedulerService.setLocalReplacementPolicy(false);
-  }
-
-  /*
-  | ---------------------------------------------------------------------------
-  | isAsyncFlushReplacementPolicy
-  | ---------------------------------------------------------------------------
-  */
-  $scope.queueOptions = SchedulerService.getQueuePolicies();
 
   $scope.hasAlgorithm = function () {
     return $scope.algorithmSelected;
@@ -512,7 +500,8 @@ app.config(function($translateProvider){
     BREADCRUMB_REQUIREMENTS: 'Requirements',
     BREADCRUMB_POLICIES: 'Policies',
     BREADCRUMB_RESOLUTION: 'Resolution',
-    EXAMPLE: 'Example'
+    EXAMPLE: 'Example',
+    ERROR_LAST_REQ: 'ERROR: The last element in the sequence is invalid or empty.',
   });
 
   $translateProvider.translations('es', {
@@ -529,7 +518,8 @@ app.config(function($translateProvider){
     BREADCRUMB_REQUIREMENTS: 'Requerimientos',
     BREADCRUMB_POLICIES: 'Políticas',
     BREADCRUMB_RESOLUTION: 'Resolución',
-    EXAMPLE: 'Ejemplo'
+    EXAMPLE: 'Ejemplo',
+    ERROR_LAST_REQ: 'ERROR: El último requerimiento de la secuencia es inválido o vacío.',
   });
 
   $translateProvider.preferredLanguage( 'es' );
@@ -575,6 +565,11 @@ angular.module('sams.services', [])
 |
 */
 .factory('SamsService', function(){
+
+  var inputProcesses = [];
+  var processes = [];
+  var pages = {};
+  var sequence = [];
 
   return {
     getLocales: function(){
@@ -643,7 +638,31 @@ angular.module('sams.services', [])
         }
       }
       return array;
-    }
+    },
+    setInputProcesses: function(arr){
+      this.inputProcesses = arr;
+    },
+    getInputProcesses: function(){
+      return this.inputProcesses;
+    },
+    setProcesses: function(arr){
+      this.processes = arr;
+    },
+    getProcesses: function(){
+      return this.processes;
+    },
+    setPages: function(dict){
+      this.pages = dict;
+    },
+    getPages: function(){
+      return this.pages;
+    },
+    setSequence: function(arr){
+      this.sequence = arr;
+    },
+    getSequence: function(){
+      return this.sequence;
+    },
   }
 })
 
