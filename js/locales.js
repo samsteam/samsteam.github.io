@@ -30,6 +30,7 @@ app.config(function($translateProvider){
     BREADCRUMB_RESOLUTION: 'Resolution',
     EXAMPLE: 'Example',
     ERROR_LAST_REQ: 'ERROR: The last element in the sequence is invalid or empty.',
+    RESET: 'Reset',
   });
 
   $translateProvider.translations('es', {
@@ -48,6 +49,7 @@ app.config(function($translateProvider){
     BREADCRUMB_RESOLUTION: 'Resolución',
     EXAMPLE: 'Ejemplo',
     ERROR_LAST_REQ: 'ERROR: El último requerimiento de la secuencia es inválido o vacío.',
+    RESET: 'Resetear',
   });
 
   $translateProvider.preferredLanguage( 'es' );

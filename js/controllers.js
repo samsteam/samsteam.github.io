@@ -114,11 +114,26 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
       {'process': $scope.processes[1], 'cantPages': 1, 'mode': 'read'}
     ];
 
+    $scope.__refresh();
+  }
+
+  /*
+  * Resend data to the service
+  */
+  $scope.__refresh = function(){
     SamsService.setInputProcesses($scope.inputProcesses);
     SamsService.setProcesses($scope.processes);
     SamsService.setPages($scope.pages);
     SamsService.setSequence($scope.secuences);
     $scope.processRequirements();
+  }
+
+  $scope.resetAll = function() {
+    $scope.inputProcesses = [];
+    $scope.processes = [];
+    $scope.pages = {};
+    $scope.secuences = [];
+    $scope.__refresh();
   }
 
   $scope.hasPages = function(){

@@ -184,11 +184,26 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
       {'process': $scope.processes[1], 'cantPages': 1, 'mode': 'read'}
     ];
 
+    $scope.__refresh();
+  }
+
+  /*
+  * Resend data to the service
+  */
+  $scope.__refresh = function(){
     SamsService.setInputProcesses($scope.inputProcesses);
     SamsService.setProcesses($scope.processes);
     SamsService.setPages($scope.pages);
     SamsService.setSequence($scope.secuences);
     $scope.processRequirements();
+  }
+
+  $scope.resetAll = function() {
+    $scope.inputProcesses = [];
+    $scope.processes = [];
+    $scope.pages = {};
+    $scope.secuences = [];
+    $scope.__refresh();
   }
 
   $scope.hasPages = function(){
@@ -502,6 +517,7 @@ app.config(function($translateProvider){
     BREADCRUMB_RESOLUTION: 'Resolution',
     EXAMPLE: 'Example',
     ERROR_LAST_REQ: 'ERROR: The last element in the sequence is invalid or empty.',
+    RESET: 'Reset',
   });
 
   $translateProvider.translations('es', {
@@ -520,6 +536,7 @@ app.config(function($translateProvider){
     BREADCRUMB_RESOLUTION: 'Resolución',
     EXAMPLE: 'Ejemplo',
     ERROR_LAST_REQ: 'ERROR: El último requerimiento de la secuencia es inválido o vacío.',
+    RESET: 'Resetear',
   });
 
   $translateProvider.preferredLanguage( 'es' );
