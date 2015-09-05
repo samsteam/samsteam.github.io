@@ -146,6 +146,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     $scope.pages = {};
     $scope.secuences = [];
     $scope.__refreshData();
+    $scope.hideSequenceSection();
   }
 
   /*
