@@ -49,9 +49,9 @@
 							<td class="rtable rtable-frame">Frame {{n}}</td>
 							<td class="rtable rtable-space"></td>
 							<td class="rtable rtable-frame" ng-repeat="p in results"
-							ng-class="{true: 'rtable-async', false: ''}[p.frames[n].reservedForAsyncFlush]"
-							ng-class="{true: 'rtable-newinmemory', false:''}[p.frames[n].process == p.requirement.process && p.frames[n].pageNumber == p.requirement.pageNumber]">
-								{{ p.frames[n].process }}{{ p.frames[n].pageNumber }}
+							ng-class= frameClassFor(p.frames[n])>
+								{{p.frames[n].reservedForPageBuffering ? '' : (p.frames[n].process + p.frames[n].pageNumber)}}
+
 							</td>
 						</tr>
 						<!-- render page faults -->
@@ -75,19 +75,58 @@
 							<td class="rtable rtable-default">Victims' Queue</td>
 							<td class="rtable rtable-space"></td>
 							<td class="rtable rtable-default" ng-repeat="p in results">
-								<button type="button" name="button" class="btn btn-primary"> \/ </button>
+								<button type="button" name="button" class="btn"> <span class="glyphicon glyphicon-chevron-down"></span></button>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		<!-- /Rendered Table -->
-		<!-- leyend panel -->
+		<!-- legend panel -->
 			<div class="col-xs-offset-1 col-xs-10">
 				<div class="panel panel-default panel-body grey-color">
-				    leyend panel
+			    <div class="row">
+
+						<div class="col-xs-offset-1 col-xs-2">
+							<div class="panel panel-default">
+							  <div class="panel-body rtable-legend rtable-frame">
+							    Empty frame, frame with no changes
+							  </div>
+							</div>
+						</div>
+						<div class="col-xs-2">
+							<div class="panel panel-default">
+							  <div class="panel-body rtable-legend rtable-newinmemory">
+							    New page in memory
+							  </div>
+							</div>
+						</div>
+						<div class="col-xs-2">
+							<div class="panel panel-default">
+							  <div class="panel-body rtable-legend rtable-referenced">
+							    Referenced page
+							  </div>
+							</div>
+						</div>
+						<div class="col-xs-2">
+							<div class="panel panel-default">
+							  <div class="panel-body rtable-legend rtable-modified">
+							    Modified page
+							  </div>
+							</div>
+						</div>
+						<div class="col-xs-2">
+							<div class="panel panel-default">
+							  <div class="panel-body rtable-legend rtable-async">
+							    Frame reserved for Page Buffering
+							  </div>
+							</div>
+						</div>
+
+					</div>
 				</div>
 			</div>
+			<!--/legend panel-->
 		</div>
   </div>
 </div>

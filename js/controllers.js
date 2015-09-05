@@ -375,4 +375,56 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   } finally {
     $rootScope.$broadcast('processed');
   }
+
+  $scope.frameClassFor = function(frame){
+
+    if (!frame) return '';
+    console.log(frame);
+
+    if (frame.reservedForPageBuffering){
+      //frame is async reserved
+      return 'rtable-async';
+    }
+
+    if (frame.pageFault) {
+      if (frame.modified){
+        if(frame.referenced){
+          //page is new in memory, is modified and referenced
+          //note: shouldn't this be unreachable?
+
+        } else {
+          //page is new in memory and modified
+          return 'rtable-newandmodified'
+        }
+      } else {
+        //page is only new in memory
+        return 'rtable-newinmemory'
+      }
+    } else {
+      //page already in memory
+      if (frame.modified){
+        if (frame.referenced){
+          //page modified and referenced
+          return 'rtable-modifiedandreferenced'
+        }else {
+          //page only modified
+          return 'rtable-modified'
+        }
+      }
+    }
+
+    // if (frame.required){
+    //   if (frame.pageFault){
+    //     //page just arrived at the memory
+    //     return 'rtable-newinmemory';
+    //   }else{
+    //     //page was already in the memory
+    //     return 'rtable-referenced';
+    //   }
+    // }
+
+    //if no special status, return empty string
+    return '';
+  }
+
 })
