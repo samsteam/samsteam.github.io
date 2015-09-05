@@ -353,7 +353,6 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     $scope.results = SchedulerService.run();
     $scope.instants = $scope.results.length - 1;
   } catch (err) {
-    console.log(err);
     alert(err);
     return $state.go('step.requirements');
   } finally {
@@ -363,7 +362,6 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   $scope.frameClassFor = function(frame){
 
     if (!frame) return '';
-    console.log(frame);
 
     if (frame.reservedForPageBuffering){
       //frame is async reserved
