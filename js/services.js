@@ -26,6 +26,22 @@ angular.module('sams.services', [])
     inArray: function(arr, value) {
       if(!value) return false;
       return $filter('inArray')(arr, value);
+    },
+    validateDemands: function(pages) {
+      angular.forEach(pages, function(req, p) {
+        var matches = req.match(/^([0-9][rR|wW]{0,1}\s*,{0,1}\s*)*[fF]{0,1}$/);
+        if (!matches) {
+          throw new Error("Invalid Requirements in process '" + p + "'.");
+        }
+        if ( matches[0].toLowerCase().split(',').indexOf('f') === -1 ){
+          throw new Error("The process '" + p + "' is not marked as finish (f or F)");
+        }
+        // var matches = matches[0].split(','); // convert to array
+        // angular.forEach(matches, function(r,i){
+        //   var reqMatched = r.match(/([0-9]|[0-9][rR|wW]|[fF])/);
+        //   if (!reqMatched) throw new Error("Requested " + r + " is not valid");
+        // });
+      });
     }
   }
 })
@@ -36,11 +52,12 @@ angular.module('sams.services', [])
 | -----------------------------------------------------------------------------
 |
 */
-.factory('SamsService', function(){
+.factory('SamsService', function(ValidationService){
 
   var inputProcesses = [];
   var processes = [];
   var pages = {};
+  var demands = {};
   var sequence = [];
 
   return {
@@ -75,38 +92,63 @@ angular.module('sams.services', [])
         return true;
       }
     },
-    createRequirements: function(pages, secuences){
-      var reqs = []
-      angular.forEach(pages, function(pagesString, p){
-        pages[p] = pagesString.split(',');
-      });
-      // create requirements
-      secuences.forEach(function(obj, index){
-        if (obj.mode == 'finish') {
-          var req = {};
-          req['process'] = obj.process;
-          req['pageNumber'] = 0;
-          req['mode'] = 'finish';
-          reqs.push(req);
-        } else {
-          for (var i = 0; i < obj.cantPages; i++) {
-            var req = {};
-            req['process'] = obj.process;
-            req['pageNumber'] = pages[obj.process].shift();
-            req['mode'] = obj.mode;
-            reqs.push(req);
+    createDemands: function(pages){
+      /* This function returns:
+      * [{ page: <pageNumber>, mode: "read|write|finish" }, ...]
+      */
+      ValidationService.validateDemands(pages);
+      var reqs = {};
+      // iterate over pages of processes
+      angular.forEach(pages, function(reqsString, pName){
+        // initialize empty
+        reqs[pName] = [];
+        // convert reqs string into array
+        var reqsArray = reqsString.toLowerCase().split(',');
+        // create requeriments object from reqsArray
+        angular.forEach(reqsArray, function(r, index){
+          var req = {pageNumber: -1, mode: null};
+          var lastChar = r.substr(-1);
+          if ( lastChar === 'f' ) {
+            req.pageNumber = -1;
+            req.mode = 'finish';
+          } else if (lastChar === 'r') {
+            req.pageNumber = parseInt(r.substr(0, r.length-1));
+            req.mode = 'read';
+          } else if (lastChar === 'w') {
+            req.pageNumber = parseInt(r.substr(0, r.length-1));
+            req.mode = 'write';
+          } else if (!isNaN(lastChar) ) { //is Number
+            req.pageNumber = parseInt(lastChar);
+            req.mode = 'read';
+          } else {
+            throw Error("Invalid Requirements: " + reqsString);
           }
+          reqs[pName].push(req);
+        });
+      });
+      return reqs;
+    },
+    createRequirements: function(secuence, demands){
+      var reqs = [];
+      angular.forEach(secuence, function(seq, i){
+        for (var i = 0; i < seq.cantPages; i++) {
+          var req = {};
+          req['process'] = seq.process;
+          var page = demands[seq.process].shift();
+          req['pageNumber'] = page.pageNumber;
+          req['mode'] = page.mode;
+          reqs.push(req);
         }
       });
       return reqs;
     },
-    createEmptyRequirement: function() {
-      return {
-        process: null,
-        cantPages: 0,
-        mode: null
-      };
-    },
+    // createEmptyRequirement: function() {
+    //   return {
+    //     process: null,
+    //     cantPages: 0,
+    //     mode: null
+    //   };
+    // },
     stringToArray: function(array, stringValue, delimiter) {
       delimiter = delimiter || ','
       if (typeof stringValue === 'string'){
@@ -128,6 +170,12 @@ angular.module('sams.services', [])
     },
     getProcesses: function(){
       return this.processes;
+    },
+    setDemands: function(arr){
+      this.demands = arr;
+    },
+    getDemands: function(){
+      return this.demands;
     },
     setPages: function(dict){
       this.pages = dict;
@@ -333,10 +381,6 @@ angular.module('sams.services', [])
       isValid = isValid && typeof req == 'object';
       isValid = isValid && req.process && req.process !== '';
       isValid = isValid && typeof req.cantPages == 'number';
-      if ( isValid && req.cantPages == 0) {
-        isValid = isValid && req.mode == 'finish';
-      }
-      isValid = isValid && ValidationService.inArray(this.getModes(), req.mode);;
       return isValid;
     },
     /*

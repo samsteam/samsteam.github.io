@@ -25,16 +25,31 @@
 		<div class="row data-input">
 			<button class="btn btn-primary" type="button" ng-click="loadDefault()">{{ 'EXAMPLE' | translate }}</button>
 			<button class="btn btn-danger" type="button" ng-click="resetAll()">{{ 'RESET' | translate }}</button>
+			<span class="dropdown">
+			  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownExercise" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					{{ 'I/O' | translate }}
+			    <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+					<li>
+						<input type="file" class="hidden" id="import"/>
+						<a ng-click="import()" href="#">{{ 'IMPORT' | translate }}</a>
+					</li>
+					<li>
+						<a ng-click="export()" href="#">{{ 'EXPORT' | translate }}</a>
+					</li>
+			  </ul>
+			</span>
 			<div class="page-header">
 				<h3>Processes:</h3>
 			</div>
 			<div class="input-group">
 				<span class="input-group-addon">Processes</span>
 				<input type="text"
-							 pattern="([a-zA-Z][,]{0,1}){1,}"
 							 class="form-control grey-color"
 							 placeholder="Processes' names"
 							 name="name"
+							 ng-change="changeInputProcesses()"
 							 ng-model="inputProcesses">
 			</div>
 
@@ -44,36 +59,30 @@
 			  </div>
 				<div class="input-group" ng-repeat="p in processes">
 				  <span class="input-group-addon">{{p}}</span>
-				  <input name="name" ng-model="pages[p]" type="text" class="form-control grey-color">
+				  <input name="name"
+								 ng-model="pages[p]"
+								 type="text"
+								 class="form-control grey-color">
 				</div>
-			</div>
+				<button class="btn btn-default pull-right" type="button" ng-click="addSequences()">Agregar Secuencia</button>
+			</div><!-- pages-per-process -->
+
 		</div><!-- data input -->
 
-		<div class="row" ng-show="hasPages()">
+		<div class="row" ng-show="showReqSeq">
 			<div class="page-header">
 				<h3>Request's sequence: </h3>
 			</div>
-			<div class="secuences-container">
+			<div class="secuences-container container-fluid">
 			  <div class="col-xs-2 well grey-color" ng-repeat="s in secuences">
 					<button class="btn btn-small btn-danger pull-right btn-close" ng-click="deleteRequest($index)">X</button>
 					<div class="input-group">
 						<label for="process">Process:</label>
-				    <select class="form-control" ng-model="s.process" name="process">
+				    <select class="form-control" ng-model="s.process" name="process" ng-change="s.cantPages=0">
 				      <option ng-repeat="p in processes"
-											ng-class="{'hidden':(remainingRequeriments(p)<0||isFinished(p))}"
+											ng-class="{'hidden':remainingRequeriments(p)<=0}"
 											value="{{p}}"
 											ng-selected="s.process==p">{{p}}
-							</option>
-				    </select>
-					</div>
-
-					<div class="input-group">
-						<label for="mode">Mode:</label>
-				    <select class="form-control" ng-model="s.mode" name="mode" ng-change="changeMode(s)" ng-disabled="!s.process">
-				      <option ng-repeat="m in modes"
-											value="{{m}}"
-											ng-selected="s.mode==m"
-											ng-show="(remainingRequeriments(s.process) > 0 || m == 'finish')">{{m}}
 							</option>
 				    </select>
 					</div>
@@ -83,11 +92,9 @@
 						<input class="form-control"
 									min="0"
 									type="number"
-									name="name"
-									placeholder="cant"
+									placeholder="Total requirements"
 									ng-model="s.cantPages"
-									ng-change="checkMaxPages(s)"
-									ng-disabled="!s.mode || s.mode=='finish'">
+									ng-change="checkMaxPages(s)">
 					</div>
 			  </div><!-- /secuences -->
 
@@ -105,32 +112,29 @@
 						<label for="name">Nº Pages:</label>
 						<input class="form-control grey-color" type="number" name="name" placeholder="cant" disabled>
 					</div>
-
-					<div class="input-group">
-						<label for="mode">Mode:</label>
-				    <select class="form-control grey-color" name="mode" disabled>
-				      <option></option>
-				    </select>
-					</div>
 				</div>
+
 			</div><!-- secuences-container -->
+
+			<div class="container-fluid buttons-sequence">
+		  	<input type="button"
+							 class="btn btn-sm btn-danger pull-right"
+							 value="Preview page requirements"
+							 ng-click="previewAllRequirements()" />
+			</div><!-- add sequence -->
+
+		  <div class="container-fluid well grey-color">
+				<p class="text-muted">Generated page requirements</p>
+	      <div class="col-xs-2" ng-repeat="r in requirements">
+	        <div ng-class="{'read':'panel-primary', 'write':'panel-warning', 'finish':'panel-success' }[r.mode]" class="panel">
+	          <div class="panel-heading requirement">
+	            <p> {{r.process}} </p>
+							<p> {{r.pageNumber !== -1 ? r.pageNumber : '-'}} </p>
+							<p> {{r.mode}} </p>
+						</div>
+	        </div>
+	    	</div>
+		  </div>
 		</div>
-
-		<div class="row buttons-sequence">
-	  	<input type="button" class="btn btn-sm btn-danger pull-right" value="Preview page requirements" ng-click="previewAllRequirements()">
-		</div><!-- add sequence -->
-
-	  <div class="row well grey-color">
-			<p class="text-muted">Generated page requirements</p>
-      <div class="col-xs-2" ng-repeat="r in previewRequirements">
-        <div ng-class="{'read':'panel-primary', 'write':'panel-danger', 'finish':'panel-success' }[r.mode]" class="panel">
-          <div class="panel-heading requirement">
-            <p> {{r.process}} </p>
-						<p> {{r.pageNumber}} </p>
-						<p> {{r.mode}} </p>
-					</div>
-        </div>
-    	</div>
-	  </div>
 	</div><!-- /panel body -->
 </div>
