@@ -290,16 +290,55 @@ New classes
 
 .rtable-async {
   background-color: #FDD54B !important;
-  color: #FDD54B !important;
 }
 
 .rtable-newinmemory{
   background-color: #f04124 !important;
 }
 
+.rtable-referenced{
+  background-color: #008cba !important;
+}
+
+.rtable-modified{
+  background-color: #6265B1 !important;
+}
+
+.rtable-newandmodified{
+  background: rgba(239,58,26,1);
+  background: -moz-linear-gradient(left, rgba(239,58,26,1) 0%, rgba(240,66,36,1) 49%, rgba(0,0,0,1) 50%, rgba(98,101,177,1) 51%, rgba(98,101,177,1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(239,58,26,1)), color-stop(49%, rgba(240,66,36,1)), color-stop(50%, rgba(0,0,0,1)), color-stop(51%, rgba(98,101,177,1)), color-stop(100%, rgba(98,101,177,1)));
+  background: -webkit-linear-gradient(left, rgba(239,58,26,1) 0%, rgba(240,66,36,1) 49%, rgba(0,0,0,1) 50%, rgba(98,101,177,1) 51%, rgba(98,101,177,1) 100%);
+  background: -o-linear-gradient(left, rgba(239,58,26,1) 0%, rgba(240,66,36,1) 49%, rgba(0,0,0,1) 50%, rgba(98,101,177,1) 51%, rgba(98,101,177,1) 100%);
+  background: -ms-linear-gradient(left, rgba(239,58,26,1) 0%, rgba(240,66,36,1) 49%, rgba(0,0,0,1) 50%, rgba(98,101,177,1) 51%, rgba(98,101,177,1) 100%);
+  background: linear-gradient(to right, rgba(239,58,26,1) 0%, rgba(240,66,36,1) 49%, rgba(0,0,0,1) 50%, rgba(98,101,177,1) 51%, rgba(98,101,177,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ef3a1a', endColorstr='#6265b1', GradientType=1 );
+}
+
+.rtable-modifiedandreferenced{
+  background: rgba(0,140,186,1);
+  background: -moz-linear-gradient(left, rgba(0,140,186,1) 0%, rgba(0,140,186,1) 49%, rgba(0,0,0,1) 50%, rgba(98,101,177,1) 51%, rgba(98,101,177,1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(0,140,186,1)), color-stop(49%, rgba(0,140,186,1)), color-stop(50%, rgba(0,0,0,1)), color-stop(51%, rgba(98,101,177,1)), color-stop(100%, rgba(98,101,177,1)));
+  background: -webkit-linear-gradient(left, rgba(0,140,186,1) 0%, rgba(0,140,186,1) 49%, rgba(0,0,0,1) 50%, rgba(98,101,177,1) 51%, rgba(98,101,177,1) 100%);
+  background: -o-linear-gradient(left, rgba(0,140,186,1) 0%, rgba(0,140,186,1) 49%, rgba(0,0,0,1) 50%, rgba(98,101,177,1) 51%, rgba(98,101,177,1) 100%);
+  background: -ms-linear-gradient(left, rgba(0,140,186,1) 0%, rgba(0,140,186,1) 49%, rgba(0,0,0,1) 50%, rgba(98,101,177,1) 51%, rgba(98,101,177,1) 100%);
+  background: linear-gradient(to right, rgba(0,140,186,1) 0%, rgba(0,140,186,1) 49%, rgba(0,0,0,1) 50%, rgba(98,101,177,1) 51%, rgba(98,101,177,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#008cba', endColorstr='#6265b1', GradientType=1 );
+}
+
+.rtable-finished {
+  background-color: #43ac6a !important;
+}
+
 .rtable-frame {
   color: black;
   background-color: grey;
+}
+
+.rtable-legend {
+  height: 80px;
+  color: black !important;
+  text-align: center;
 }
 
 .rtable-space {
