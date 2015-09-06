@@ -9,12 +9,12 @@
   },
   "user-agent": "samsteam-app-agent",
   "window": {
-    "toolbar": true,
+    "toolbar": false,
     "frame": true,
     "position": "center",
-    "min-width": 1024,
-    "min-height": 600,
-    "width": 1024,
+    "min_width": 1200,
+    "min_height": 600,
+    "width": 1200,
     "height": 600,
     "as_desktop": true
   },
