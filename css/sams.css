@@ -184,12 +184,15 @@ New classes
   background-color: #363942;
   border: 1px solid #333;
   font-size: 14px;
-  margin-bottom: 0 !important;
 }
 
 .panel-about {
   background-color:#363942;
   color: #B1BDC3;
+}
+
+.panel-write {
+  background-color: #6265B1;
 }
 
 .caption {
@@ -338,7 +341,6 @@ New classes
 .rtable-legend {
   border: 2px;
   height: 80px;
-  font-size: 12px;
   color: black !important;
   text-align: center;
 }

@@ -37,9 +37,9 @@
 							<td class="rtable rtable-default" ng-repeat="p in results">
 								{{
 									{
-										'read': p.requirement.process + p.requirement.pageNumber + 'R',
-										'write': p.requirement.process + p.requirement.pageNumber + 'W',
-										'finish': p.requirement.process + 'F'
+										'read': '[' + p.requirement.process + p.requirement.pageNumber + ']' + 'R',
+										'write': '[' + p.requirement.process + p.requirement.pageNumber + ']' + 'W',
+										'finish': '[' + p.requirement.process + ']' + 'F'
 									}[p.requirement.mode]
 								}}
 							</td>
@@ -75,14 +75,41 @@
 						<tr>
 							<td class="rtable rtable-default">Victims' Queue</td>
 							<td class="rtable rtable-space"></td>
-							<td class="rtable rtable-default" ng-repeat="p in results">
-								<button type="button" name="button" class="btn btn-primary btn-lg"> <span class="glyphicon glyphicon-chevron-down"></span></button>
+							<td class="rtable rtable-default" ng-repeat="(i, p) in results">
+								<button ng-click="showVictims(i)" type="button" name="button" class="btn btn-info btn-lg">
+									<span class="glyphicon glyphicon-chevron-down"></span>
+								</button>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		<!-- /Rendered Table -->
+
+		<!-- Render victim queue -->
+			<div class="col-xs-offset-1 col-xs-10">
+				<div class="panel panel-default panel-body grey-color">
+					<table>
+						<tbody>
+							<tr>
+								<td class="rtable rtable-default" ng-repeat="v in victimsQueue">
+									{{ v.process }} {{v.pageNumber}}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		<!-- /Render victim queue -->
+
+		<!-- general info panel -->
+		<div class="col-xs-offset-1 col-xs-10">
+			<div class="panel panel-default panel-body grey-color">
+					general info panel
+			</div>
+		</div>
+		<!-- /general info panel -->
+
 		<!-- legend panel -->
 			<div class="col-xs-offset-1 col-xs-10">
 				<div class="panel panel-default panel-body grey-color">
@@ -135,12 +162,6 @@
 				</div>
 			</div>
 			<!--/legend panel-->
-			<!-- general info panel -->
-			<div class="col-xs-offset-1 col-xs-10">
-				<div class="panel panel-default panel-body grey-color">
-				    general info panel
-				</div>
-			</div>
 		</div>
   </div>
 </div>

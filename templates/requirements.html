@@ -127,7 +127,7 @@
 		  <div class="container-fluid well grey-color">
 				<p class="text-muted">Generated page requirements</p>
 	      <div class="col-xs-2" ng-repeat="r in requirements">
-	        <div ng-class="{'read':'panel-primary', 'write':'panel-warning', 'finish':'panel-success' }[r.mode]" class="panel">
+	        <div ng-class="{'read':'panel-primary', 'write':'panel-write', 'finish':'panel-success' }[r.mode]" class="panel">
 	          <div class="panel-heading requirement">
 	            <p> {{r.process}} </p>
 							<p> {{r.pageNumber !== -1 ? r.pageNumber : '-'}} </p>
