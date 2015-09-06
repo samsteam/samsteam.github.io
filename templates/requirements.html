@@ -91,10 +91,11 @@
 						<label for="name">Nº Pages:</label>
 						<input class="form-control"
 									min="0"
+									max="{{checkMaxPages(s)}}"
 									type="number"
 									placeholder="Total requirements"
 									ng-model="s.cantPages"
-									ng-change="checkMaxPages(s)">
+									ng-disabled="!s.process">
 					</div>
 			  </div><!-- /secuences -->
 
