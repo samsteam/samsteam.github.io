@@ -32,11 +32,11 @@
 			  </button>
 			  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 					<li>
-						<input type="file" class="hidden" id="import"/>
-						<a ng-click="import()" href="#">{{ 'IMPORT' | translate }}</a>
+						<input type="file" onchange="angular.element(this).scope().uploadFile()" ng-model="upload" id="upload" style="visibily: hidden; height:1px; width:1px;"/>
+						<a href="" ng-click="import()">{{ 'IMPORT' | translate }}</a>
 					</li>
 					<li>
-						<a ng-click="export()" href="#">{{ 'EXPORT' | translate }}</a>
+						<a id="export" ng-click="export()" ng-href="{{ urlExport }}" download="{{filename}}">{{ 'EXPORT' | translate }}</a>
 					</li>
 			  </ul>
 			</span>

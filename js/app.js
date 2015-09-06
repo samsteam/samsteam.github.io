@@ -5,7 +5,9 @@ var angularRouter = require('angular-ui-router');
 
 var app = angular.module('sams', ['sams.controllers', 'sams.locales', 'ui.router']);
 
-app.config(function($stateProvider, $urlRouterProvider){
+app.config(function($stateProvider, $urlRouterProvider, $compileProvider){
+
+  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|blob):/);
 
   if ( navigator.userAgent === 'samsteam-app-agent' ) {
     $urlRouterProvider.otherwise('/step/requirements');
