@@ -338,6 +338,7 @@ New classes
 .rtable-legend {
   border: 2px;
   height: 80px;
+  font-size: 12px;
   color: black !important;
   text-align: center;
 }

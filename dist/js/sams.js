@@ -37036,7 +37036,7 @@ module.exports = angular;
 
 },{"./angular":8}],10:[function(require,module,exports){
 module.exports = {
-		debug: true
+		debug: false
 	};
 
 },{}],11:[function(require,module,exports){
@@ -38463,7 +38463,7 @@ cocktail.mix({
           page.setFinished(true);
         }
       }, requirement);
-
+      
     } else {
       //  Assume that the requirement is already in memory.
       var page = this._memory.at(this._memory.getFrameOf(requirement));
@@ -38529,8 +38529,8 @@ cocktail.mix({
          pageFault = true;
          var frame;
          if(this._assignmentFiltersAproves(requirement)) {
+            this.log("---Free frame available.---\n");
             frame = this._memory.getFreeFrame();
-            this.log("---Free frame available: " + frame + "---\n");
          } else {
            this.log("---Searching for a victim muajajaja!---\n");
            victim = this._algorithm.victimFor(requirement);
@@ -38561,14 +38561,14 @@ cocktail.mix({
 
 	constructor: function() {
 		this._victims = undefined;
-		// this._finalized = new Queue();
+		this._finalized = new Queue();
 		this._requirements = [];
 		this._filters = [];
 	},
 
 	initialize: function(requirements) {
 	  this._requirements = requirements;
-		// this._finalized = new Queue();
+		this._finalized = new Queue();
 	},
 
 	getVictimsStructure: function() {
@@ -38577,21 +38577,18 @@ cocktail.mix({
 
 	victimFor: function(requirement) {
 
-		//NOTE: changed the way finished proceses are handled.
-		//			now, they are completly erased from the algorithm's view.
+		//If some process has finalized, use it's frames.
+		if (this._finalized.size() !== 0) {
+			this.log("---Seems like I have some finished processes.---");
+			var result = {};
+			result.frame = this._finalized.first();
+			result.page = result.frame;
+			this._victims.remove(result.frame);
+			this.log("The selected victim is: " + result.frame + " from a finished process.\n");
+			return result;
+		}
 
-		// //If some process has finalized, use it's frames.
-		// if (this._finalized.size() !== 0) {
-		// 	this.log("---Seems like I have some finished processes.---");
-		// 	var result = {};
-		// 	result.frame = this._finalized.first();
-		// 	result.page = result.frame;
-		// 	this._victims.remove(result.frame);
-		// 	this.log("The selected victim is: " + result.frame + " from a finished process.\n");
-		// 	return result;
-		// }
-		//
-		// //Else search for a victim.
+		//Else search for a victim.
 		this.log("---Started applying replacement filters.---");
 		var filteredVictims = this._victims.clone();
 
@@ -38631,37 +38628,19 @@ cocktail.mix({
 	update: function(requirement) {
 		if (requirement.getMode() === "finish") {
 
-			//NOTE: changed the way finished proceses are handled.
-			//			now, they are completly erased from the algorithm's view.
-
-			//	Use a clone of victims so we don't remove elements from
-			//	the same collection we are iterating.
 			var context = {
 				requirement: requirement,
-				victims: this._victims.clone()
+				finalized: this._finalized
 			};
 
-			this.log("Removing all the frames of process " + requirement.getProcess() + " from the Victim's Queue.")
-			this._victims.forEach(function(page, index) {
+			this.log("Adding all the frames of process " + requirement.getProcess() + " to the finalized Queue.")
+			this._victims.forEach(function(page, index, victims) {
 			  if (this.requirement.getProcess() === page.getProcess()) {
-					this.victims.remove(page);
+					victims.pageOf(page).setFinished(true);
+			  	this.finalized.add(page.clone());
 			  }
 			}, context);
 
-			this._victims = context.victims;
-
-			// var context = {
-			// 	requirement: requirement,
-			// 	finalized: this._finalized
-			// };
-
-			// this.log("Adding all the frames of process " + requirement.getProcess() + " to the finalized Queue.")
-			// this._victims.forEach(function(page, index, victims) {
-			//   if (this.requirement.getProcess() === page.getProcess()) {
-			// 		victims.pageOf(page).setFinished(true);
-			//   	this.finalized.add(page.clone());
-			//   }
-			// }, context);
 			return;
 		}
 	},
@@ -38986,13 +38965,10 @@ cocktail.mix({
    *  Return whether the memory is full or not.
    */
   isFull: function() {
-    /*
     if (this._used === this._size) {
       return true;
     }
     return false;
-    */
-    return this.getFreeFrame() === -1;
   },
 
   /*
@@ -39001,14 +38977,10 @@ cocktail.mix({
    *  Otherwise return -1.
    */
   getFreeFrame: function() {
-    //NOTE: changed the way finished proceses are handled.
-		//			now, they are completly erased from the algorithm's view.
-    //      Now it's memory's responsibility to check for finished proceses.
-
-    // //Ensure there is space before searching for it.
-    // if(this.isFull()) {
-    //   return -1;
-    // }
+    //Ensure there is space before searching for it.
+    if(this.isFull()) {
+      return -1;
+    }
 
     //Move all initializations out of the loop.
     var i = 0;
@@ -39016,11 +38988,10 @@ cocktail.mix({
     var length = this._size;
 
 		for (; i < length; i++) {
-			if (array[i] === undefined || array[i].isFinished()) {
+			if (array[i] == undefined) {
 				return i;
 			}
 		}
-    return -1;
 	},
 
   /*
