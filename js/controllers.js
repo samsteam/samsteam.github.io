@@ -158,6 +158,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     SamsService.setPages($scope.pages);
     SamsService.setDemands($scope.demands);
     SamsService.setSequence($scope.secuences);
+    $scope.processRequirements();
   }
 
   $scope.__needClean = function(){
@@ -248,11 +249,10 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   }
 
   $scope.checkMaxPages = function(secuence) {
-    if(secuence){
-      var remaining = $scope.remainingRequeriments(secuence.process);
-      if ( remaining < 0 ) {
-        secuence.cantPages = 0;
-      }
+    var total = $scope.pages[secuence.process].length;// - 1; //exclude f
+    var remaining = $scope.remainingRequeriments(secuence.process);
+    if ( remaining < 0 ) {
+      secuence.cantPages = 0;
     }
   }
 
@@ -260,13 +260,12 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     var demands = angular.copy($scope.demands);
     $scope.requirements = SamsService.createRequirements($scope.secuences, demands);
     SchedulerService.addRequirements($scope.requirements);
-    $scope.__refreshData();
   }
 
   $scope.previewAllRequirements = function() {
     // create requeriments
     $scope.processRequirements();
-    $scope.previewRequirements = $scope.requirements;
+    $scope.previewRequirements = angular.copy($scope.requirements);
   }
 })
 
@@ -360,14 +359,25 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     $rootScope.$broadcast('processed');
   }
 
-  $scope.frameClassFor = function(frame){
-
+  $scope.frameClassFor = function(frame,p){
+    console.log(p);
     if (!frame) return '';
 
     if (frame.reservedForPageBuffering){
       //frame is async reserved
       return 'rtable-async';
     }
+
+    if(frame.finished){
+      //page belongs to a finished process
+      if(p.requirement.process == frame.process){
+        //process ended on this instant
+        return 'rtable-finished';
+      } else {
+        return '';
+      }
+    }
+
 
     if (frame.pageFault) {
       if (frame.modified){
@@ -396,17 +406,6 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
       }
     }
 
-    // if (frame.required){
-    //   if (frame.pageFault){
-    //     //page just arrived at the memory
-    //     return 'rtable-newinmemory';
-    //   }else{
-    //     //page was already in the memory
-    //     return 'rtable-referenced';
-    //   }
-    // }
-
-    //if no special status, return empty string
     return '';
   }
 
