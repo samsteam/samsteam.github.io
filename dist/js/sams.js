@@ -227,7 +227,6 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     SamsService.setPages($scope.pages);
     SamsService.setDemands($scope.demands);
     SamsService.setSequence($scope.secuences);
-    $scope.processRequirements();
   }
 
   $scope.__needClean = function(){
@@ -318,10 +317,11 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   }
 
   $scope.checkMaxPages = function(secuence) {
-    var total = $scope.pages[secuence.process].length;// - 1; //exclude f
-    var remaining = $scope.remainingRequeriments(secuence.process);
-    if ( remaining < 0 ) {
-      secuence.cantPages = 0;
+    if(secuence){
+      var remaining = $scope.remainingRequeriments(secuence.process);
+      if ( remaining < 0 ) {
+        secuence.cantPages = 0;
+      }
     }
   }
 
@@ -329,12 +329,13 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     var demands = angular.copy($scope.demands);
     $scope.requirements = SamsService.createRequirements($scope.secuences, demands);
     SchedulerService.addRequirements($scope.requirements);
+    $scope.__refreshData();
   }
 
   $scope.previewAllRequirements = function() {
     // create requeriments
     $scope.processRequirements();
-    $scope.previewRequirements = angular.copy($scope.requirements);
+    $scope.previewRequirements = $scope.requirements;
   }
 })
 
