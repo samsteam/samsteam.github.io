@@ -354,3 +354,7 @@ New classes
   margin-right: auto;
   display: table;
 }
+
+#victims-queue {
+  margin: auto;
+}
