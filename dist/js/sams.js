@@ -182,6 +182,53 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     $rootScope.$broadcast('processed');
   }
 
+  $scope.__setAllData = function(data){
+    $scope.resetAll();
+    $scope.inputProcesses = data.inputProcesses;
+    $scope.processes = data.processes;
+    $scope.pages = data.pages;
+    $scope.demands = data.demands;
+    $scope.secuences = data.secuences;
+    $scope.requirements = data.requirements;
+    $scope.__refreshData();
+    $scope.showSequenceSection();
+    $scope.$apply();
+  }
+
+  $scope.import = function(){
+    var el = document.getElementById('upload');
+    el.click();
+  }
+
+  $scope.uploadFile = function(){
+    var reader = new FileReader();
+    var file = document.getElementById('upload').files[0];
+    reader.readAsText(file);
+    reader.onload = function(data){
+      var json = JSON.parse(data.target.result);
+      $scope.__setAllData(json);
+    };
+  }
+
+  $scope.export = function(){
+    $scope.processRequirements();
+    var data = {
+      'inputProcesses': $scope.inputProcesses,
+      'processes': $scope.processes,
+      'pages': $scope.pages,
+      'demands': $scope.demands,
+      'secuences': $scope.secuences,
+      'requirements': $scope.requirements,
+    };
+    data = angular.toJson(data);
+    $scope.filename = new Date().getTime()+".json";
+    var downloadLink = angular.element('<a id="export"></a>');
+    var blob = new Blob([data], { type:"application/json;charset=utf-8;" });
+    $scope.urlExport = (window.URL || window.webkitURL).createObjectURL( blob );
+    downloadLink.attr('download', $scope.filename);
+		downloadLink[0].click();
+  }
+
   $scope.next = function() {
    $rootScope.$broadcast('processing');
    $scope.processRequirements();
