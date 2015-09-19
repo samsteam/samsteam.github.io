@@ -180,6 +180,22 @@ New classes
   box-shadow: 1px 1px 1px 1px #1f1f1f;
 }
 
+.table-bordered tr td {
+  border: 1px solid #333 !important;
+}
+
+.requirement.panel-heading table {
+  margin: 0 auto;
+}
+
+.requirement .panel-primary {
+  background-color: #008cba;
+}
+
+.requirement .panel-success {
+  background-color: #3c9a5f;
+}
+
 .grey-color {
   background-color: #363942;
   border: 1px solid #333;
