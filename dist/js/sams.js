@@ -348,16 +348,24 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     }
   }
 
-  $scope.remainingRequeriments = function(pName){
+  $scope.__currentDemanded = function(pName) {
     var currentTotalDemanded = 0;
-    var total = 0;
     if (pName) {
-      total = $scope.demands[pName].length;// - 1; //exclude f
       angular.forEach($scope.secuences, function(seq, i){
         if (seq.process === pName && seq.mode !== 'finish'){
           currentTotalDemanded += seq.cantPages;
         }
       });
+    }
+    return currentTotalDemanded;
+  }
+
+  $scope.remainingRequeriments = function(pName){
+    var currentTotalDemanded = 0;
+    var total = 0;
+    if (pName) {
+      total = $scope.demands[pName].length;// - 1; //exclude f
+      currentTotalDemanded = $scope.__currentDemanded(pName);
     }
     return total - currentTotalDemanded;
   }
@@ -366,11 +374,15 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     $scope.secuences.splice(index, 1);
   }
 
-  $scope.checkMaxPages = function(secuence) {
-    var total = $scope.pages[secuence.process].length;// - 1; //exclude f
-    var remaining = $scope.remainingRequeriments(secuence.process);
-    if ( remaining < 0 ) {
-      secuence.cantPages = 0;
+  $scope.checkMaxPages = function(secuence, el) {
+    console.log(el.s)
+    if ( $scope.pages[secuence.process] ) {
+      var totalOfProcess = $scope.pages[secuence.process].split(',').length;// - 1; //exclude f
+      // var remainingOfProcess = $scope.remainingRequeriments(secuence.process);
+      var currentDemandedOfProcess = $scope.__currentDemanded(secuence.process);
+      if ( currentDemandedOfProcess > totalOfProcess ){
+        el.s.cantPages -= 1;
+      }
     }
   }
 

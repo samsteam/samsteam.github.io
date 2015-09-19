@@ -64,7 +64,7 @@
 								 type="text"
 								 class="form-control grey-color">
 				</div>
-				<button class="btn btn-default pull-right" type="button" ng-click="addSequences()">Agregar Secuencia</button>
+				<button class="btn btn-sm btn-default pull-right" ng-disabled="showReqSeq" type="button" ng-click="addSequences()">Agregar Secuencia</button>
 			</div><!-- pages-per-process -->
 
 		</div><!-- data input -->
@@ -74,7 +74,7 @@
 				<h3>Request's sequence: </h3>
 			</div>
 			<div class="secuences-container container-fluid">
-			  <div class="col-xs-2 well grey-color" ng-repeat="s in secuences">
+			  <div class="col-xs-4 col-sm-2 well grey-color" ng-repeat="s in secuences">
 					<button class="btn btn-small btn-danger pull-right btn-close" ng-click="deleteRequest($index)">X</button>
 					<div class="input-group">
 						<label for="process">Process:</label>
@@ -91,7 +91,7 @@
 						<label for="name">Nº Pages:</label>
 						<input class="form-control"
 									min="0"
-									max="{{checkMaxPages(s)}}"
+									ng-change="checkMaxPages(s, this)"
 									type="number"
 									placeholder="Total requirements"
 									ng-model="s.cantPages"
@@ -100,7 +100,7 @@
 			  </div><!-- /secuences -->
 
 				<!-- button add (simil to requirement) -->
-				<div class="col-xs-2 well grey-color fake-requirementsWell">
+				<div class="col-xs-4 col-sm-2 well grey-color fake-requirementsWell">
 					<div class="button-add" ng-click="add()"></div>
 					<div class="input-group">
 						<label for="process">Process:</label>
@@ -119,19 +119,27 @@
 
 			<div class="container-fluid buttons-sequence">
 		  	<input type="button"
-							 class="btn btn-sm btn-danger pull-right"
+							 class="btn btn-sm btn-default pull-right"
 							 value="Preview page requirements"
 							 ng-click="previewAllRequirements()" />
 			</div><!-- add sequence -->
 
 		  <div class="container-fluid well grey-color">
-				<p class="text-muted">Generated page requirements</p>
-	      <div class="col-xs-2" ng-repeat="r in requirements">
-	        <div ng-class="{'read':'panel-primary', 'write':'panel-write', 'finish':'panel-success' }[r.mode]" class="panel">
+				<p class="text-muted">Preview Page Requirements</p>
+	      <div class="col-xs-6 col-md-2" ng-repeat="r in requirements">
+	        <div class="panel grey-color text-center">
 	          <div class="panel-heading requirement">
-	            <p> {{r.process}} </p>
-							<p> {{r.pageNumber !== -1 ? r.pageNumber : '-'}} </p>
-							<p> {{r.mode}} </p>
+							<table class="table table-bordered table-responsive">
+								<tr>
+									<td class="text-left">Process</td><td>{{r.process}}</td>
+								</tr>
+								<tr>
+									<td class="text-left">Page #</td><td>{{r.pageNumber !== -1 ? r.pageNumber : '-'}}</td>
+								</tr>
+								<tr ng-class="{'read':'panel-primary', 'write':'panel-write', 'finish':'panel-success' }[r.mode]">
+									<td class="text-left">Mode</td><td>{{r.mode}}</td>
+								</tr>
+							</table>
 						</div>
 	        </div>
 	    	</div>
