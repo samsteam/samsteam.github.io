@@ -374,3 +374,7 @@ New classes
 #victims-queue {
   margin: auto;
 }
+
+.section-header{
+  margin-top: 0;
+}

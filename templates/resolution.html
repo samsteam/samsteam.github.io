@@ -88,12 +88,15 @@
 
 		<!-- Render victim queue -->
 			<div class="col-xs-offset-1 col-xs-10">
+				<div class="page-header section-header">
+					<h4>Victims' Queue</h4>
+	      </div>
 				<div class="panel panel-default panel-body grey-color">
 					<table id="victims-queue">
 						<tbody>
 							<tr>
 								<td class="rtable rtable-default" ng-repeat="v in victimsQueue">
-									{{ v.process }} {{v.pageNumber}}
+									{{ v.process }}{{v.pageNumber}}
 								</td>
 							</tr>
 						</tbody>
@@ -104,14 +107,20 @@
 
 		<!-- general info panel -->
 		<div class="col-xs-offset-1 col-xs-10">
+			<div class="page-header section-header">
+				<h4>General Info Panel</h4>
+			</div>
 			<div class="panel panel-default panel-body grey-color">
-					general info panel
+					General content
 			</div>
 		</div>
 		<!-- /general info panel -->
 
 		<!-- legend panel -->
 			<div class="col-xs-offset-1 col-xs-10">
+				<div class="page-header section-header">
+					<h4>Legend</h4>
+				</div>
 				<div class="panel panel-default panel-body grey-color">
 			    <div class="row">
 

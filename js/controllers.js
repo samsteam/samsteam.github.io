@@ -467,6 +467,10 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
           //page only modified
           return 'rtable-modified'
         }
+      } else {
+        if (frame.referenced)
+        //page only referenced
+        return 'rtable-referenced'
       }
     }
 
