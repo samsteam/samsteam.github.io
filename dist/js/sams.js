@@ -4,7 +4,7 @@
 var angular = require('angular');
 var angularRouter = require('angular-ui-router');
 
-var app = angular.module('sams', ['sams.controllers', 'sams.locales', 'ui.router']);
+var app = angular.module('sams', ['sams.controllers', 'sams.locales', 'ui.router', 'contenteditable']);
 
 app.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 
@@ -478,9 +478,46 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   if (!checkData)
     return $state.go('step.requirements');
 
+  $scope.__emptyResolution = function(results) {
+    $scope.inputMatrix = [];
+    var biggerFrame = -1;
+    angular.forEach(results, function(instant, i){
+      var l = instant.frames.length;
+      if ( l > biggerFrame ){
+        biggerFrame = l;
+      }
+    });
+    for (var i = 0; i < results.length; i++) {
+      $scope.inputMatrix[i] = [];
+      for (var j = 0; j < biggerFrame; j++) {
+        $scope.inputMatrix[i][j] = "";
+      }
+    }
+    console.log($scope.inputMatrix)
+    angular.forEach(results, function(memory, instant){
+      memory.pageFault = false;
+      memory.victim = undefined;
+      angular.forEach(memory.frames, function(frame, i){
+        frame.finished = false;
+        frame.modified = false;
+        frame.pageFault = false;
+        frame.pageNumber = undefined;
+        frame.process = undefined;
+        frame.referenced = false;
+        frame.required = false;
+        frame.reserverdForPageBuffering = false;
+      });
+      memory.potentialVictims = [];
+    });
+  }
+
+
   try {
     $scope.framesTotal = SchedulerService.getMemorySize() - 1;
     $scope.results = SchedulerService.run();
+    console.log($scope.results);
+    $scope.userSolution = angular.copy($scope.results);
+    $scope.__emptyResolution($scope.userSolution);
     $scope.instants = $scope.results.length - 1;
   } catch (err) {
     alert(err);
@@ -489,13 +526,17 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     $rootScope.$broadcast('processed');
   }
 
+  $scope.changeFrame = function(i,j){
+    console.log($scope.inputMatrix[i][j]);
+  }
+
   $scope.showVictims = function(instantIndex) {
     $scope.victimsQueue = $scope.results[instantIndex].potentialVictims;
   }
 
   $scope.frameClassFor = function(frame,p){
 
-    console.log(p);
+    // console.log(p);
 
     if (!frame) return '';
 

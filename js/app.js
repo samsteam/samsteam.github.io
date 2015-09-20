@@ -3,7 +3,7 @@
 var angular = require('angular');
 var angularRouter = require('angular-ui-router');
 
-var app = angular.module('sams', ['sams.controllers', 'sams.locales', 'ui.router']);
+var app = angular.module('sams', ['sams.controllers', 'sams.locales', 'ui.router', 'contenteditable']);
 
 app.config(function($stateProvider, $urlRouterProvider, $compileProvider){
 

@@ -19,6 +19,65 @@
 		<!-- /Back-Forward buttons -->
 
 		<div class="row">
+
+
+			<!-- Rendered User Solution Table -->
+				<div class="col-sm-12">
+					<!-- results memory-->
+					<table  style="table-layout:fixed; margin-top:30px; margin-bottom:30px" class="center-table">
+						<thead>
+							<!-- render nº instant-->
+							<tr>
+								<td class="rtable rtable-default">Instant #</td>
+								<td class="rtable rtable-space"></td>
+								<td class="rtable rtable-default" ng-repeat="instant in [0, instants] | makeRange">{{instant}}</td>
+							</tr>
+							<!-- specify the required page for the instant-->
+							<tr>
+								<td class="rtable rtable-default">Requirement</td>
+								<td class="rtable rtable-space"></td>
+								<td class="rtable rtable-default" ng-repeat="p in userSolution">
+									{{ p.requirement.process }}
+									<span class="text-primary">{{ p.requirement.mode == 'read' ? p.requirement.pageNumber + ' R' : ''}}</span>
+									<span class="text-info">{{ p.requirement.mode == 'write' ? p.requirement.pageNumber + ' W' : ''}}</span>
+									<span class="text-success">{{ p.requirement.mode == 'finish' ? 'F' : '' }}</span>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- render nº frames-->
+							<tr ng-repeat="n in [0, framesTotal] | makeRange">
+								<td class="rtable rtable-frame">Frame {{n}}</td>
+								<td class="rtable rtable-space"></td>
+								<td class="rtable rtable-frame" ng-repeat="p in userSolution"
+								ng-class="frameClassFor(p.frames[n],p)" contenteditable="true" strip-br="true" ng-model="inputMatrix[n][$index]" ng-change="changeFrame(n,$index)">
+									{{(p.frames[n].reservedForPageBuffering || p.frames[n].finished) ? '' : (p.frames[n].process + p.frames[n].pageNumber)}}
+								</td>
+							</tr>
+							<!-- render page faults -->
+							<tr>
+								<td class="rtable rtable-default rtable-pf">PF</td>
+								<td class="rtable rtable-space"></td>
+								<td class="rtable rtable-default rtable-pf" ng-repeat="p in userSolution">
+									{{ p.pageFault ? 'X' : ''}}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- /Rendered User Solution Table -->
+
+
+
+
+
+
+
+
+
+
+
+
 		<!-- Rendered Table -->
 			<div class="col-sm-12">
 				<!-- results memory-->
@@ -51,7 +110,7 @@
 							<td class="rtable rtable-frame">Frame {{n}}</td>
 							<td class="rtable rtable-space"></td>
 							<td class="rtable rtable-frame" ng-repeat="p in results"
-							ng-class= frameClassFor(p.frames[n],p)>
+							ng-class="frameClassFor(p.frames[n],p)">
 								{{(p.frames[n].reservedForPageBuffering || p.frames[n].finished) ? '' : (p.frames[n].process + p.frames[n].pageNumber)}}
 							</td>
 						</tr>
