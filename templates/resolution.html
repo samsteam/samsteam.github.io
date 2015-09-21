@@ -15,12 +15,13 @@
 			<div class="col-sm-6">
 		    <a class="btn btn-primary btn pull-right" ui-sref="step.policies"><span class="glyphicon glyphicon-chevron-left"></span></a>
 			</div>
+			<div class="col-sm-6">
+		    <a class="btn btn-primary btn"><span class="glyphicon glyphicon-cog"></span> Solve</a>
+			</div>
 		</div>
 		<!-- /Back-Forward buttons -->
 
 		<div class="row">
-
-
 			<!-- Rendered User Solution Table -->
 				<div class="col-sm-12">
 					<!-- results memory-->
@@ -37,10 +38,9 @@
 								<td class="rtable rtable-default">Requirement</td>
 								<td class="rtable rtable-space"></td>
 								<td class="rtable rtable-default" ng-repeat="p in userSolution">
-									{{ p.requirement.process }}
-									<span class="text-primary">{{ p.requirement.mode == 'read' ? p.requirement.pageNumber + ' R' : ''}}</span>
-									<span class="text-info">{{ p.requirement.mode == 'write' ? p.requirement.pageNumber + ' W' : ''}}</span>
-									<span class="text-success">{{ p.requirement.mode == 'finish' ? 'F' : '' }}</span>
+									<span class="text-primary">{{ p.requirement.mode == 'read' ? p.requirement.process + p.requirement.pageNumber + ' R' : ''}}</span>
+									<span class="text-default">{{ p.requirement.mode == 'write' ? p.requirement.process + p.requirement.pageNumber + ' W' : ''}}</span>
+									<span class="text-success">{{ p.requirement.mode == 'finish' ? p.requirement.process + ' F' : '' }}</span>
 								</td>
 							</tr>
 						</thead>
@@ -64,15 +64,9 @@
 							</tr>
 						</tbody>
 					</table>
+					<button class="btn btn-success btn pull-right" ng-click="checkSolution()"> Check solution <span class="glyphicon glyphicon-ok"></span></button>
 				</div>
 				<!-- /Rendered User Solution Table -->
-
-
-
-
-
-
-
 
 
 
@@ -94,13 +88,9 @@
 							<td class="rtable rtable-default">Requirement</td>
 							<td class="rtable rtable-space"></td>
 							<td class="rtable rtable-default" ng-repeat="p in results">
-								{{
-									{
-										'read': '[' + p.requirement.process + p.requirement.pageNumber + ']' + 'R',
-										'write': '[' + p.requirement.process + p.requirement.pageNumber + ']' + 'W',
-										'finish': '[' + p.requirement.process + ']' + 'F'
-									}[p.requirement.mode]
-								}}
+								<span class="text-primary">{{ p.requirement.mode == 'read' ? p.requirement.process + p.requirement.pageNumber + ' R' : ''}}</span>
+								<span class="text-default">{{ p.requirement.mode == 'write' ? p.requirement.process + p.requirement.pageNumber + ' W' : ''}}</span>
+								<span class="text-success">{{ p.requirement.mode == 'finish' ? p.requirement.process + ' F' : '' }}</span>
 							</td>
 						</tr>
 					</thead>

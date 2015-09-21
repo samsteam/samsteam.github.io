@@ -459,6 +459,26 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     console.log($scope.inputMatrix[i][j]);
   }
 
+  $scope.checkSolution = function(){
+
+    //should follow this steps:
+    //1. validate data in inputMatrix
+    //2. if valid, populate userSolution with information parsed from imputMatix
+    //3. check if userSolution corresponds to results
+    //4. display feedback on the resolution table
+
+    //PROBLEM: inputMatrix structure is too simple to represent all the properties of the userSolution, every [i][j] should be able to
+    // store all the possible flags that a frame has, IE: reservedForPageBuffering, finished, modified, referemced, pageFault, etc
+
+    //POSSIBLE SOLUTION: instead of using the inputMatix, use ony the userSolution object, assigning the users' input to the corresponding variables
+    //exept for the pageNumber and process (store both in the same variable, IE pageNumber), and only parse and correctly assign this values when
+    //the Check Solution button is pressed
+
+    //POSSIBLE SOLUTION: extend the inputMatrix object so it can reflect all the properties of any given frame
+
+    console.log("checking solution");
+  }
+
   $scope.showVictims = function(instantIndex) {
     $scope.victimsQueue = $scope.results[instantIndex].potentialVictims;
   }

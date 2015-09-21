@@ -530,6 +530,26 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     console.log($scope.inputMatrix[i][j]);
   }
 
+  $scope.checkSolution = function(){
+
+    //should follow this steps:
+    //1. validate data in inputMatrix
+    //2. if valid, populate userSolution with information parsed from imputMatix
+    //3. check if userSolution corresponds to results
+    //4. display feedback on the resolution table
+
+    //PROBLEM: inputMatrix structure is too simple to represent all the properties of the userSolution, every [i][j] should be able to
+    // store all the possible flags that a frame has, IE: reservedForPageBuffering, finished, modified, referemced, pageFault, etc
+
+    //POSSIBLE SOLUTION: instead of using the inputMatix, use ony the userSolution object, assigning the users' input to the corresponding variables
+    //exept for the pageNumber and process (store both in the same variable, IE pageNumber), and only parse and correctly assign this values when
+    //the Check Solution button is pressed
+
+    //POSSIBLE SOLUTION: extend the inputMatrix object so it can reflect all the properties of any given frame
+
+    console.log("checking solution");
+  }
+
   $scope.showVictims = function(instantIndex) {
     $scope.victimsQueue = $scope.results[instantIndex].potentialVictims;
   }
@@ -8639,7 +8659,7 @@ angular.module('ui.router.state')
 })(window, window.angular);
 },{}],8:[function(require,module,exports){
 /**
- * @license AngularJS v1.4.6
+ * @license AngularJS v1.5.0-beta.0
  * (c) 2010-2015 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -8697,7 +8717,7 @@ function minErr(module, ErrorConstructor) {
       return match;
     });
 
-    message += '\nhttp://errors.angularjs.org/1.4.6/' +
+    message += '\nhttp://errors.angularjs.org/1.5.0-beta.0/' +
       (module ? module + '/' : '') + code;
 
     for (i = SKIP_INDEXES, paramPrefix = '?'; i < templateArgs.length; i++, paramPrefix = '&') {
@@ -11018,11 +11038,11 @@ function toDebugString(obj) {
  * - `codeName` – `{string}` – Code name of the release, such as "jiggling-armfat".
  */
 var version = {
-  full: '1.4.6',    // all of these placeholder strings will be replaced by grunt's
+  full: '1.5.0-beta.0',    // all of these placeholder strings will be replaced by grunt's
   major: 1,    // package task
-  minor: 4,
-  dot: 6,
-  codeName: 'multiplicative-elevation'
+  minor: 5,
+  dot: 0,
+  codeName: 'intialization-processation'
 };
 
 
@@ -11313,10 +11333,10 @@ function camelCase(name) {
     replace(MOZ_HACK_REGEXP, 'Moz$1');
 }
 
-var SINGLE_TAG_REGEXP = /^<(\w+)\s*\/?>(?:<\/\1>|)$/;
+var SINGLE_TAG_REGEXP = /^<([\w-]+)\s*\/?>(?:<\/\1>|)$/;
 var HTML_REGEXP = /<|&#?\w+;/;
-var TAG_NAME_REGEXP = /<([\w:]+)/;
-var XHTML_TAG_REGEXP = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi;
+var TAG_NAME_REGEXP = /<([\w:-]+)/;
+var XHTML_TAG_REGEXP = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:-]+)[^>]*)\/>/gi;
 
 var wrapMap = {
   'option': [1, '<select multiple="multiple">', '</select>'],
@@ -36921,7 +36941,7 @@ var SelectController =
  *     </select><br>
  *
  *     <label for="singleSelect"> Single select with "not selected" option and dynamic option values: </label><br>
- *     <select name="singleSelect" ng-model="data.singleSelect">
+ *     <select name="singleSelect" id="singleSelect" ng-model="data.singleSelect">
  *       <option value="">---Please select---</option> <!-- not selected / blank option -->
  *       <option value="{{data.option1}}">Option 1</option> <!-- interpolation -->
  *       <option value="option-2">Option 2</option>
@@ -36962,7 +36982,7 @@ var SelectController =
  * <div ng-controller="ExampleController">
  *   <form name="myForm">
  *     <label for="repeatSelect"> Repeat select: </label>
- *     <select name="repeatSelect" ng-model="data.repeatSelect">
+ *     <select name="repeatSelect" id="repeatSelect" ng-model="data.repeatSelect">
  *       <option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
  *     </select>
  *   </form>
@@ -36974,7 +36994,7 @@ var SelectController =
  *  angular.module('ngrepeatSelect', [])
  *    .controller('ExampleController', ['$scope', function($scope) {
  *      $scope.data = {
- *       singleSelect: null,
+ *       repeatSelect: null,
  *       availableOptions: [
  *         {id: '1', name: 'Option A'},
  *         {id: '2', name: 'Option B'},
@@ -37470,7 +37490,7 @@ module.exports = angular;
 
 },{"./angular":8}],10:[function(require,module,exports){
 module.exports = {
-		debug: false
+		debug: true
 	};
 
 },{}],11:[function(require,module,exports){
@@ -38618,8 +38638,6 @@ var cocktail = require('cocktail');
 var Logger = require('./annotations/Logger');
 var Fifo = require('./algorithms/Fifo');
 var Lru = require('./algorithms/Lru');
-var Nru = require('./algorithms/Nru');
-//var Optimal = require('./algorithms/Optimal');
 var Memory = require('./common/Memory');
 var Requirement = require('./common/Requirement');
 var FixedEvenAssignmentPolicy = require('./filters/assignment_filters/FixedEvenAssignmentPolicy');
@@ -38653,13 +38671,6 @@ cocktail.mix({
 
       if (this._algorithm instanceof Fifo)
         return 'fifo';
-
-      if (this._algorithm instanceof Optimal)
-        return 'optimal';
-
-      if (this._algorithm instanceof Nru) {
-        return 'nru';
-      }
     }
 
     return undefined;
@@ -38697,7 +38708,6 @@ cocktail.mix({
     if (!algorithm) {
       return;
     }
-    algorithm = algorithm.toLowerCase();
     switch (algorithm) {
       case 'fifo':
         this.clearPolicies();
@@ -38706,13 +38716,6 @@ cocktail.mix({
       case 'lru':
         this.clearPolicies();
         this._algorithm = new Lru();
-        break;
-      case 'nru':
-        this.clearPolicies();
-        this._algorithm = new Nru();
-      case 'optimal':
-        this.clearPolicies();
-        this._algorithm = new Optimal();
         break;
       default:
         return;
@@ -38748,7 +38751,7 @@ cocktail.mix({
       this._filters[0] = filter;
       this._algorithm.setPageBufferingFilter(true, filter);
     } else {
-      delete this._filters[0];
+      delete this._assignmentPolicies[0];
       this._algorithm.setPageBufferingFilter(false);
     }
 	},
@@ -38762,7 +38765,7 @@ cocktail.mix({
       this._filters[1] = filter;
       this._algorithm.setSecondChanceFilter(true, filter);
     } else {
-      delete this._fiters[1];
+      delete this._assignmentPolicies[1];
       this._algorithm.setSecondChanceFilter(false);
     }
   },
@@ -38943,7 +38946,7 @@ cocktail.mix({
   },
 
   _clearTemporalFlags: function() {
-    this._memory.forEach(function(page, index) {
+    this._memory.forEach(function(page) {
       page.clearRequired();
       page.clearPageFault();
     }, this);
@@ -38995,7 +38998,7 @@ cocktail.mix({
   }
 });
 
-},{"./algorithms/Fifo":29,"./algorithms/Lru":30,"./algorithms/Nru":31,"./annotations/Logger":32,"./common/Memory":34,"./common/Requirement":36,"./filters/PageBufferingFilter":40,"./filters/SecondChanceFilter":41,"./filters/assignment_filters/FixedEvenAssignmentPolicy":43,"cocktail":13}],27:[function(require,module,exports){
+},{"./algorithms/Fifo":29,"./algorithms/Lru":30,"./annotations/Logger":31,"./common/Memory":33,"./common/Requirement":35,"./filters/PageBufferingFilter":39,"./filters/SecondChanceFilter":40,"./filters/assignment_filters/FixedEvenAssignmentPolicy":42,"cocktail":13}],27:[function(require,module,exports){
 var cocktail = require('cocktail');
 var Logger = require('../annotations/Logger');
 var AlgorithmInterface = require('./AlgorithmInterface');
@@ -39162,7 +39165,7 @@ cocktail.mix({
 	}
 });
 
-},{"../annotations/Logger":32,"../common/VictimsStructures/Queue":37,"../filters/replacement_filters/LocalReplacementPolicy":44,"./AlgorithmInterface":28,"cocktail":13}],28:[function(require,module,exports){
+},{"../annotations/Logger":31,"../common/VictimsStructures/Queue":36,"../filters/replacement_filters/LocalReplacementPolicy":43,"./AlgorithmInterface":28,"cocktail":13}],28:[function(require,module,exports){
 var cocktail = require('cocktail');
 
 //Using a trait as an interface.
@@ -39250,7 +39253,7 @@ cocktail.mix({
 
 });
 
-},{"../annotations/Logger":32,"../common/VictimsStructures/Queue":37,"./Algorithm":27,"./AlgorithmInterface":28,"cocktail":13}],30:[function(require,module,exports){
+},{"../annotations/Logger":31,"../common/VictimsStructures/Queue":36,"./Algorithm":27,"./AlgorithmInterface":28,"cocktail":13}],30:[function(require,module,exports){
 var cocktail = require('cocktail');
 var Logger = require('../annotations/Logger');
 var AlgorithmInterface = require('./AlgorithmInterface');
@@ -39279,87 +39282,7 @@ cocktail.mix({
 	}
 });
 
-},{"../annotations/Logger":32,"../common/VictimsStructures/ReQueueQueue":38,"./AlgorithmInterface":28,"./Fifo":29,"cocktail":13}],31:[function(require,module,exports){
-var cocktail = require('cocktail');
-var Logger = require('../annotations/Logger');
-var AlgorithmInterface = require('./AlgorithmInterface');
-var Algorithm = require('./Algorithm');
-var Queue = require('../common/VictimsStructures/Queue');
-
-cocktail.use(Logger);
-
-cocktail.mix({
-	'@exports': module,
-	'@as': 'class',
-	'@extends': Algorithm,
-	'@traits': [AlgorithmInterface],
-	'@logger' : [console, "Algorithm Nru:"],
-
-	constructor: function() {
-		this.callSuper("constructor");
-		this._instant = 0;
-		this._victims = new Queue();
-		this._orderedVictims = {};
-		this.log("Created.");
-	},
-
-	initialize: function(requirements) {
-		this.callSuper("initialize", requirements);
-		this._instant = 0;
-	  this._victims = new Queue();
-		this._orderedVictims = {};
-		this._orderVictims();
-		this.log("Initialized.");
-	},
-
-	addPage: function(requirement) {
-  	// this._victims.add(requirement.asPage().clearAll());
-	},
-
-	getPage: function(page) {
-	  // return this._victims.pageOf(page);
-	},
-
-	update: function(requirement) {
-
-		this._instant++;
-		var highestLesser = {};
-
-		for (key in this._orderedVictims) {
-			this._orderedVictims[key].forEach(function(instant) {
-			  if (instant < this._instant) {
-					highestLesser[key] = instant;
-			  }
-			}, this);
-		}
-
-		var sortable = [];
-		for (var page in highestLesser) {
-	      sortable.push([page, highestLesser[page]]);
-			}
-
-		sortable.sort(function(a, b) {return a[1] - b[1]});
-		sortable.forEach(function(elem) {
-			this._victims.add(this._requirements[elem[1]].asPage());
-		}, this);
-
-	},
-
-	_orderVictims: function() {
-	  var reqs = this._requirements;
-		reqs.forEach(function(elem, index) {
-			var key = elem.getProcess() + elem.getPageNumber();
-			if (!this._orderedVictims[key]) {
-				this._orderedVictims[key] = [];
-			}
-			this._orderedVictims[key].push(index)
-		}, this);
-		this.log(this._orderedVictims);
-	}
-
-});
-
-},{"../annotations/Logger":32,"../common/VictimsStructures/Queue":37,"./Algorithm":27,"./AlgorithmInterface":28,"cocktail":13}],32:[function(require,module,exports){
+},{"../annotations/Logger":31,"../common/VictimsStructures/ReQueueQueue":37,"./AlgorithmInterface":28,"./Fifo":29,"cocktail":13}],31:[function(require,module,exports){
 var cocktail = require('cocktail');
 var config = require('../../config');
 
@@ -39409,7 +39332,7 @@ cocktail.mix({
   }
 });
 
-},{"../../config":10,"cocktail":13}],33:[function(require,module,exports){
+},{"../../config":10,"cocktail":13}],32:[function(require,module,exports){
 var cocktail = require('cocktail');
 
 cocktail.mix({
@@ -39458,7 +39381,7 @@ cocktail.mix({
   }
 });
 
-},{"cocktail":13}],34:[function(require,module,exports){
+},{"cocktail":13}],33:[function(require,module,exports){
 var cocktail = require('cocktail');
 
 //Add Logger annotation.
@@ -39748,7 +39671,7 @@ cocktail.mix({
   }
 });
 
-},{"../annotations/Logger":32,"./Behavior":33,"./Memory":34,"cocktail":13}],35:[function(require,module,exports){
+},{"../annotations/Logger":31,"./Behavior":32,"./Memory":33,"cocktail":13}],34:[function(require,module,exports){
 var cocktail = require('cocktail');
 
 //Add Logger annotation.
@@ -39764,7 +39687,6 @@ var Requirement = require('./Requirement');
  *  the properties defined as instance variables.
  */
 var Configurable = require('cocktail-trait-configurable');
-
 
 cocktail.mix({
 	//Define this file as a single class module exportable.
@@ -39785,23 +39707,6 @@ cocktail.mix({
     modified: false,
     finished: false,
     reservedForPageBuffering: false
-  },
-
-  '@static': {
-    empty: function () {
-      var Page = require('./Page');
-  		return new Page({
-        'process': '',
-        'pageNumber': 0,
-        'mode': '',
-        'pageFault': false,
-        'required': false,
-        'referenced': false,
-        'modified':  false,
-        'finished': false,
-        'reservedForPageBuffering': false
-      });
-    }
   },
 
 	/*
@@ -39900,7 +39805,7 @@ cocktail.mix({
   }
 });
 
-},{"../annotations/Logger":32,"./Page":35,"./Requirement":36,"cocktail":13,"cocktail-trait-configurable":12}],36:[function(require,module,exports){
+},{"../annotations/Logger":31,"./Page":34,"./Requirement":35,"cocktail":13,"cocktail-trait-configurable":12}],35:[function(require,module,exports){
 var cocktail = require('cocktail');
 
 //Add Logger annotation.
@@ -40028,7 +39933,7 @@ cocktail.mix({
   }
 });
 
-},{"../annotations/Logger":32,"./Behavior":33,"./Page":35,"./Requirement":36,"cocktail":13,"cocktail-trait-configurable":12}],37:[function(require,module,exports){
+},{"../annotations/Logger":31,"./Behavior":32,"./Page":34,"./Requirement":35,"cocktail":13,"cocktail-trait-configurable":12}],36:[function(require,module,exports){
 var cocktail = require('cocktail');
 var Logger = require('../../annotations/Logger');
 var VictimsStructureInterface = require('./VictimsStructureInterface');
@@ -40207,7 +40112,7 @@ cocktail.mix({
   }
 });
 
-},{"../../annotations/Logger":32,"./VictimsStructureInterface":39,"cocktail":13}],38:[function(require,module,exports){
+},{"../../annotations/Logger":31,"./VictimsStructureInterface":38,"cocktail":13}],37:[function(require,module,exports){
 var cocktail = require('cocktail');
 var Logger = require('../../annotations/Logger');
 var VictimsStructureInterface = require('./VictimsStructureInterface');
@@ -40265,7 +40170,7 @@ cocktail.mix({
   }
 });
 
-},{"../../annotations/Logger":32,"./Queue":37,"./ReQueueQueue":38,"./VictimsStructureInterface":39,"cocktail":13}],39:[function(require,module,exports){
+},{"../../annotations/Logger":31,"./Queue":36,"./ReQueueQueue":37,"./VictimsStructureInterface":38,"cocktail":13}],38:[function(require,module,exports){
 var cocktail = require('cocktail');
 
 //Using a trait as an interface.
@@ -40287,7 +40192,7 @@ cocktail.mix({
 	]
 });
 
-},{"cocktail":13}],40:[function(require,module,exports){
+},{"cocktail":13}],39:[function(require,module,exports){
 var cocktail = require('cocktail');
 var Logger = require('../annotations/Logger');
 var Page = require('../common/Page');
@@ -40344,7 +40249,7 @@ cocktail.mix({
 	}
 });
 
-},{"../annotations/Logger":32,"../common/Page":35,"cocktail":13}],41:[function(require,module,exports){
+},{"../annotations/Logger":31,"../common/Page":34,"cocktail":13}],40:[function(require,module,exports){
 var cocktail = require('cocktail');
 var Logger = require('../annotations/Logger');
 
@@ -40389,7 +40294,7 @@ cocktail.mix({
 	}
 });
 
-},{"../annotations/Logger":32,"cocktail":13}],42:[function(require,module,exports){
+},{"../annotations/Logger":31,"cocktail":13}],41:[function(require,module,exports){
 var cocktail = require('cocktail');
 
 //Using a trait as an interface.
@@ -40399,7 +40304,7 @@ cocktail.mix({
 	'@requires': ['hasFreeFrameFor']
 });
 
-},{"cocktail":13}],43:[function(require,module,exports){
+},{"cocktail":13}],42:[function(require,module,exports){
 var cocktail = require('cocktail');
 var Logger = require('../../annotations/Logger');
 var AssignmentFilterInterface = require('./AssignmentFilterInterface');
@@ -40439,7 +40344,7 @@ cocktail.mix({
 	}
 });
 
-},{"../../annotations/Logger":32,"./AssignmentFilterInterface":42,"cocktail":13}],44:[function(require,module,exports){
+},{"../../annotations/Logger":31,"./AssignmentFilterInterface":41,"cocktail":13}],43:[function(require,module,exports){
 var cocktail = require('cocktail');
 var Logger = require('../../annotations/Logger');
 var ReplacementFilterInterface = require('./ReplacementFilterInterface');
@@ -40474,7 +40379,7 @@ cocktail.mix({
 	}
 });
 
-},{"../../annotations/Logger":32,"./ReplacementFilterInterface":45,"cocktail":13}],45:[function(require,module,exports){
+},{"../../annotations/Logger":31,"./ReplacementFilterInterface":44,"cocktail":13}],44:[function(require,module,exports){
 var cocktail = require('cocktail');
 
 //Using a trait as an interface.
