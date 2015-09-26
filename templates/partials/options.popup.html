@@ -1,0 +1,17 @@
+<div class="modal fade" id="modal-options" style="color:black">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h4 class="modal-title">Current Page is {{inputMatrix[currentInstant][currentFrame]}}</h4>
+        Set flags:<br>
+        <input type="checkbox" name="finished" ng-model="actual.finished">Finished<br>
+        <input type="checkbox" name="modified" ng-model="actual.modified">Modified<br>
+        <input type="checkbox" name="pageFault" ng-model="actual.pageFault">Page Fault<br>
+        <input type="checkbox" name="referenced" ng-model="actual.referenced">Referenced<br>
+        <input type="checkbox" name="required" ng-model="actual.required">Required<br>
+        <input type="checkbox" name="reservedForPageBuffering" ng-model="actual.reservedForPageBuffering">Reserved for Page Buffering<br>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

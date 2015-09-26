@@ -1,6 +1,8 @@
 <div class="panel panel-default">
 	<div class="panel-body">
 
+		<ng-include src="'templates/partials/options.popup.html'"></ng-include>
+
 		<!--Breadcrumb, step 4 -->
 			<nav>
 				<ol class="cd-multi-steps text-top">
@@ -16,14 +18,16 @@
 		    <a class="btn btn-primary btn pull-right" ui-sref="step.policies"><span class="glyphicon glyphicon-chevron-left"></span></a>
 			</div>
 			<div class="col-sm-6">
-		    <a class="btn btn-primary btn"><span class="glyphicon glyphicon-cog"></span> Solve</a>
+		    <button class="btn btn-primary btn" ng-click="showSolve=!showSolve"><span class="glyphicon glyphicon-cog"></span>
+					{{showSolve ? "Back to Resolution" : "Show Solution"}}
+				</button>
 			</div>
 		</div>
 		<!-- /Back-Forward buttons -->
 
 		<div class="row">
 			<!-- Rendered User Solution Table -->
-				<div class="col-sm-12">
+				<div class="col-sm-12" ng-hide="showSolve">
 					<!-- results memory-->
 					<table  style="table-layout:fixed; margin-top:30px; margin-bottom:30px" class="center-table">
 						<thead>
@@ -50,7 +54,9 @@
 								<td class="rtable rtable-frame">Frame {{n}}</td>
 								<td class="rtable rtable-space"></td>
 								<td class="rtable rtable-frame" ng-repeat="p in userSolution"
-								ng-class="frameClassFor(p.frames[n],p)" contenteditable="true" strip-br="true" ng-model="inputMatrix[n][$index]" ng-change="changeFrame(n,$index)">
+								ng-dblclick="showOptions(n,$index)"
+								ng-class="frameClassFor(p.frames[n], p)" contenteditable="true" strip-br="true"
+								ng-model="inputMatrix[n][$index]" ng-change="changeFrame(n,$index)">
 									{{(p.frames[n].reservedForPageBuffering || p.frames[n].finished) ? '' : (p.frames[n].process + p.frames[n].pageNumber)}}
 								</td>
 							</tr>
@@ -73,7 +79,7 @@
 
 
 		<!-- Rendered Table -->
-			<div class="col-sm-12">
+			<div class="col-sm-12" ng-show="showSolve">
 				<!-- results memory-->
 				<table  style="table-layout:fixed; margin-top:30px; margin-bottom:30px" class="center-table">
 					<thead>

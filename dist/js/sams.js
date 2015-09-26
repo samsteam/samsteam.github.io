@@ -478,6 +478,8 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   if (!checkData)
     return $state.go('step.requirements');
 
+  $scope.showSolve = false;
+
   $scope.__emptyResolution = function(results) {
     $scope.inputMatrix = [];
     var biggerFrame = -1;
@@ -530,6 +532,15 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     console.log($scope.inputMatrix[i][j]);
   }
 
+  $scope.showOptions = function(nFrame, index){
+    var modal = angular.element('#modal-options');
+    $scope.currentInstant = index;
+    $scope.currentFrame = nFrame;
+    console.log($scope.userSolution);
+    $scope.actual = $scope.userSolution[index].frames[nFrame];
+    modal.modal('show');
+  }
+
   $scope.checkSolution = function(){
 
     //should follow this steps:
@@ -554,9 +565,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     $scope.victimsQueue = $scope.results[instantIndex].potentialVictims;
   }
 
-  $scope.frameClassFor = function(frame,p){
-
-    // console.log(p);
+  $scope.frameClassFor = function(frame, p){
 
     if (!frame) return '';
 
