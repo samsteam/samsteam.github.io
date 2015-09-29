@@ -528,7 +528,6 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     $scope.currentInstant = index;
     $scope.currentFrame = nFrame;
     $scope.actual = $scope.userSolution[index].frames[nFrame];
-    modal.modal({keyboard: false});
     modal.modal('show');
   }
 

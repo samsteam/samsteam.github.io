@@ -386,6 +386,19 @@ New classes
   color: #6265B1
 }
 
+.modal .modal-body {
+  background: #363942;
+  color: #fff;
+}
+
+.modal .modal-body input[type="checkbox"]:focus {
+  outline: 2px solid #6265B1;
+}
+
+.modal .modal-body .checkbox label {
+  min-height: auto;
+}
+
 @media print {
   body *:not(.printable *) {
     display: none;
