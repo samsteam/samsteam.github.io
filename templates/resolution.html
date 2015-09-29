@@ -57,7 +57,8 @@
 							ng-dblclick="showOptions(n,$index)"
 							ng-class="frameClassFor(p.frames[n], p)" contenteditable="true" strip-br="true"
 							ng-model="inputMatrix[$index][n]" ng-change="changeFrame(n,$index)">
-								{{(p.frames[n].reservedForPageBuffering || p.frames[n].finished) ? '' : (p.frames[n].process + p.frames[n].pageNumber)}}
+								<!-- {{(p.frames[n].reservedForPageBuffering || p.frames[n].finished) ? '' : (p.frames[n].process + p.frames[n].pageNumber)}} -->
+								{{ inputMatrix[n][$index] }}
 							</td>
 						</tr>
 						<!-- render page faults -->
