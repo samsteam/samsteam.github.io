@@ -1,19 +1,19 @@
 <div class="panel panel-default">
 	<div class="panel-body">
 
-		<ng-include src="'templates/partials/options.popup.html'"></ng-include>
+		<ng-include src="'templates/partials/options.popup.html'" class="no-printable"></ng-include>
 
 		<!--Breadcrumb, step 4 -->
-			<nav>
-				<ol class="cd-multi-steps text-top">
-					<li class="visited"><em>{{ 'BREADCRUMB_REQUIREMENTS' | translate }}</em></li>
-					<li class="visited"><em>{{ 'BREADCRUMB_POLICIES' | translate }}</em></li>
-					<li class="current"><em>{{ 'BREADCRUMB_RESOLUTION' | translate }}</em></li>
-				</ol>
-			</nav>
+		<nav class="no-printable">
+			<ol class="cd-multi-steps text-top">
+				<li class="visited"><em>{{ 'BREADCRUMB_REQUIREMENTS' | translate }}</em></li>
+				<li class="visited"><em>{{ 'BREADCRUMB_POLICIES' | translate }}</em></li>
+				<li class="current"><em>{{ 'BREADCRUMB_RESOLUTION' | translate }}</em></li>
+			</ol>
+		</nav>
 		<!-- /breacrumbs -->
 		<!-- Back-Forward buttons -->
-		<div class="row">
+		<div class="row no-printable">
 			<div class="col-sm-6">
 		    <a class="btn btn-primary btn pull-right" ui-sref="step.policies"><span class="glyphicon glyphicon-chevron-left"></span></a>
 			</div>
@@ -27,61 +27,58 @@
 
 		<div class="row">
 			<!-- Rendered User Solution Table -->
-				<div class="col-sm-12" ng-hide="showSolve">
-					<!-- results memory-->
-					<table  style="table-layout:fixed; margin-top:30px; margin-bottom:30px" class="center-table">
-						<thead>
-							<!-- render nº instant-->
-							<tr>
-								<td class="rtable rtable-default">Instant #</td>
-								<td class="rtable rtable-space"></td>
-								<td class="rtable rtable-default" ng-repeat="instant in [0, instants] | makeRange">{{instant}}</td>
-							</tr>
-							<!-- specify the required page for the instant-->
-							<tr>
-								<td class="rtable rtable-default">Requirement</td>
-								<td class="rtable rtable-space"></td>
-								<td class="rtable rtable-default" ng-repeat="p in userSolution">
-									<span class="text-primary">{{ p.requirement.mode == 'read' ? p.requirement.process + p.requirement.pageNumber + ' R' : ''}}</span>
-									<span class="text-default">{{ p.requirement.mode == 'write' ? p.requirement.process + p.requirement.pageNumber + ' W' : ''}}</span>
-									<span class="text-success">{{ p.requirement.mode == 'finish' ? p.requirement.process + ' F' : '' }}</span>
-								</td>
-							</tr>
-						</thead>
-						<tbody>
-							<!-- render nº frames-->
-							<tr ng-repeat="n in [0, framesTotal] | makeRange">
-								<td class="rtable rtable-frame">Frame {{n}}</td>
-								<td class="rtable rtable-space"></td>
-								<td class="rtable rtable-frame" ng-repeat="p in userSolution"
-								ng-dblclick="showOptions(n,$index)"
-								ng-class="frameClassFor(p.frames[n], p)" contenteditable="true" strip-br="true"
-								ng-model="inputMatrix[n][$index]" ng-change="changeFrame(n,$index)">
-									{{(p.frames[n].reservedForPageBuffering || p.frames[n].finished) ? '' : (p.frames[n].process + p.frames[n].pageNumber)}}
-								</td>
-							</tr>
-							<!-- render page faults -->
-							<tr>
-								<td class="rtable rtable-default rtable-pf">PF</td>
-								<td class="rtable rtable-space"></td>
-								<td class="rtable rtable-default rtable-pf" ng-repeat="p in userSolution">
-									{{ p.pageFault ? 'X' : ''}}
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<button class="btn btn-success btn pull-right" ng-click="checkSolution()"> Check solution <span class="glyphicon glyphicon-ok"></span></button>
-				</div>
-				<!-- /Rendered User Solution Table -->
+			<div class="col-sm-12" ng-hide="showSolve">
+				<!-- results memory-->
+				<table class="center-table printable">
+					<thead>
+						<!-- render nº instant-->
+						<tr>
+							<td class="rtable rtable-default">Instant #</td>
+							<td class="rtable rtable-space"></td>
+							<td class="rtable rtable-default" ng-repeat="instant in [0, instants] | makeRange">{{instant}}</td>
+						</tr>
+						<!-- specify the required page for the instant-->
+						<tr>
+							<td class="rtable rtable-default">Requirement</td>
+							<td class="rtable rtable-space"></td>
+							<td class="rtable rtable-default" ng-repeat="p in userSolution">
+								<span class="text-primary">{{ p.requirement.mode == 'read' ? p.requirement.process + p.requirement.pageNumber + ' R' : ''}}</span>
+								<span class="text-default">{{ p.requirement.mode == 'write' ? p.requirement.process + p.requirement.pageNumber + ' W' : ''}}</span>
+								<span class="text-success">{{ p.requirement.mode == 'finish' ? p.requirement.process + ' F' : '' }}</span>
+							</td>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- render nº frames-->
+						<tr ng-repeat="n in [0, framesTotal] | makeRange">
+							<td class="rtable rtable-frame">Frame {{n}}</td>
+							<td class="rtable rtable-space"></td>
+							<td class="rtable rtable-frame" ng-repeat="p in userSolution"
+							ng-dblclick="showOptions(n,$index)"
+							ng-class="frameClassFor(p.frames[n], p)" contenteditable="true" strip-br="true"
+							ng-model="inputMatrix[n][$index]" ng-change="changeFrame(n,$index)">
+								{{(p.frames[n].reservedForPageBuffering || p.frames[n].finished) ? '' : (p.frames[n].process + p.frames[n].pageNumber)}}
+							</td>
+						</tr>
+						<!-- render page faults -->
+						<tr>
+							<td class="rtable rtable-default rtable-pf">PF</td>
+							<td class="rtable rtable-space"></td>
+							<td class="rtable rtable-default rtable-pf" ng-repeat="p in userSolution">
+								{{ p.pageFault ? 'X' : ''}}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button class="btn btn-primary btn no-printable" ng-click="print()"><span class="glyphicon glyphicon-print"></span> Print</button>
+				<button class="btn btn-success btn pull-right no-printable" ng-click="checkSolution()"> Check solution <span class="glyphicon glyphicon-ok"></span></button>
+			</div>
+			<!-- /Rendered User Solution Table -->
 
-
-
-
-
-		<!-- Rendered Table -->
+			<!-- Rendered Table -->
 			<div class="col-sm-12" ng-show="showSolve">
 				<!-- results memory-->
-				<table  style="table-layout:fixed; margin-top:30px; margin-bottom:30px" class="center-table">
+				<table class="center-table">
 					<thead>
 						<!-- render nº instant-->
 						<tr>
@@ -142,7 +139,7 @@
 		<!-- /Rendered Table -->
 
 		<!-- Render victim queue -->
-			<div class="col-xs-offset-1 col-xs-10">
+			<div class="col-xs-offset-1 col-xs-10 no-printable">
 				<div class="page-header section-header">
 					<h4>Victims' Queue</h4>
 	      </div>
@@ -161,7 +158,7 @@
 		<!-- /Render victim queue -->
 
 		<!-- general info panel -->
-		<div class="col-xs-offset-1 col-xs-10">
+		<div class="col-xs-offset-1 col-xs-10 no-printable">
 			<div class="page-header section-header">
 				<h4>General Info Panel</h4>
 			</div>
@@ -172,7 +169,7 @@
 		<!-- /general info panel -->
 
 		<!-- legend panel -->
-			<div class="col-xs-offset-1 col-xs-10">
+			<div class="col-xs-offset-1 col-xs-10 no-printable">
 				<div class="page-header section-header">
 					<h4>Legend</h4>
 				</div>
