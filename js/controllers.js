@@ -428,7 +428,6 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
         $scope.inputMatrix[i][j] = "";
       }
     }
-    console.log($scope.inputMatrix)
     angular.forEach(results, function(memory, instant){
       memory.pageFault = false;
       memory.victim = undefined;
@@ -446,6 +445,62 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     });
   }
 
+  $scope.addDefaultInputMatrixUserInput = function() {
+    $scope.inputMatrix[1][0] = undefined;
+    $scope.inputMatrix[0][0] = 'a1';
+    $scope.inputMatrix[2][0] = undefined;
+    $scope.inputMatrix[3][0] = undefined;
+    $scope.inputMatrix[0][1] = 'a1';
+    $scope.inputMatrix[1][1] = 'a2';
+    $scope.inputMatrix[2][1] = undefined;
+    $scope.inputMatrix[3][1] = undefined;
+    $scope.inputMatrix[0][2] = 'a1';
+    $scope.inputMatrix[1][2] = 'a2';
+    $scope.inputMatrix[2][2] = 'a3';
+    $scope.inputMatrix[3][2] = undefined;
+    $scope.inputMatrix[0][3] = 'a1';
+    $scope.inputMatrix[1][3] = 'a2';
+    $scope.inputMatrix[2][3] = 'a3';
+    $scope.inputMatrix[3][3] = 'a4';
+    $scope.inputMatrix[0][4] = undefined;
+    $scope.inputMatrix[1][4] = undefined;
+    $scope.inputMatrix[2][4] = undefined;
+    $scope.inputMatrix[3][4] = undefined;
+    $scope.inputMatrix[0][5] = 'b5';
+    $scope.inputMatrix[1][5] = undefined;
+    $scope.inputMatrix[2][5] = undefined;
+    $scope.inputMatrix[3][5] = undefined;
+    $scope.inputMatrix[0][6] = 'b5';
+    $scope.inputMatrix[1][6] = 'b6';
+    $scope.inputMatrix[2][6] = undefined;
+    $scope.inputMatrix[3][6] = undefined;
+    $scope.inputMatrix[0][7] = 'b5';
+    $scope.inputMatrix[1][7] = 'b6';
+    $scope.inputMatrix[2][7] = 'b7';
+    $scope.inputMatrix[3][7] = undefined;
+    $scope.inputMatrix[0][8] = undefined;
+    $scope.inputMatrix[1][8] = undefined;
+    $scope.inputMatrix[2][8] = undefined;
+    $scope.inputMatrix[3][8] = undefined;
+    $scope.inputMatrix[0][9] = 'c9';
+    $scope.inputMatrix[1][9] = undefined;
+    $scope.inputMatrix[2][9] = undefined;
+    $scope.inputMatrix[3][9] = undefined;
+    $scope.inputMatrix[0][10] = 'c9';
+    $scope.inputMatrix[1][10] = 'c10';
+    $scope.inputMatrix[2][10] = undefined;
+    $scope.inputMatrix[3][10] = undefined;
+    $scope.inputMatrix[0][11] = 'c9';
+    $scope.inputMatrix[1][11] = 'c10';
+    $scope.inputMatrix[2][11] = 'c11';
+    $scope.inputMatrix[3][11] = undefined;
+    $scope.inputMatrix[0][12] = undefined;
+    $scope.inputMatrix[1][12] = undefined;
+    $scope.inputMatrix[2][12] = undefined;
+    $scope.inputMatrix[3][12] = undefined;
+
+    console.log($scope.inputMatrix);
+  }
 
   try {
     $scope.framesTotal = SchedulerService.getMemorySize() - 1;
@@ -453,6 +508,10 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     $scope.userSolution = angular.copy($scope.results);
     $scope.__emptyResolution($scope.userSolution);
     $scope.instants = $scope.results.length - 1;
+
+    // TODO: remove this (test)
+    $scope.addDefaultInputMatrixUserInput();
+
   } catch (err) {
     alert(err);
     return $state.go('step.requirements');
@@ -461,7 +520,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   }
 
   $scope.changeFrame = function(i,j){
-    console.log($scope.inputMatrix[i][j]);
+    console.log($scope.inputMatrix);
   }
 
   $scope.showOptions = function(nFrame, index){
