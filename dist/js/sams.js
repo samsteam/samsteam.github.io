@@ -473,12 +473,16 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 | Show results
 | ---------------------------------------------------------------------------
 */
-.controller('ResolutionController', function($rootScope, $scope, $state, SchedulerService, checkData){
+.controller('ResolutionController', function($window, $rootScope, $scope, $state, SchedulerService, checkData){
   console.info('In Resolution Controller');
   if (!checkData)
     return $state.go('step.requirements');
 
   $scope.showSolve = false;
+
+  $scope.print = function(){
+    $window.print();
+  }
 
   $scope.__emptyResolution = function(results) {
     $scope.inputMatrix = [];
