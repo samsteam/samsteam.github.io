@@ -446,7 +446,6 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   try {
     $scope.framesTotal = SchedulerService.getMemorySize() - 1;
     $scope.results = SchedulerService.run();
-    console.log($scope.results);
     $scope.userSolution = angular.copy($scope.results);
     $scope.__emptyResolution($scope.userSolution);
     $scope.instants = $scope.results.length - 1;
@@ -465,12 +464,19 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     var modal = angular.element('#modal-options');
     $scope.currentInstant = index;
     $scope.currentFrame = nFrame;
-    console.log($scope.userSolution);
     $scope.actual = $scope.userSolution[index].frames[nFrame];
+    modal.modal({keyboard: false});
     modal.modal('show');
   }
 
   $scope.checkSolution = function(){
+
+    console.log('inputMatrix');
+    console.log($scope.inputMatrix);
+    console.log('UserSolution');
+    console.log($scope.userSolution);
+    console.log('results');
+    console.log($scope.results);
 
     //should follow this steps:
     //1. validate data in inputMatrix

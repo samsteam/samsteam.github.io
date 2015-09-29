@@ -2,7 +2,9 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-        <h4 class="modal-title">Current Page is {{inputMatrix[currentInstant][currentFrame]}}</h4>
+        <div class="page-header section-header">
+          <h4 class="modal-title">Set flags for page <span class="text-danger"><b>{{inputMatrix[currentInstant][currentFrame]}}</b></span></h4>
+        </div>
         Set flags:<br>
         <input type="checkbox" name="finished" ng-model="actual.finished">Finished<br>
         <input type="checkbox" name="modified" ng-model="actual.modified">Modified<br>
