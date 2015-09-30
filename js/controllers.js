@@ -432,20 +432,21 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
       memory.pageFault = false;
       memory.victim = undefined;
       angular.forEach(memory.frames, function(frame, i){
-        frame.finished = false;
-        frame.modified = false;
-        frame.pageFault = false;
-        frame.pageNumber = undefined;
-        frame.process = undefined;
-        frame.referenced = false;
+        frame.process = '';
+        frame.pageNumber = 0;
         frame.required = false;
-        frame.reserverdForPageBuffering = false;
+        frame.pageFault = false;
+        frame.referenced = false;
+        frame.modified = false;
+        frame.finished = false;
+        frame.reservedForPageBuffering = false;
       });
       memory.potentialVictims = [];
     });
   }
 
   $scope.addDefaultInputMatrixUserInput = function() {
+
     $scope.inputMatrix[0][1] = "";
     $scope.inputMatrix[0][0] = 'a1';
     $scope.inputMatrix[0][2] = "";
@@ -510,7 +511,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     $scope.instants = $scope.results.length - 1;
 
     // TODO: remove this (test)
-    $scope.addDefaultInputMatrixUserInput();
+    // $scope.addDefaultInputMatrixUserInput();
 
   } catch (err) {
     alert(err);
@@ -540,11 +541,11 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     //4. display feedback on the resolution table
 
 
-    //parse inputMatrix to userSolution
+    //parse inputMatrix into userSolution
     angular.forEach($scope.inputMatrix, function(instant,instant_number){
       angular.forEach(instant, function (frames, frame_number){
         if(($scope.inputMatrix[instant_number][frame_number] != "")&&($scope.userSolution[instant_number].frames[frame_number] != undefined)){
-          $scope.userSolution[instant_number].frames[frame_number].pageNumber = $scope.inputMatrix[instant_number][frame_number].match(/\d+/)[0];
+          $scope.userSolution[instant_number].frames[frame_number].pageNumber = parseInt($scope.inputMatrix[instant_number][frame_number].match(/\d+/)[0]);
           $scope.userSolution[instant_number].frames[frame_number].process = $scope.inputMatrix[instant_number][frame_number].match(/\D+/)[0];
         }
       });
@@ -556,6 +557,32 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     console.log($scope.userSolution);
     console.log('results');
     console.log($scope.results);
+
+    //compare userSolution to results
+    var ok = true;
+
+    angular.forEach($scope.results, function(instant, instant_number){
+      angular.forEach(instant.frames, function(frame, frame_number){
+
+        if (frame.finished) {
+          //should only check for finished in userSolution
+          $scope.userSolution[instant_number].frames[frame_number].finished ? ok = true : ok = false;
+        } else {
+          //should check entire frame
+          if(JSON.stringify(frame) == JSON.stringify($scope.userSolution[instant_number].frames[frame_number])){
+            //todo piola por ahora
+          } else {
+            //NOPE
+            ok = false;
+          }
+        }
+
+      });
+    });
+
+    ok ? alert("BIEN, BOLUDO BIEEEN") : alert("RECURSÁ SORETE");
+
+
 
   }
 
