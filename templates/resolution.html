@@ -61,14 +61,6 @@
 								{{ inputMatrix[$index][n] }}
 							</td>
 						</tr>
-						<!-- render page faults -->
-						<tr>
-							<td class="rtable rtable-default rtable-pf">PF</td>
-							<td class="rtable rtable-space"></td>
-							<td class="rtable rtable-default rtable-pf" ng-repeat="p in userSolution">
-								{{ p.pageFault ? 'X' : ''}}
-							</td>
-						</tr>
 					</tbody>
 				</table>
 				<button class="btn btn-primary btn pull-left no-printable" ng-click="print()"><span class="glyphicon glyphicon-print"></span> Print</button>
