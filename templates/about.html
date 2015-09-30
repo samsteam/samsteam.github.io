@@ -46,21 +46,32 @@
                 <div class="page-header">
                   <h1>{{ 'ABOUT_ABOUTSAMS_TITLE' | translate }}</h1>
                 </div>
+                <h3>Motivation</h3>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare lobortis posuere. Aliquam sem leo, dignissim vel nunc non, iaculis molestie eros. Nam elementum sem sit amet sapien porta, id fermentum libero ultricies. Aliquam erat volutpat. Morbi semper sem in quam pellentesque scelerisque. Morbi at nisl at nunc faucibus faucibus id sed nunc. Nulla imperdiet magna in finibus varius. Sed gravida ex quis sapien venenatis, pellentesque dictum tortor placerat. Praesent elementum augue sed erat dictum interdum. Pellentesque porttitor tortor sit amet diam pulvinar elementum. Nunc venenatis suscipit massa vel dictum.
+                  Ever since we took "Introducción a los sistemas operativos" (Introduction to the Operative Systems) at "Universidad Nacional de La Plata (UNLP)" we were interested in how the OS manages it's pages and how complex does it is.
                 </p>
                 <p>
-                  Sed rutrum risus sit amet ligula laoreet, vel commodo velit tincidunt. Maecenas at mattis turpis. Ut suscipit massa pellentesque, finibus velit sit amet, hendrerit ipsum. Suspendisse sollicitudin nulla vel sapien rhoncus, eu vehicula diam pretium. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla in lorem ex. Pellentesque rutrum sit amet magna in pharetra. Suspendisse eros quam, euismod eget purus et, pharetra scelerisque mauris. Vestibulum tincidunt, diam a porta congue, dolor risus porta libero, eget dapibus purus ipsum eu arcu. Curabitur eu odio ut tellus accumsan lobortis. Aenean molestie consectetur enim mattis porttitor. Nam porttitor neque erat, vitae tincidunt felis rhoncus vitae.
+                  This project surges from the lack of a tool that would easily emulate the OS Memory Scheduling in the context of some practices we had at the university. Since we couldn't validate our answers were right and all exersices were made in paper, we said: let's make it!
+                </p>
+                <h3>Technologies</h3>
+                <p>
+                  So we wanted this tool to be available for everyone, with that premise we thought that Javascript (more specifically NodeJS) would fit well the cross-plataform role.
                 </p>
                 <p>
-                  Nunc non sollicitudin augue, ut pulvinar erat. Aenean nisi metus, dictum in ipsum quis, ornare semper nisi. Pellentesque ut ex ultricies, consectetur tortor ut, faucibus lectus. In vel mattis neque. Maecenas vel elit eget est varius finibus nec a leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed ut elit consequat, luctus ligula et, pretium ex. Phasellus consequat eros quis dolor malesuada consectetur sed ut turpis. Nullam faucibus dignissim tellus, et congue ante scelerisque vitae. Fusce malesuada, ligula in condimentum suscipit, orci neque suscipit erat, at finibus neque metus quis neque. Quisque maximus felis quam, quis cursus mauris pulvinar ac.
+                  As we started planning and designing SAMS we realized that we would need something to facilitate us the use of Object Oriented Programming based in classes (since ES6 wasn't yet available and we weren't used to prototype-based inheritance either), that's when we found CocktailJS.
                 </p>
+                <blockquote>
+                  <p><a href="https://github.com/CocktailJS/cocktail">CocktailJS</a> is a small library for NodeJS to help developers defining classes and modules in a better, more readable and organised way. It also explores other technics to reuse code such as Annotations, Traits and Talents.
+                  </p>
+                </blockquote>
                 <p>
-                  Curabitur suscipit est vel turpis mattis vestibulum. Aenean accumsan ultrices ipsum sed suscipit. Suspendisse et lacus sed felis lobortis viverra quis nec tellus. Vivamus vehicula sapien eu turpis ultrices, ac mattis odio tristique. Curabitur fermentum pretium elit. Curabitur odio mi, lacinia a tempor eget, commodo a tortor. Vivamus cursus odio quam, ut gravida nulla bibendum ac. Nam iaculis vulputate aliquet. Duis eros erat, auctor eu posuere bibendum, hendrerit laoreet ligula. Pellentesque pharetra urna sed orci porttitor consectetur. Nam sed felis dolor. Aenean sit amet malesuada justo, vel semper odio. Mauris quis dapibus odio. Proin at augue non neque accumsan suscipit. Phasellus diam quam, molestie eu nibh lobortis, semper facilisis dui. Sed imperdiet felis ac tellus maximus, eget rutrum enim rhoncus.
+                  The testing was driven by Mocha which integrated well in our development since it's easy to install and use.
                 </p>
-                <p>
-                  Nullam molestie eros quis risus ullamcorper lobortis. Nulla molestie leo tincidunt mi mattis, a consectetur lacus congue. Phasellus augue lectus, porta at lacinia ut, rutrum sit amet ligula. Praesent vitae ultrices lectus, ac iaculis sapien. Integer euismod efficitur arcu et posuere. Aliquam in gravida velit, vitae pellentesque nunc. Ut elementum in orci a vestibulum.
-                </p>
+                <blockquote>
+                  <p>
+                    <a href="https://github.com/mochajs/mocha">Mocha</a> is a feature-rich JavaScript test framework running on Node.js and the browser, making asynchronous testing simple and fun. Mocha tests run serially, allowing for flexible and accurate reporting, while mapping uncaught exceptions to the correct test cases. Hosted on GitHub.
+                  </p>
+                </blockquote>
               </div>
             </div>
 
@@ -95,19 +106,28 @@
                   <h1>{{ 'ABOUT_GITHUB_TITLE' | translate }}</h1>
                 </div>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare lobortis posuere. Aliquam sem leo, dignissim vel nunc non, iaculis molestie eros. Nam elementum sem sit amet sapien porta, id fermentum libero ultricies. Aliquam erat volutpat. Morbi semper sem in quam pellentesque scelerisque. Morbi at nisl at nunc faucibus faucibus id sed nunc. Nulla imperdiet magna in finibus varius. Sed gravida ex quis sapien venenatis, pellentesque dictum tortor placerat. Praesent elementum augue sed erat dictum interdum. Pellentesque porttitor tortor sit amet diam pulvinar elementum. Nunc venenatis suscipit massa vel dictum.
+                  SAMS' project organization consist mainly in two separated repositories, each one focusing on specific tasks:
                 </p>
                 <p>
-                  Sed rutrum risus sit amet ligula laoreet, vel commodo velit tincidunt. Maecenas at mattis turpis. Ut suscipit massa pellentesque, finibus velit sit amet, hendrerit ipsum. Suspendisse sollicitudin nulla vel sapien rhoncus, eu vehicula diam pretium. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla in lorem ex. Pellentesque rutrum sit amet magna in pharetra. Suspendisse eros quam, euismod eget purus et, pharetra scelerisque mauris. Vestibulum tincidunt, diam a porta congue, dolor risus porta libero, eget dapibus purus ipsum eu arcu. Curabitur eu odio ut tellus accumsan lobortis. Aenean molestie consectetur enim mattis porttitor. Nam porttitor neque erat, vitae tincidunt felis rhoncus vitae.
+                  <h3><a href="https://github.com/samsteam/sams-core">sams-core</a></h3>
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      This is where the heart of SAMS resides. All the logic and implementations of the algorithms are here.
+                    </div>
+                  </div>
                 </p>
                 <p>
-                  Nunc non sollicitudin augue, ut pulvinar erat. Aenean nisi metus, dictum in ipsum quis, ornare semper nisi. Pellentesque ut ex ultricies, consectetur tortor ut, faucibus lectus. In vel mattis neque. Maecenas vel elit eget est varius finibus nec a leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed ut elit consequat, luctus ligula et, pretium ex. Phasellus consequat eros quis dolor malesuada consectetur sed ut turpis. Nullam faucibus dignissim tellus, et congue ante scelerisque vitae. Fusce malesuada, ligula in condimentum suscipit, orci neque suscipit erat, at finibus neque metus quis neque. Quisque maximus felis quam, quis cursus mauris pulvinar ac.
+                  <h3><a href="https://github.com/samsteam/samsteam.github.io">samsteam.github.io</a></h3>
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      Home of the web application, this repo contains all the magic that makes it accessible from most platforms.
+                    </div>
+                  </div>
                 </p>
                 <p>
-                  Curabitur suscipit est vel turpis mattis vestibulum. Aenean accumsan ultrices ipsum sed suscipit. Suspendisse et lacus sed felis lobortis viverra quis nec tellus. Vivamus vehicula sapien eu turpis ultrices, ac mattis odio tristique. Curabitur fermentum pretium elit. Curabitur odio mi, lacinia a tempor eget, commodo a tortor. Vivamus cursus odio quam, ut gravida nulla bibendum ac. Nam iaculis vulputate aliquet. Duis eros erat, auctor eu posuere bibendum, hendrerit laoreet ligula. Pellentesque pharetra urna sed orci porttitor consectetur. Nam sed felis dolor. Aenean sit amet malesuada justo, vel semper odio. Mauris quis dapibus odio. Proin at augue non neque accumsan suscipit. Phasellus diam quam, molestie eu nibh lobortis, semper facilisis dui. Sed imperdiet felis ac tellus maximus, eget rutrum enim rhoncus.
+                  As with most Github proyects, you are free to look, comment, fork and contribute in any way you like, so feel free to do so.
                 </p>
                 <p>
-                  Nullam molestie eros quis risus ullamcorper lobortis. Nulla molestie leo tincidunt mi mattis, a consectetur lacus congue. Phasellus augue lectus, porta at lacinia ut, rutrum sit amet ligula. Praesent vitae ultrices lectus, ac iaculis sapien. Integer euismod efficitur arcu et posuere. Aliquam in gravida velit, vitae pellentesque nunc. Ut elementum in orci a vestibulum.
                 </p>
               </div>
             </div>
