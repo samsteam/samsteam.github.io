@@ -392,7 +392,7 @@ New classes
 }
 
 .modal .modal-body input[type="checkbox"]:focus {
-  outline: 2px solid #6265B1;
+  outline: 2px solid #5bc0de;
 }
 
 .modal .modal-body .checkbox label {
