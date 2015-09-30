@@ -44,7 +44,7 @@
     "angular-ui-router": "^0.2.15",
     "bootstrap": "^3.3.5",
     "jquery": "^2.1.4",
-    "sams": "git://github.com/samsteam/sams-core.git"
+    "sams": "^1.0.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
