@@ -503,72 +503,73 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
       memory.pageFault = false;
       memory.victim = undefined;
       angular.forEach(memory.frames, function(frame, i){
-        frame.finished = false;
-        frame.modified = false;
-        frame.pageFault = false;
-        frame.pageNumber = undefined;
-        frame.process = undefined;
-        frame.referenced = false;
+        frame.process = 'empty';
+        frame.pageNumber = 0;
         frame.required = false;
-        frame.reserverdForPageBuffering = false;
+        frame.pageFault = false;
+        frame.referenced = false;
+        frame.modified = false;
+        frame.finished = false;
+        frame.reservedForPageBuffering = false;
       });
       memory.potentialVictims = [];
     });
   }
 
   $scope.addDefaultInputMatrixUserInput = function() {
-    $scope.inputMatrix[1][0] = undefined;
+
+    $scope.inputMatrix[0][1] = "";
     $scope.inputMatrix[0][0] = 'a1';
-    $scope.inputMatrix[2][0] = undefined;
-    $scope.inputMatrix[3][0] = undefined;
-    $scope.inputMatrix[0][1] = 'a1';
+    $scope.inputMatrix[0][2] = "";
+    $scope.inputMatrix[0][3] = "";
+    $scope.inputMatrix[1][0] = 'a1';
     $scope.inputMatrix[1][1] = 'a2';
-    $scope.inputMatrix[2][1] = undefined;
-    $scope.inputMatrix[3][1] = undefined;
-    $scope.inputMatrix[0][2] = 'a1';
-    $scope.inputMatrix[1][2] = 'a2';
+    $scope.inputMatrix[1][2] = "";
+    $scope.inputMatrix[1][3] = "";
+    $scope.inputMatrix[2][0] = 'a1';
+    $scope.inputMatrix[2][1] = 'a2';
     $scope.inputMatrix[2][2] = 'a3';
-    $scope.inputMatrix[3][2] = undefined;
-    $scope.inputMatrix[0][3] = 'a1';
-    $scope.inputMatrix[1][3] = 'a2';
-    $scope.inputMatrix[2][3] = 'a3';
+    $scope.inputMatrix[2][3] = "";
+    $scope.inputMatrix[3][0] = 'a1';
+    $scope.inputMatrix[3][1] = 'a2';
+    $scope.inputMatrix[3][2] = 'a3';
     $scope.inputMatrix[3][3] = 'a4';
-    $scope.inputMatrix[0][4] = undefined;
-    $scope.inputMatrix[1][4] = undefined;
-    $scope.inputMatrix[2][4] = undefined;
-    $scope.inputMatrix[3][4] = undefined;
-    $scope.inputMatrix[0][5] = 'b5';
-    $scope.inputMatrix[1][5] = undefined;
-    $scope.inputMatrix[2][5] = undefined;
-    $scope.inputMatrix[3][5] = undefined;
-    $scope.inputMatrix[0][6] = 'b5';
-    $scope.inputMatrix[1][6] = 'b6';
-    $scope.inputMatrix[2][6] = undefined;
-    $scope.inputMatrix[3][6] = undefined;
-    $scope.inputMatrix[0][7] = 'b5';
-    $scope.inputMatrix[1][7] = 'b6';
-    $scope.inputMatrix[2][7] = 'b7';
-    $scope.inputMatrix[3][7] = undefined;
-    $scope.inputMatrix[0][8] = undefined;
-    $scope.inputMatrix[1][8] = undefined;
-    $scope.inputMatrix[2][8] = undefined;
-    $scope.inputMatrix[3][8] = undefined;
-    $scope.inputMatrix[0][9] = 'c9';
-    $scope.inputMatrix[1][9] = undefined;
-    $scope.inputMatrix[2][9] = undefined;
-    $scope.inputMatrix[3][9] = undefined;
-    $scope.inputMatrix[0][10] = 'c9';
-    $scope.inputMatrix[1][10] = 'c10';
-    $scope.inputMatrix[2][10] = undefined;
-    $scope.inputMatrix[3][10] = undefined;
-    $scope.inputMatrix[0][11] = 'c9';
-    $scope.inputMatrix[1][11] = 'c10';
-    $scope.inputMatrix[2][11] = 'c11';
-    $scope.inputMatrix[3][11] = undefined;
-    $scope.inputMatrix[0][12] = undefined;
-    $scope.inputMatrix[1][12] = undefined;
-    $scope.inputMatrix[2][12] = undefined;
-    $scope.inputMatrix[3][12] = undefined;
+    $scope.inputMatrix[4][0] = "";
+    $scope.inputMatrix[4][1] = "";
+    $scope.inputMatrix[4][2] = "";
+    $scope.inputMatrix[4][3] = "";
+    $scope.inputMatrix[5][0] = 'b5';
+    $scope.inputMatrix[5][1] = "";
+    $scope.inputMatrix[5][2] = "";
+    $scope.inputMatrix[5][3] = "";
+    $scope.inputMatrix[6][0] = 'b5';
+    $scope.inputMatrix[6][1] = 'b6';
+    $scope.inputMatrix[6][2] = "";
+    $scope.inputMatrix[6][3] = "";
+    $scope.inputMatrix[7][0] = 'b5';
+    $scope.inputMatrix[7][1] = 'b6';
+    $scope.inputMatrix[7][2] = 'b7';
+    $scope.inputMatrix[7][3] = "";
+    $scope.inputMatrix[8][0] = "";
+    $scope.inputMatrix[8][1] = "";
+    $scope.inputMatrix[8][2] = "";
+    $scope.inputMatrix[8][3] = "";
+    $scope.inputMatrix[9][0] = 'c9';
+    $scope.inputMatrix[9][1] = "";
+    $scope.inputMatrix[9][2] = "";
+    $scope.inputMatrix[9][3] = "";
+    $scope.inputMatrix[10][0] = 'c9';
+    $scope.inputMatrix[10][1] = 'c10';
+    $scope.inputMatrix[10][2] = "";
+    $scope.inputMatrix[10][3] = "";
+    $scope.inputMatrix[11][0] = 'c9';
+    $scope.inputMatrix[11][1] = 'c10';
+    $scope.inputMatrix[11][2] = 'c11';
+    $scope.inputMatrix[11][3] = "";
+    $scope.inputMatrix[12][0] = "";
+    $scope.inputMatrix[12][1] = "";
+    $scope.inputMatrix[12][2] = "";
+    $scope.inputMatrix[12][3] = "";
 
     console.log($scope.inputMatrix);
   }
@@ -581,7 +582,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     $scope.instants = $scope.results.length - 1;
 
     // TODO: remove this (test)
-    $scope.addDefaultInputMatrixUserInput();
+    // $scope.addDefaultInputMatrixUserInput();
 
   } catch (err) {
     alert(err);
@@ -611,15 +612,41 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     //4. display feedback on the resolution table
 
 
-    //parse inputMatrix to userSolution
+    //parse inputMatrix into userSolution
     angular.forEach($scope.inputMatrix, function(instant,instant_number){
       angular.forEach(instant, function (frames, frame_number){
         if(($scope.inputMatrix[instant_number][frame_number] != "")&&($scope.userSolution[instant_number].frames[frame_number] != undefined)){
-          $scope.userSolution[instant_number].frames[frame_number].pageNumber = $scope.inputMatrix[instant_number][frame_number].match(/\d+/)[0];
+          $scope.userSolution[instant_number].frames[frame_number].pageNumber = parseInt($scope.inputMatrix[instant_number][frame_number].match(/\d+/)[0]);
           $scope.userSolution[instant_number].frames[frame_number].process = $scope.inputMatrix[instant_number][frame_number].match(/\D+/)[0];
         }
       });
     });
+
+    //compare userSolution to results
+    var fails = 0;
+
+    angular.forEach($scope.results, function(instant, instant_number){
+      angular.forEach(instant.frames, function(frame, frame_number){
+
+        if (frame.finished) {
+          //should only check for finished in userSolution
+          $scope.userSolution[instant_number].frames[frame_number].finished ? fails = fails : fails++;
+        } else {
+          //should check entire frame
+          if(JSON.stringify(frame) == JSON.stringify($scope.userSolution[instant_number].frames[frame_number])){
+            //todo piola por ahora
+          } else {
+            //NOPE
+            fails++;
+            console.log(frame.process + frame.pageNumber);
+          }
+        }
+
+      });
+    });
+
+    //show feedback to user
+    fails == 0 ? alert("BIEN, BOLUDO BIEEEN") : alert("RECURSÁ SORETE");
 
     console.log('inputMatrix');
     console.log($scope.inputMatrix);
@@ -628,29 +655,25 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     console.log('results');
     console.log($scope.results);
 
+
   }
 
   $scope.showVictims = function(instantIndex) {
     $scope.victimsQueue = $scope.results[instantIndex].potentialVictims;
   }
 
-  $scope.frameClassFor = function(frame, p){
+  $scope.frameClassFor = function(frame){
 
     if (!frame) return '';
+
+    if(frame.finished){
+        //process ended on this instant
+        return 'rtable-finished';
+    }
 
     if (frame.reservedForPageBuffering){
       //frame is async reserved
       return 'rtable-async';
-    }
-
-    if(frame.finished){
-      //page belongs to a finished process
-      if(p.requirement.process == frame.process){
-        //process ended on this instant
-        return 'rtable-finished';
-      } else {
-        return '';
-      }
     }
 
     if (frame.pageFault) {
@@ -8737,7 +8760,7 @@ angular.module('ui.router.state')
 })(window, window.angular);
 },{}],8:[function(require,module,exports){
 /**
- * @license AngularJS v1.4.6
+ * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -8795,7 +8818,7 @@ function minErr(module, ErrorConstructor) {
       return match;
     });
 
-    message += '\nhttp://errors.angularjs.org/1.4.6/' +
+    message += '\nhttp://errors.angularjs.org/1.4.7/' +
       (module ? module + '/' : '') + code;
 
     for (i = SKIP_INDEXES, paramPrefix = '?'; i < templateArgs.length; i++, paramPrefix = '&') {
@@ -11079,6 +11102,7 @@ function toDebugString(obj) {
   $HttpParamSerializerProvider,
   $HttpParamSerializerJQLikeProvider,
   $HttpBackendProvider,
+  $xhrFactoryProvider,
   $LocationProvider,
   $LogProvider,
   $ParseProvider,
@@ -11116,11 +11140,11 @@ function toDebugString(obj) {
  * - `codeName` – `{string}` – Code name of the release, such as "jiggling-armfat".
  */
 var version = {
-  full: '1.4.6',    // all of these placeholder strings will be replaced by grunt's
+  full: '1.4.7',    // all of these placeholder strings will be replaced by grunt's
   major: 1,    // package task
   minor: 4,
-  dot: 6,
-  codeName: 'multiplicative-elevation'
+  dot: 7,
+  codeName: 'dark-luminescence'
 };
 
 
@@ -11237,6 +11261,7 @@ function publishExternalAPI(angular) {
         $httpParamSerializer: $HttpParamSerializerProvider,
         $httpParamSerializerJQLike: $HttpParamSerializerJQLikeProvider,
         $httpBackend: $HttpBackendProvider,
+        $xhrFactory: $xhrFactoryProvider,
         $location: $LocationProvider,
         $log: $LogProvider,
         $parse: $ParseProvider,
@@ -11411,10 +11436,10 @@ function camelCase(name) {
     replace(MOZ_HACK_REGEXP, 'Moz$1');
 }
 
-var SINGLE_TAG_REGEXP = /^<(\w+)\s*\/?>(?:<\/\1>|)$/;
+var SINGLE_TAG_REGEXP = /^<([\w-]+)\s*\/?>(?:<\/\1>|)$/;
 var HTML_REGEXP = /<|&#?\w+;/;
-var TAG_NAME_REGEXP = /<([\w:]+)/;
-var XHTML_TAG_REGEXP = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi;
+var TAG_NAME_REGEXP = /<([\w:-]+)/;
+var XHTML_TAG_REGEXP = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:-]+)[^>]*)\/>/gi;
 
 var wrapMap = {
   'option': [1, '<select multiple="multiple">', '</select>'],
@@ -14146,6 +14171,13 @@ var $CoreAnimateCssProvider = function() {
     };
 
     return function(element, options) {
+      // there is no point in applying the styles since
+      // there is no animation that goes on at all in
+      // this version of $animateCss.
+      if (options.cleanupStyles) {
+        options.from = options.to = null;
+      }
+
       if (options.from) {
         element.css(options.from);
         options.from = null;
@@ -14613,10 +14645,10 @@ function $BrowserProvider() {
            $scope.keys = [];
            $scope.cache = $cacheFactory('cacheId');
            $scope.put = function(key, value) {
-             if (isUndefined($scope.cache.get(key))) {
+             if (angular.isUndefined($scope.cache.get(key))) {
                $scope.keys.push(key);
              }
-             $scope.cache.put(key, isUndefined(value) ? null : value);
+             $scope.cache.put(key, angular.isUndefined(value) ? null : value);
            };
          }]);
      </file>
@@ -17373,7 +17405,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
         compile: function() {
             return {
               pre: function attrInterpolatePreLinkFn(scope, element, attr) {
-                var $$observers = (attr.$$observers || (attr.$$observers = {}));
+                var $$observers = (attr.$$observers || (attr.$$observers = createMap()));
 
                 if (EVENT_HANDLER_ATTR_REGEXP.test(name)) {
                   throw $compileMinErr('nodomevents',
@@ -18425,28 +18457,18 @@ function $HttpProvider() {
      *
      *
      * ## General usage
-     * The `$http` service is a function which takes a single argument — a configuration object —
+     * The `$http` service is a function which takes a single argument — a {@link $http#usage configuration object} —
      * that is used to generate an HTTP request and returns  a {@link ng.$q promise}.
      *
      * ```js
-     *   // Simple GET request example :
-     *   $http.get('/someUrl').
-     *     then(function(response) {
+     *   // Simple GET request example:
+     *   $http({
+     *     method: 'GET',
+     *     url: '/someUrl'
+     *   }).then(function successCallback(response) {
      *       // this callback will be called asynchronously
      *       // when the response is available
-     *     }, function(response) {
-     *       // called asynchronously if an error occurs
-     *       // or server returns response with an error status.
-     *     });
-     * ```
-     *
-     * ```js
-     *   // Simple POST request example (passing data) :
-     *   $http.post('/someUrl', {msg:'hello word!'}).
-     *     then(function(response) {
-     *       // this callback will be called asynchronously
-     *       // when the response is available
-     *     }, function(response) {
+     *     }, function errorCallback(response) {
      *       // called asynchronously if an error occurs
      *       // or server returns response with an error status.
      *     });
@@ -18466,25 +18488,16 @@ function $HttpProvider() {
      * XMLHttpRequest will transparently follow it, meaning that the error callback will not be
      * called for such responses.
      *
-     * ## Writing Unit Tests that use $http
-     * When unit testing (using {@link ngMock ngMock}), it is necessary to call
-     * {@link ngMock.$httpBackend#flush $httpBackend.flush()} to flush each pending
-     * request using trained responses.
-     *
-     * ```
-     * $httpBackend.expectGET(...);
-     * $http.get(...);
-     * $httpBackend.flush();
-     * ```
      *
      * ## Shortcut methods
      *
      * Shortcut methods are also available. All shortcut methods require passing in the URL, and
-     * request data must be passed in for POST/PUT requests.
+     * request data must be passed in for POST/PUT requests. An optional config can be passed as the
+     * last argument.
      *
      * ```js
-     *   $http.get('/someUrl').then(successCallback);
-     *   $http.post('/someUrl', data).then(successCallback);
+     *   $http.get('/someUrl', config).then(successCallback, errorCallback);
+     *   $http.post('/someUrl', data, config).then(successCallback, errorCallback);
      * ```
      *
      * Complete list of shortcut methods:
@@ -18497,6 +18510,17 @@ function $HttpProvider() {
      * - {@link ng.$http#jsonp $http.jsonp}
      * - {@link ng.$http#patch $http.patch}
      *
+     *
+     * ## Writing Unit Tests that use $http
+     * When unit testing (using {@link ngMock ngMock}), it is necessary to call
+     * {@link ngMock.$httpBackend#flush $httpBackend.flush()} to flush each pending
+     * request using trained responses.
+     *
+     * ```
+     * $httpBackend.expectGET(...);
+     * $http.get(...);
+     * $httpBackend.flush();
+     * ```
      *
      * ## Deprecation Notice
      * <div class="alert alert-danger">
@@ -18655,7 +18679,7 @@ function $HttpProvider() {
      *
      * There are two kinds of interceptors (and two kinds of rejection interceptors):
      *
-     *   * `request`: interceptors get called with a http `config` object. The function is free to
+     *   * `request`: interceptors get called with a http {@link $http#usage config} object. The function is free to
      *     modify the `config` object or create a new one. The function needs to return the `config`
      *     object directly, or a promise containing the `config` or a new `config` object.
      *   * `requestError`: interceptor gets called when a previous interceptor threw an error or
@@ -19321,8 +19345,33 @@ function $HttpProvider() {
   }];
 }
 
-function createXhr() {
-    return new window.XMLHttpRequest();
+/**
+ * @ngdoc service
+ * @name $xhrFactory
+ *
+ * @description
+ * Factory function used to create XMLHttpRequest objects.
+ *
+ * Replace or decorate this service to create your own custom XMLHttpRequest objects.
+ *
+ * ```
+ * angular.module('myApp', [])
+ * .factory('$xhrFactory', function() {
+ *   return function createXhr(method, url) {
+ *     return new window.XMLHttpRequest({mozSystem: true});
+ *   };
+ * });
+ * ```
+ *
+ * @param {string} method HTTP method of the request (GET, POST, PUT, ..)
+ * @param {string} url URL of the request.
+ */
+function $xhrFactoryProvider() {
+  this.$get = function() {
+    return function createXhr() {
+      return new window.XMLHttpRequest();
+    };
+  };
 }
 
 /**
@@ -19330,6 +19379,7 @@ function createXhr() {
  * @name $httpBackend
  * @requires $window
  * @requires $document
+ * @requires $xhrFactory
  *
  * @description
  * HTTP backend used by the {@link ng.$http service} that delegates to
@@ -19342,8 +19392,8 @@ function createXhr() {
  * $httpBackend} which can be trained with responses.
  */
 function $HttpBackendProvider() {
-  this.$get = ['$browser', '$window', '$document', function($browser, $window, $document) {
-    return createHttpBackend($browser, createXhr, $browser.defer, $window.angular.callbacks, $document[0]);
+  this.$get = ['$browser', '$window', '$document', '$xhrFactory', function($browser, $window, $document, $xhrFactory) {
+    return createHttpBackend($browser, $xhrFactory, $browser.defer, $window.angular.callbacks, $document[0]);
   }];
 }
 
@@ -19367,7 +19417,7 @@ function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDoc
       });
     } else {
 
-      var xhr = createXhr();
+      var xhr = createXhr(method, url);
 
       xhr.open(method, url, true);
       forEach(headers, function(value, key) {
@@ -21236,20 +21286,30 @@ var $parseMinErr = minErr('$parse');
 
 
 function ensureSafeMemberName(name, fullExpression) {
+  if (name === "__defineGetter__" || name === "__defineSetter__"
+      || name === "__lookupGetter__" || name === "__lookupSetter__"
+      || name === "__proto__") {
+    throw $parseMinErr('isecfld',
+        'Attempting to access a disallowed field in Angular expressions! '
+        + 'Expression: {0}', fullExpression);
+  }
+  return name;
+}
+
+function getStringValue(name, fullExpression) {
   // From the JavaScript docs:
   // Property names must be strings. This means that non-string objects cannot be used
   // as keys in an object. Any non-string object, including a number, is typecasted
   // into a string via the toString method.
   //
   // So, to ensure that we are checking the same `name` that JavaScript would use,
-  // we cast it to a string, if possible
-  name =  (isObject(name) && name.toString) ? name.toString() : name;
-
-  if (name === "__defineGetter__" || name === "__defineSetter__"
-      || name === "__lookupGetter__" || name === "__lookupSetter__"
-      || name === "__proto__") {
-    throw $parseMinErr('isecfld',
-        'Attempting to access a disallowed field in Angular expressions! '
+  // we cast it to a string, if possible.
+  // Doing `name + ''` can cause a repl error if the result to `toString` is not a string,
+  // this is, this will handle objects that misbehave.
+  name = name + '';
+  if (!isString(name)) {
+    throw $parseMinErr('iseccst',
+        'Cannot convert object to primitive value! '
         + 'Expression: {0}', fullExpression);
   }
   return name;
@@ -21296,6 +21356,16 @@ function ensureSafeFunction(obj, fullExpression) {
       throw $parseMinErr('isecff',
         'Referencing call, apply or bind in Angular expressions is disallowed! Expression: {0}',
         fullExpression);
+    }
+  }
+}
+
+function ensureSafeAssignContext(obj, fullExpression) {
+  if (obj) {
+    if (obj === (0).constructor || obj === (false).constructor || obj === ''.constructor ||
+        obj === {}.constructor || obj === [].constructor || obj === Function.constructor) {
+      throw $parseMinErr('isecaf',
+        'Assigning to a constructor is disallowed! Expression: {0}', fullExpression);
     }
   }
 }
@@ -22014,6 +22084,8 @@ ASTCompiler.prototype = {
         'ensureSafeMemberName',
         'ensureSafeObject',
         'ensureSafeFunction',
+        'getStringValue',
+        'ensureSafeAssignContext',
         'ifDefined',
         'plus',
         'text',
@@ -22022,6 +22094,8 @@ ASTCompiler.prototype = {
           ensureSafeMemberName,
           ensureSafeObject,
           ensureSafeFunction,
+          getStringValue,
+          ensureSafeAssignContext,
           ifDefined,
           plusFn,
           expression);
@@ -22165,6 +22239,7 @@ ASTCompiler.prototype = {
           if (ast.computed) {
             right = self.nextId();
             self.recurse(ast.property, right);
+            self.getStringValue(right);
             self.addEnsureSafeMemberName(right);
             if (create && create !== 1) {
               self.if_(self.not(self.computedMember(left, right)), self.lazyAssign(self.computedMember(left, right), '{}'));
@@ -22248,6 +22323,7 @@ ASTCompiler.prototype = {
         self.if_(self.notNull(left.context), function() {
           self.recurse(ast.right, right);
           self.addEnsureSafeObject(self.member(left.context, left.name, left.computed));
+          self.addEnsureSafeAssignContext(left.context);
           expression = self.member(left.context, left.name, left.computed) + ast.operator + right;
           self.assign(intoId, expression);
           recursionFn(intoId || expression);
@@ -22373,6 +22449,10 @@ ASTCompiler.prototype = {
     this.current().body.push(this.ensureSafeFunction(item), ';');
   },
 
+  addEnsureSafeAssignContext: function(item) {
+    this.current().body.push(this.ensureSafeAssignContext(item), ';');
+  },
+
   ensureSafeObject: function(item) {
     return 'ensureSafeObject(' + item + ',text)';
   },
@@ -22383,6 +22463,14 @@ ASTCompiler.prototype = {
 
   ensureSafeFunction: function(item) {
     return 'ensureSafeFunction(' + item + ',text)';
+  },
+
+  getStringValue: function(item) {
+    this.assign(item, 'getStringValue(' + item + ',text)');
+  },
+
+  ensureSafeAssignContext: function(item) {
+    return 'ensureSafeAssignContext(' + item + ',text)';
   },
 
   lazyRecurse: function(ast, intoId, nameId, recursionFn, create, skipWatchIdCheck) {
@@ -22562,6 +22650,7 @@ ASTInterpreter.prototype = {
         var lhs = left(scope, locals, assign, inputs);
         var rhs = right(scope, locals, assign, inputs);
         ensureSafeObject(lhs.value, self.expression);
+        ensureSafeAssignContext(lhs.context);
         lhs.context[lhs.name] = rhs;
         return context ? {value: rhs} : rhs;
       };
@@ -22759,6 +22848,7 @@ ASTInterpreter.prototype = {
       var value;
       if (lhs != null) {
         rhs = right(scope, locals, assign, inputs);
+        rhs = getStringValue(rhs);
         ensureSafeMemberName(rhs, expression);
         if (create && create !== 1 && lhs && !(lhs[rhs])) {
           lhs[rhs] = {};
@@ -27395,6 +27485,7 @@ function formatNumber(number, pattern, groupSep, decimalSep, fractionSize) {
     if (fractionSize > 0 && number < 1) {
       formatedText = number.toFixed(fractionSize);
       number = parseFloat(formatedText);
+      formatedText = formatedText.replace(DECIMAL_SEP, decimalSep);
     }
   }
 
@@ -33190,7 +33281,7 @@ var ngInitDirective = ngDirective({
  *   </file>
  * </example>
  *
- * ### Example - splitting on whitespace
+ * ### Example - splitting on newline
  * <example name="ngList-directive-newlines">
  *   <file name="index.html">
  *    <textarea ng-model="list" ng-list="&#10;" ng-trim="false"></textarea>
@@ -33275,7 +33366,9 @@ var ngModelMinErr = minErr('ngModel');
  * @ngdoc type
  * @name ngModel.NgModelController
  *
- * @property {string} $viewValue Actual string value in the view.
+ * @property {*} $viewValue The actual value from the control's view. For `input` elements, this is a
+ * String. See {@link ngModel.NgModelController#$setViewValue} for information about when the $viewValue
+ * is set.
  * @property {*} $modelValue The value in the model that the control is bound to.
  * @property {Array.<Function>} $parsers Array of functions to execute, as a pipeline, whenever
        the control reads value from the DOM. The functions are called in array order, each passing
@@ -35226,11 +35319,16 @@ var ngOptionsDirective = ['$compile', '$parse', function($compile, $parse) {
       function updateOptionElement(option, element) {
         option.element = element;
         element.disabled = option.disabled;
-        if (option.value !== element.value) element.value = option.selectValue;
+        // NOTE: The label must be set before the value, otherwise IE10/11/EDGE create unresponsive
+        // selects in certain circumstances when multiple selects are next to each other and display
+        // the option list in listbox style, i.e. the select is [multiple], or specifies a [size].
+        // See https://github.com/angular/angular.js/issues/11314 for more info.
+        // This is unfortunately untestable with unit / e2e tests
         if (option.label !== element.label) {
           element.label = option.label;
           element.textContent = option.label;
         }
+        if (option.value !== element.value) element.value = option.selectValue;
       }
 
       function addOrReuseElement(parent, current, type, templateElement) {
@@ -35271,7 +35369,10 @@ var ngOptionsDirective = ['$compile', '$parse', function($compile, $parse) {
         if (emptyOption_ || unknownOption_) {
           while (current &&
                 (current === emptyOption_ ||
-                current === unknownOption_)) {
+                current === unknownOption_ ||
+                emptyOption_ && emptyOption_.nodeType === NODE_TYPE_COMMENT)) {
+            // Empty options might have directives that transclude
+            // and insert comments (e.g. ngIf)
             current = current.nextSibling;
           }
         }
@@ -37019,7 +37120,7 @@ var SelectController =
  *     </select><br>
  *
  *     <label for="singleSelect"> Single select with "not selected" option and dynamic option values: </label><br>
- *     <select name="singleSelect" ng-model="data.singleSelect">
+ *     <select name="singleSelect" id="singleSelect" ng-model="data.singleSelect">
  *       <option value="">---Please select---</option> <!-- not selected / blank option -->
  *       <option value="{{data.option1}}">Option 1</option> <!-- interpolation -->
  *       <option value="option-2">Option 2</option>
@@ -37060,7 +37161,7 @@ var SelectController =
  * <div ng-controller="ExampleController">
  *   <form name="myForm">
  *     <label for="repeatSelect"> Repeat select: </label>
- *     <select name="repeatSelect" ng-model="data.repeatSelect">
+ *     <select name="repeatSelect" id="repeatSelect" ng-model="data.repeatSelect">
  *       <option ng-repeat="option in data.availableOptions" value="{{option.id}}">{{option.name}}</option>
  *     </select>
  *   </form>
@@ -37072,7 +37173,7 @@ var SelectController =
  *  angular.module('ngrepeatSelect', [])
  *    .controller('ExampleController', ['$scope', function($scope) {
  *      $scope.data = {
- *       singleSelect: null,
+ *       repeatSelect: null,
  *       availableOptions: [
  *         {id: '1', name: 'Option A'},
  *         {id: '2', name: 'Option B'},
@@ -38717,7 +38818,7 @@ var Logger = require('./annotations/Logger');
 var Fifo = require('./algorithms/Fifo');
 var Lru = require('./algorithms/Lru');
 var Nru = require('./algorithms/Nru');
-// var Optimal = require('./algorithms/Optimal');
+var Optimal = require('./algorithms/Optimal');
 var Memory = require('./common/Memory');
 var Requirement = require('./common/Requirement');
 var FixedEvenAssignmentPolicy = require('./filters/assignment_filters/FixedEvenAssignmentPolicy');
@@ -38752,8 +38853,8 @@ cocktail.mix({
       if (this._algorithm instanceof Fifo)
         return 'fifo';
 
-      // if (this._algorithm instanceof Optimal)
-        // return 'optimal';
+      if (this._algorithm instanceof Optimal)
+        return 'optimal';
 
       if (this._algorithm instanceof Nru) {
         return 'nru';
@@ -39052,9 +39153,15 @@ cocktail.mix({
     this.log("Temporal page flags cleared.");
   },
 
+  _clearFinished: function() {
+    this._memory.clearFinished();
+    this.log("Finished proceses cleared.");
+  },
+
   _processRequirements: function() {
     this._requirements.forEach(function(requirement) {
       //  Start with a clean image of the frames.
+      this._clearFinished();
       this._clearTemporalFlags();
       //Declare victim here because it'll be used for update.
       this.log("Processing requirement: " + requirement + ".");
@@ -39097,7 +39204,7 @@ cocktail.mix({
   }
 });
 
-},{"./algorithms/Fifo":29,"./algorithms/Lru":30,"./algorithms/Nru":31,"./annotations/Logger":32,"./common/Memory":34,"./common/Requirement":36,"./filters/PageBufferingFilter":40,"./filters/SecondChanceFilter":41,"./filters/assignment_filters/FixedEvenAssignmentPolicy":43,"cocktail":13}],27:[function(require,module,exports){
+},{"./algorithms/Fifo":29,"./algorithms/Lru":30,"./algorithms/Nru":31,"./algorithms/Optimal":32,"./annotations/Logger":33,"./common/Memory":35,"./common/Requirement":37,"./filters/PageBufferingFilter":41,"./filters/SecondChanceFilter":42,"./filters/assignment_filters/FixedEvenAssignmentPolicy":44,"cocktail":13}],27:[function(require,module,exports){
 var cocktail = require('cocktail');
 var Logger = require('../annotations/Logger');
 var AlgorithmInterface = require('./AlgorithmInterface');
@@ -39266,7 +39373,7 @@ cocktail.mix({
 	}
 });
 
-},{"../annotations/Logger":32,"../common/VictimsStructures/Queue":37,"../filters/replacement_filters/LocalReplacementPolicy":44,"./AlgorithmInterface":28,"cocktail":13}],28:[function(require,module,exports){
+},{"../annotations/Logger":33,"../common/VictimsStructures/Queue":38,"../filters/replacement_filters/LocalReplacementPolicy":45,"./AlgorithmInterface":28,"cocktail":13}],28:[function(require,module,exports){
 var cocktail = require('cocktail');
 
 //Using a trait as an interface.
@@ -39352,7 +39459,7 @@ cocktail.mix({
 
 });
 
-},{"../annotations/Logger":32,"../common/VictimsStructures/Queue":37,"./Algorithm":27,"./AlgorithmInterface":28,"cocktail":13}],30:[function(require,module,exports){
+},{"../annotations/Logger":33,"../common/VictimsStructures/Queue":38,"./Algorithm":27,"./AlgorithmInterface":28,"cocktail":13}],30:[function(require,module,exports){
 var cocktail = require('cocktail');
 var Logger = require('../annotations/Logger');
 var AlgorithmInterface = require('./AlgorithmInterface');
@@ -39381,7 +39488,7 @@ cocktail.mix({
 	}
 });
 
-},{"../annotations/Logger":32,"../common/VictimsStructures/ReQueueQueue":38,"./AlgorithmInterface":28,"./Fifo":29,"cocktail":13}],31:[function(require,module,exports){
+},{"../annotations/Logger":33,"../common/VictimsStructures/ReQueueQueue":39,"./AlgorithmInterface":28,"./Fifo":29,"cocktail":13}],31:[function(require,module,exports){
 var cocktail = require('cocktail');
 var Logger = require('../annotations/Logger');
 var AlgorithmInterface = require('./AlgorithmInterface');
@@ -39461,7 +39568,157 @@ cocktail.mix({
 
 });
 
-},{"../annotations/Logger":32,"../common/VictimsStructures/Queue":37,"./Algorithm":27,"./AlgorithmInterface":28,"cocktail":13}],32:[function(require,module,exports){
+},{"../annotations/Logger":33,"../common/VictimsStructures/Queue":38,"./Algorithm":27,"./AlgorithmInterface":28,"cocktail":13}],32:[function(require,module,exports){
+var cocktail = require('cocktail');
+var Logger = require('../annotations/Logger');
+var AlgorithmInterface = require('./AlgorithmInterface');
+var Algorithm = require('./Algorithm');
+var Queue = require('../common/VictimsStructures/Queue');
+var Page = require('../common/Page');
+
+cocktail.use(Logger);
+
+cocktail.mix({
+	'@exports': module,
+	'@as': 'class',
+	'@extends': Algorithm,
+	'@traits': [AlgorithmInterface],
+	'@logger' : [console, "Algorithm Optimal:"],
+
+	constructor: function() {
+		this.callSuper("constructor");
+	  this._victims = new Queue();
+		this._orderedVictims = [];
+		this.log("Created.");
+	},
+
+	initialize: function(requirements) {
+		this.callSuper("initialize", requirements);
+	  this._victims = new Queue();
+		this._orderedVictims = [];
+		this._orderVictims();
+		this.log("Initialized.");
+	},
+
+	victimFor: function(requirement) {
+	  var result = this.callSuper("victimFor", requirement);
+		// Find the victim & set it as unloaded.
+		var page = this._orderedVictims.find(function(page) {
+			return (page.process == result.page.getProcess() && page.pageNumber == result.page.getPageNumber());
+		});
+		page.loaded = false;
+		return result;
+	},
+
+	update: function(requirement) {
+
+		if (requirement.getMode() ===  "finish") {
+			// Remove the pages that finished from the victim's structure.
+			var toRemove = [];
+			this._orderedVictims.forEach(function(page, index) {
+			  if(page.process === requirement.getProcess()) {
+					this.log("Page: {process:" + page.process + " pageNumber:" + page.pageNumber  + "} is being finished.");
+					toRemove.push(page);
+				}
+			}, this);
+
+			toRemove.forEach(function(page) {
+				var index = this._orderedVictims.indexOf(page);
+			  this._orderedVictims.splice(index, 1);
+			}, this);
+
+		} else {
+			// Find the new commer, set it as loaded, update its instant & check if is finished.
+			var page = this._orderedVictims.find(function(page) {
+				return (page.process == requirement.getProcess() && page.pageNumber == requirement.getPageNumber());
+			});
+			this.log("Page: {process:" + page.process + " pageNumber:" + page.pageNumber  + "} is being updated.");
+			page.loaded = true;
+			page.index++;
+			page.finished = (page.index +1 >= page.requirements.length);
+		}
+
+		// Update the victim's structure.
+		this._victims = new Queue();
+
+		// // Get all the finished pages first (ordered by FIFO in Memory).
+		// this._orderedVictims.forEach(function(page) {
+		//   if (page.finished && page.loaded) {
+		//   	this._victims.add(page.simpleRequirement[page.index]);
+		//   }
+		// }, this);
+
+		// Get all the finished pages first (ordered by FIFO in Victim's Structure).
+		var finished = [];
+		this._orderedVictims.forEach(function(page) {
+		  if (page.finished && page.loaded) {
+				finished.push(page);
+		  }
+		}, this);
+
+		finished.sort(function(a, b) {
+		  return a.requirements[a.index] - b.requirements[b.index];
+		});
+
+		finished.forEach(function(requirement) {
+			var page = this._orderedVictims.find(function(page) {
+		    return (page.process == requirement.process && page.pageNumber == requirement.pageNumber);
+		  });
+			this._victims.add(page.simpleRequirement[page.index]);
+		}, this);
+
+		// Get the loaded pages and order them by next reference (optimal).
+		var loadedNotFinished = [];
+		this._orderedVictims.forEach(function(page) {
+		  if (!page.finished && page.loaded) {
+		  	loadedNotFinished.push(page);
+		  }
+		});
+
+		loadedNotFinished.sort(function(a, b) {
+		  return b.requirements[(b.index) +1] - a.requirements[(a.index) +1];
+		});
+
+		loadedNotFinished.forEach(function(requirement) {
+		  var page = this._orderedVictims.find(function(page) {
+		    return (page.process == requirement.process && page.pageNumber == requirement.pageNumber);
+		  });
+			this._victims.add(page.simpleRequirement[page.index]);
+		}, this);
+
+	},
+
+	_orderVictims: function() {
+	  var reqs = this._requirements;
+		reqs.forEach(function(req, instant) {
+			var page = this._orderedVictims.find(function(page) {
+			  return (page.process == req.getProcess() && page.pageNumber == req.getPageNumber());
+			});
+			if(page == undefined) {
+				page = {
+					process: req.getProcess(),
+					pageNumber: req.getPageNumber(),
+					finished: false,
+					loaded: false,
+					index: -1,
+					requirements: [],
+					simpleRequirement: []
+				}
+				if (req.getMode() != "finish") {
+					this._orderedVictims.push(page);
+				}
+			}
+			page.requirements.push(instant);
+			var instant = req.asPage();
+			instant.setModified(req.getMode() == "write");
+			page.simpleRequirement.push(instant);
+		}, this);
+		this.log(this._orderedVictims);
+	}
+
+});
+
+},{"../annotations/Logger":33,"../common/Page":36,"../common/VictimsStructures/Queue":38,"./Algorithm":27,"./AlgorithmInterface":28,"cocktail":13}],33:[function(require,module,exports){
 var cocktail = require('cocktail');
 var config = require('../../config');
 
@@ -39511,7 +39768,7 @@ cocktail.mix({
   }
 });
 
-},{"../../config":10,"cocktail":13}],33:[function(require,module,exports){
+},{"../../config":10,"cocktail":13}],34:[function(require,module,exports){
 var cocktail = require('cocktail');
 
 cocktail.mix({
@@ -39560,15 +39817,15 @@ cocktail.mix({
   }
 });
 
-},{"cocktail":13}],34:[function(require,module,exports){
+},{"cocktail":13}],35:[function(require,module,exports){
 var cocktail = require('cocktail');
-
 //Add Logger annotation.
 var Logger = require('../annotations/Logger');
 cocktail.use(Logger);
 
 //Using Behavior class.
 var Behavior = require('./Behavior');
+var Page = require('./Page');
 
 /*
  *  Adding this trait lets the constructor accept an object as parameter.
@@ -39647,9 +39904,8 @@ cocktail.mix({
     var i = 0;
     var array = this._array;
     var length = this._size;
-
 		for (; i < length; i++) {
-			if (array[i] === undefined || array[i].isFinished()) {
+			if (array[i] === undefined || Page.empty().equals(array[i])) {
 				return i;
 			}
 		}
@@ -39847,10 +40103,20 @@ cocktail.mix({
         exec(element, index, context.memory);
       }, context);
     }
+  },
+
+  clearFinished: function() {
+    for (var i = 0; i < this._size; i++) {
+      var page = this._array[i];
+      if (page === undefined || page.isFinished()) {
+        this.atPut(i, Page.empty());
+      }
+    }
   }
+
 });
 
-},{"../annotations/Logger":32,"./Behavior":33,"./Memory":34,"cocktail":13}],35:[function(require,module,exports){
+},{"../annotations/Logger":33,"./Behavior":34,"./Memory":35,"./Page":36,"cocktail":13}],36:[function(require,module,exports){
 var cocktail = require('cocktail');
 
 //Add Logger annotation.
@@ -39893,7 +40159,7 @@ cocktail.mix({
     empty: function () {
       var Page = require('./Page');
   		return new Page({
-        'process': '',
+        'process': 'empty',
         'pageNumber': 0,
         'mode': '',
         'pageFault': false,
@@ -40002,7 +40268,7 @@ cocktail.mix({
   }
 });
 
-},{"../annotations/Logger":32,"./Page":35,"./Requirement":36,"cocktail":13,"cocktail-trait-configurable":12}],36:[function(require,module,exports){
+},{"../annotations/Logger":33,"./Page":36,"./Requirement":37,"cocktail":13,"cocktail-trait-configurable":12}],37:[function(require,module,exports){
 var cocktail = require('cocktail');
 
 //Add Logger annotation.
@@ -40130,7 +40396,7 @@ cocktail.mix({
   }
 });
 
-},{"../annotations/Logger":32,"./Behavior":33,"./Page":35,"./Requirement":36,"cocktail":13,"cocktail-trait-configurable":12}],37:[function(require,module,exports){
+},{"../annotations/Logger":33,"./Behavior":34,"./Page":36,"./Requirement":37,"cocktail":13,"cocktail-trait-configurable":12}],38:[function(require,module,exports){
 var cocktail = require('cocktail');
 var Logger = require('../../annotations/Logger');
 var VictimsStructureInterface = require('./VictimsStructureInterface');
@@ -40309,7 +40575,7 @@ cocktail.mix({
   }
 });
 
-},{"../../annotations/Logger":32,"./VictimsStructureInterface":39,"cocktail":13}],38:[function(require,module,exports){
+},{"../../annotations/Logger":33,"./VictimsStructureInterface":40,"cocktail":13}],39:[function(require,module,exports){
 var cocktail = require('cocktail');
 var Logger = require('../../annotations/Logger');
 var VictimsStructureInterface = require('./VictimsStructureInterface');
@@ -40367,7 +40633,7 @@ cocktail.mix({
   }
 });
 
-},{"../../annotations/Logger":32,"./Queue":37,"./ReQueueQueue":38,"./VictimsStructureInterface":39,"cocktail":13}],39:[function(require,module,exports){
+},{"../../annotations/Logger":33,"./Queue":38,"./ReQueueQueue":39,"./VictimsStructureInterface":40,"cocktail":13}],40:[function(require,module,exports){
 var cocktail = require('cocktail');
 
 //Using a trait as an interface.
@@ -40389,7 +40655,7 @@ cocktail.mix({
 	]
 });
 
-},{"cocktail":13}],40:[function(require,module,exports){
+},{"cocktail":13}],41:[function(require,module,exports){
 var cocktail = require('cocktail');
 var Logger = require('../annotations/Logger');
 var Page = require('../common/Page');
@@ -40446,7 +40712,7 @@ cocktail.mix({
 	}
 });
 
-},{"../annotations/Logger":32,"../common/Page":35,"cocktail":13}],41:[function(require,module,exports){
+},{"../annotations/Logger":33,"../common/Page":36,"cocktail":13}],42:[function(require,module,exports){
 var cocktail = require('cocktail');
 var Logger = require('../annotations/Logger');
 
@@ -40491,7 +40757,7 @@ cocktail.mix({
 	}
 });
 
-},{"../annotations/Logger":32,"cocktail":13}],42:[function(require,module,exports){
+},{"../annotations/Logger":33,"cocktail":13}],43:[function(require,module,exports){
 var cocktail = require('cocktail');
 
 //Using a trait as an interface.
@@ -40501,7 +40767,7 @@ cocktail.mix({
 	'@requires': ['hasFreeFrameFor']
 });
 
-},{"cocktail":13}],43:[function(require,module,exports){
+},{"cocktail":13}],44:[function(require,module,exports){
 var cocktail = require('cocktail');
 var Logger = require('../../annotations/Logger');
 var AssignmentFilterInterface = require('./AssignmentFilterInterface');
@@ -40541,7 +40807,7 @@ cocktail.mix({
 	}
 });
 
-},{"../../annotations/Logger":32,"./AssignmentFilterInterface":42,"cocktail":13}],44:[function(require,module,exports){
+},{"../../annotations/Logger":33,"./AssignmentFilterInterface":43,"cocktail":13}],45:[function(require,module,exports){
 var cocktail = require('cocktail');
 var Logger = require('../../annotations/Logger');
 var ReplacementFilterInterface = require('./ReplacementFilterInterface');
@@ -40576,7 +40842,7 @@ cocktail.mix({
 	}
 });
 
-},{"../../annotations/Logger":32,"./ReplacementFilterInterface":45,"cocktail":13}],45:[function(require,module,exports){
+},{"../../annotations/Logger":33,"./ReplacementFilterInterface":46,"cocktail":13}],46:[function(require,module,exports){
 var cocktail = require('cocktail');
 
 //Using a trait as an interface.

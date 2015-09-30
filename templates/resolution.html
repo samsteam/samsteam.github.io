@@ -55,7 +55,7 @@
 							<td class="rtable rtable-space"></td>
 							<td class="rtable rtable-frame" ng-repeat="p in userSolution"
 							ng-dblclick="showOptions(n,$index)"
-							ng-class="frameClassFor(p.frames[n], p)" contenteditable="true" strip-br="true"
+							ng-class="frameClassFor(p.frames[n])" contenteditable="true" strip-br="true"
 							ng-model="inputMatrix[$index][n]" ng-change="changeFrame(n,$index)">
 								<!-- {{(p.frames[n].reservedForPageBuffering || p.frames[n].finished) ? '' : (p.frames[n].process + p.frames[n].pageNumber)}} -->
 								{{ inputMatrix[$index][n] }}
@@ -96,8 +96,8 @@
 							<td class="rtable rtable-frame">Frame {{n}}</td>
 							<td class="rtable rtable-space"></td>
 							<td class="rtable rtable-frame" ng-repeat="p in results"
-							ng-class="frameClassFor(p.frames[n],p)">
-								{{(p.frames[n].reservedForPageBuffering || p.frames[n].finished) ? '' : (p.frames[n].process + p.frames[n].pageNumber)}}
+							ng-class="frameClassFor(p.frames[n])">
+								{{(p.frames[n].reservedForPageBuffering || p.frames[n].finished || (p.frames[n].process == "empty")) ? '' : (p.frames[n].process + p.frames[n].pageNumber)}}
 							</td>
 						</tr>
 						<!-- render page faults -->

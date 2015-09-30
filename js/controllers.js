@@ -432,7 +432,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
       memory.pageFault = false;
       memory.victim = undefined;
       angular.forEach(memory.frames, function(frame, i){
-        frame.process = '';
+        frame.process = 'empty';
         frame.pageNumber = 0;
         frame.required = false;
         frame.pageFault = false;
@@ -551,37 +551,38 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
       });
     });
 
-    console.log('inputMatrix');
-    console.log($scope.inputMatrix);
-    console.log('UserSolution');
-    console.log($scope.userSolution);
-    console.log('results');
-    console.log($scope.results);
-
     //compare userSolution to results
-    var ok = true;
+    var fails = 0;
 
     angular.forEach($scope.results, function(instant, instant_number){
       angular.forEach(instant.frames, function(frame, frame_number){
 
         if (frame.finished) {
           //should only check for finished in userSolution
-          $scope.userSolution[instant_number].frames[frame_number].finished ? ok = true : ok = false;
+          $scope.userSolution[instant_number].frames[frame_number].finished ? fails = fails : fails++;
         } else {
           //should check entire frame
           if(JSON.stringify(frame) == JSON.stringify($scope.userSolution[instant_number].frames[frame_number])){
             //todo piola por ahora
           } else {
             //NOPE
-            ok = false;
+            fails++;
+            console.log(frame.process + frame.pageNumber);
           }
         }
 
       });
     });
 
-    ok ? alert("BIEN, BOLUDO BIEEEN") : alert("RECURSÁ SORETE");
+    //show feedback to user
+    fails == 0 ? alert("BIEN, BOLUDO BIEEEN") : alert("RECURSÁ SORETE");
 
+    console.log('inputMatrix');
+    console.log($scope.inputMatrix);
+    console.log('UserSolution');
+    console.log($scope.userSolution);
+    console.log('results');
+    console.log($scope.results);
 
 
   }
@@ -590,23 +591,18 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     $scope.victimsQueue = $scope.results[instantIndex].potentialVictims;
   }
 
-  $scope.frameClassFor = function(frame, p){
+  $scope.frameClassFor = function(frame){
 
     if (!frame) return '';
+
+    if(frame.finished){
+        //process ended on this instant
+        return 'rtable-finished';
+    }
 
     if (frame.reservedForPageBuffering){
       //frame is async reserved
       return 'rtable-async';
-    }
-
-    if(frame.finished){
-      //page belongs to a finished process
-      if(p.requirement.process == frame.process){
-        //process ended on this instant
-        return 'rtable-finished';
-      } else {
-        return '';
-      }
     }
 
     if (frame.pageFault) {
