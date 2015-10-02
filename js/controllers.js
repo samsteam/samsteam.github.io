@@ -342,7 +342,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   }
 
   $scope.init = function(){
-    console.info('Init Policies Controller');
+    // console.info('Init Policies Controller');
     $scope.algorithms = SchedulerService.getAlgorithms();
     $scope.algorithmSelected = SchedulerService.getAlgorithm();
     $scope.memorySize = SchedulerService.getMemorySize() || 4;
