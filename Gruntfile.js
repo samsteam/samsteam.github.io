@@ -4,12 +4,13 @@ module.exports = function(grunt) {
     clean: [ "dist/desktop-app" ],
     nodewebkit: {
       options: {
+	version: '0.12.3',
         build_dir: './dist/desktop-app',
         // choose what platforms to compile for here
         mac: true,
         win: true,
         linux32: true,
-        linux64: true
+        linux64: false
       },
       src: ['*','dist/**/*', 'templates/**/*', 'images/**/*']
     },
