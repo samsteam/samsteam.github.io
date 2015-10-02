@@ -12,7 +12,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 .controller('MainController', function($scope, $state, SamsService, $translate){
 
   $scope.initMain = function(){
-    console.info('Init Main Controller');
+    //console.info('Init Main Controller');
     $scope.locales = SamsService.getLocales();
     $scope.locale = SamsService.getDefaultLocale();
     $translate.use($scope.locale);
@@ -46,7 +46,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 */
 
 .controller('HomeController', function($scope){
-  console.info('In HomeController');
+  // console.info('In HomeController');
 })
 
 /*
@@ -56,7 +56,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 */
 
 .controller('AboutController', function($scope, $filter){
-  console.info('In AboutController');
+  // console.info('In AboutController');
   var devTeam = [
     {
       'name' : 'Babbini, Ignacio',
@@ -98,7 +98,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 .controller('RequirementsController', function($rootScope, $scope, $state, $translate, SamsService, SchedulerService, ValidationService){
 
   $scope.init = function(){
-    console.info('Init Requirements Controller');
+    // console.info('Init Requirements Controller');
     $scope.inputProcesses = SamsService.getInputProcesses();
     $scope.processes = SamsService.getProcesses();
     $scope.pages = SamsService.getPages();
@@ -160,7 +160,8 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 
   $scope.next = function() {
    $rootScope.$broadcast('processing');
-   $scope.processRequirements();
+   //  $scope.processRequirements();
+   $scope.__refreshData(); // __refreshData also call processRequeriments
    $state.go('step.policies');
  }
 
@@ -403,7 +404,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 | ---------------------------------------------------------------------------
 */
 .controller('ResolutionController', function($window, $rootScope, $scope, $state, SchedulerService, checkData){
-  console.info('In Resolution Controller');
+  // console.info('In Resolution Controller');
   if (!checkData)
     return $state.go('step.requirements');
 
@@ -445,7 +446,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     });
   }
 
-  $scope.addDefaultInputMatrixUserInput = function() {
+  $scope.__addDefaultInputMatrixUserInput = function() {
 
     $scope.inputMatrix[0][1] = "";
     $scope.inputMatrix[0][0] = 'a1';
@@ -500,7 +501,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     $scope.inputMatrix[12][2] = "";
     $scope.inputMatrix[12][3] = "";
 
-    console.log($scope.inputMatrix);
+    // console.log($scope.inputMatrix);
   }
 
   try {
@@ -511,7 +512,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     $scope.instants = $scope.results.length - 1;
 
     // TODO: remove this (test)
-    // $scope.addDefaultInputMatrixUserInput();
+    // $scope.__addDefaultInputMatrixUserInput();
 
   } catch (err) {
     alert(err);
@@ -521,7 +522,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   }
 
   $scope.changeFrame = function(i,j){
-    console.log($scope.inputMatrix);
+    // console.log($scope.inputMatrix);
   }
 
   $scope.showOptions = function(nFrame, index){
@@ -533,6 +534,8 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   }
 
   $scope.checkSolution = function(){
+
+    $rootScope.$broadcast('processing');
 
     //should follow this steps:
     //1. validate data in inputMatrix
@@ -567,22 +570,28 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
           } else {
             //NOPE
             fails++;
-            console.log(frame.process + frame.pageNumber);
+            // console.log(frame.process + frame.pageNumber);
           }
         }
 
       });
     });
 
-    //show feedback to user
-    fails == 0 ? alert("BIEN, BOLUDO BIEEEN") : alert("RECURSÁ SORETE");
+    $rootScope.$broadcast('processed');
 
-    console.log('inputMatrix');
-    console.log($scope.inputMatrix);
-    console.log('UserSolution');
-    console.log($scope.userSolution);
-    console.log('results');
-    console.log($scope.results);
+    //show feedback to user
+    if (!fails) {
+      alert("The Solution is OK!");
+    } else {
+      alert("Fail. You have one or more errors.");
+    }
+
+    // console.log('inputMatrix');
+    // console.log($scope.inputMatrix);
+    // console.log('UserSolution');
+    // console.log($scope.userSolution);
+    // console.log('results');
+    // console.log($scope.results);
   }
 
   $scope.showVictims = function(instantIndex) {
