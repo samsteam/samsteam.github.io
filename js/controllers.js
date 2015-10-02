@@ -583,8 +583,6 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     console.log($scope.userSolution);
     console.log('results');
     console.log($scope.results);
-
-
   }
 
   $scope.showVictims = function(instantIndex) {
