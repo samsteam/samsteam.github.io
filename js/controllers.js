@@ -305,7 +305,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   }
 
   $scope.checkMaxPages = function(secuence, el) {
-    console.log(el.s)
+    // console.log(el.s)
     if ( $scope.pages[secuence.process] ) {
       var totalOfProcess = $scope.pages[secuence.process].split(',').length;// - 1; //exclude f
       // var remainingOfProcess = $scope.remainingRequeriments(secuence.process);
