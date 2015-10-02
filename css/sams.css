@@ -366,6 +366,9 @@ New classes
 }
 
 .center-table {
+  table-layout:fixed;
+  margin-top:30px;
+  margin-bottom:30px;
   margin-left: auto;
   margin-right: auto;
   display: table;
@@ -377,4 +380,34 @@ New classes
 
 .section-header{
   margin-top: 0;
+}
+
+.text-default {
+  color: #6265B1
+}
+
+.modal .modal-body {
+  background: #363942;
+  color: #fff;
+}
+
+.modal .modal-body input[type="checkbox"]:focus {
+  outline: 2px solid #5bc0de;
+}
+
+.modal .modal-body .checkbox label {
+  min-height: auto;
+}
+
+@media print {
+  body *:not(.printable *) {
+    display: none;
+  }
+  .no-printable {
+    display: none !important;
+  }
+  .printable {
+    page-break-before: always;
+    page-break-after: always;
+  }
 }

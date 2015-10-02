@@ -20,6 +20,7 @@ module.exports = function(grunt) {
       deps:{
         src:[
           'node_modules/jquery/dist/jquery.js',
+          'node_modules/angular/angular.js',
           'node_modules/bootstrap/dist/js/bootstrap.js',
           'deps/js/**/*.js'
         ],

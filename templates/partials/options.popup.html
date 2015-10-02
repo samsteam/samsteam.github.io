@@ -1,0 +1,52 @@
+<div class="modal fade" id="modal-options" style="color:black">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="page-header section-header">
+          <h4 class="modal-title">
+            FLAGS FOR: <span class="text-info"><b>{{inputMatrix[currentInstant][currentFrame]}}</b></span>
+          </h4>
+        </div>
+        <form class="form">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="required" ng-model="actual.required" autofocus>
+              Required
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="pageFault" ng-model="actual.pageFault">
+              Page Fault
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="modified" ng-model="actual.modified">
+              Modified
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="finished" ng-model="actual.finished">
+              Finished
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="referenced" ng-model="actual.referenced">
+              Referenced
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="reservedForPageBuffering" ng-model="actual.reservedForPageBuffering">
+              Reserved for Page Buffering
+            </label>
+          </div>
+          <button type="button" class="btn btn-block btn-info" data-dismiss="modal">CLOSE</button>
+        </form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

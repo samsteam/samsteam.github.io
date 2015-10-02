@@ -12,7 +12,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 .controller('MainController', function($scope, $state, SamsService, $translate){
 
   $scope.initMain = function(){
-    console.info('Init Main Controller');
+    //console.info('Init Main Controller');
     $scope.locales = SamsService.getLocales();
     $scope.locale = SamsService.getDefaultLocale();
     $translate.use($scope.locale);
@@ -46,7 +46,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 */
 
 .controller('HomeController', function($scope){
-  console.info('In HomeController');
+  // console.info('In HomeController');
 })
 
 /*
@@ -56,7 +56,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 */
 
 .controller('AboutController', function($scope, $filter){
-  console.info('In AboutController');
+  // console.info('In AboutController');
   var devTeam = [
     {
       'name' : 'Babbini, Ignacio',
@@ -98,7 +98,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 .controller('RequirementsController', function($rootScope, $scope, $state, $translate, SamsService, SchedulerService, ValidationService){
 
   $scope.init = function(){
-    console.info('Init Requirements Controller');
+    // console.info('Init Requirements Controller');
     $scope.inputProcesses = SamsService.getInputProcesses();
     $scope.processes = SamsService.getProcesses();
     $scope.pages = SamsService.getPages();
@@ -160,7 +160,8 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 
   $scope.next = function() {
    $rootScope.$broadcast('processing');
-   $scope.processRequirements();
+   //  $scope.processRequirements();
+   $scope.__refreshData(); // __refreshData also call processRequeriments
    $state.go('step.policies');
  }
 
@@ -304,7 +305,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   }
 
   $scope.checkMaxPages = function(secuence, el) {
-    console.log(el.s)
+    // console.log(el.s)
     if ( $scope.pages[secuence.process] ) {
       var totalOfProcess = $scope.pages[secuence.process].split(',').length;// - 1; //exclude f
       // var remainingOfProcess = $scope.remainingRequeriments(secuence.process);
@@ -341,7 +342,7 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
   }
 
   $scope.init = function(){
-    console.info('Init Policies Controller');
+    // console.info('Init Policies Controller');
     $scope.algorithms = SchedulerService.getAlgorithms();
     $scope.algorithmSelected = SchedulerService.getAlgorithm();
     $scope.memorySize = SchedulerService.getMemorySize() || 4;
@@ -402,15 +403,117 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
 | Show results
 | ---------------------------------------------------------------------------
 */
-.controller('ResolutionController', function($rootScope, $scope, $state, SchedulerService, checkData){
-  console.info('In Resolution Controller');
+.controller('ResolutionController', function($window, $rootScope, $scope, $state, SchedulerService, checkData){
+  // console.info('In Resolution Controller');
   if (!checkData)
     return $state.go('step.requirements');
+
+  $scope.showSolve = false;
+
+  $scope.print = function(){
+    $window.print();
+  }
+
+  $scope.__emptyResolution = function(results) {
+    $scope.inputMatrix = [];
+    var biggerFrame = -1;
+    angular.forEach(results, function(instant, i){
+      var l = instant.frames.length;
+      if ( l > biggerFrame ){
+        biggerFrame = l;
+      }
+    });
+    for (var i = 0; i < results.length; i++) {
+      $scope.inputMatrix[i] = [];
+      for (var j = 0; j < biggerFrame; j++) {
+        $scope.inputMatrix[i][j] = "";
+      }
+    }
+    angular.forEach(results, function(memory, instant){
+      memory.pageFault = false;
+      memory.victim = undefined;
+      angular.forEach(memory.frames, function(frame, i){
+        frame.process = 'empty';
+        frame.pageNumber = 0;
+        frame.required = false;
+        frame.pageFault = false;
+        frame.referenced = false;
+        frame.modified = false;
+        frame.finished = false;
+        frame.reservedForPageBuffering = false;
+      });
+      memory.potentialVictims = [];
+    });
+  }
+
+  $scope.__addDefaultInputMatrixUserInput = function() {
+
+    $scope.inputMatrix[0][1] = "";
+    $scope.inputMatrix[0][0] = 'a1';
+    $scope.inputMatrix[0][2] = "";
+    $scope.inputMatrix[0][3] = "";
+    $scope.inputMatrix[1][0] = 'a1';
+    $scope.inputMatrix[1][1] = 'a2';
+    $scope.inputMatrix[1][2] = "";
+    $scope.inputMatrix[1][3] = "";
+    $scope.inputMatrix[2][0] = 'a1';
+    $scope.inputMatrix[2][1] = 'a2';
+    $scope.inputMatrix[2][2] = 'a3';
+    $scope.inputMatrix[2][3] = "";
+    $scope.inputMatrix[3][0] = 'a1';
+    $scope.inputMatrix[3][1] = 'a2';
+    $scope.inputMatrix[3][2] = 'a3';
+    $scope.inputMatrix[3][3] = 'a4';
+    $scope.inputMatrix[4][0] = "";
+    $scope.inputMatrix[4][1] = "";
+    $scope.inputMatrix[4][2] = "";
+    $scope.inputMatrix[4][3] = "";
+    $scope.inputMatrix[5][0] = 'b5';
+    $scope.inputMatrix[5][1] = "";
+    $scope.inputMatrix[5][2] = "";
+    $scope.inputMatrix[5][3] = "";
+    $scope.inputMatrix[6][0] = 'b5';
+    $scope.inputMatrix[6][1] = 'b6';
+    $scope.inputMatrix[6][2] = "";
+    $scope.inputMatrix[6][3] = "";
+    $scope.inputMatrix[7][0] = 'b5';
+    $scope.inputMatrix[7][1] = 'b6';
+    $scope.inputMatrix[7][2] = 'b7';
+    $scope.inputMatrix[7][3] = "";
+    $scope.inputMatrix[8][0] = "";
+    $scope.inputMatrix[8][1] = "";
+    $scope.inputMatrix[8][2] = "";
+    $scope.inputMatrix[8][3] = "";
+    $scope.inputMatrix[9][0] = 'c9';
+    $scope.inputMatrix[9][1] = "";
+    $scope.inputMatrix[9][2] = "";
+    $scope.inputMatrix[9][3] = "";
+    $scope.inputMatrix[10][0] = 'c9';
+    $scope.inputMatrix[10][1] = 'c10';
+    $scope.inputMatrix[10][2] = "";
+    $scope.inputMatrix[10][3] = "";
+    $scope.inputMatrix[11][0] = 'c9';
+    $scope.inputMatrix[11][1] = 'c10';
+    $scope.inputMatrix[11][2] = 'c11';
+    $scope.inputMatrix[11][3] = "";
+    $scope.inputMatrix[12][0] = "";
+    $scope.inputMatrix[12][1] = "";
+    $scope.inputMatrix[12][2] = "";
+    $scope.inputMatrix[12][3] = "";
+
+    // console.log($scope.inputMatrix);
+  }
 
   try {
     $scope.framesTotal = SchedulerService.getMemorySize() - 1;
     $scope.results = SchedulerService.run();
+    $scope.userSolution = angular.copy($scope.results);
+    $scope.__emptyResolution($scope.userSolution);
     $scope.instants = $scope.results.length - 1;
+
+    // TODO: remove this (test)
+    // $scope.__addDefaultInputMatrixUserInput();
+
   } catch (err) {
     alert(err);
     return $state.go('step.requirements');
@@ -418,29 +521,95 @@ angular.module('sams.controllers', ['sams.services', 'sams.filters'])
     $rootScope.$broadcast('processed');
   }
 
+  $scope.changeFrame = function(i,j){
+    // console.log($scope.inputMatrix);
+  }
+
+  $scope.showOptions = function(nFrame, index){
+    var modal = angular.element('#modal-options');
+    $scope.currentInstant = index;
+    $scope.currentFrame = nFrame;
+    $scope.actual = $scope.userSolution[index].frames[nFrame];
+    modal.modal('show');
+  }
+
+  $scope.checkSolution = function(){
+
+    $rootScope.$broadcast('processing');
+
+    //should follow this steps:
+    //1. validate data in inputMatrix
+    //2. if valid, populate userSolution with information parsed from imputMatix
+    //3. check if userSolution corresponds to results
+    //4. display feedback on the resolution table
+
+
+    //parse inputMatrix into userSolution
+    angular.forEach($scope.inputMatrix, function(instant,instant_number){
+      angular.forEach(instant, function (frames, frame_number){
+        if(($scope.inputMatrix[instant_number][frame_number] != "")&&($scope.userSolution[instant_number].frames[frame_number] != undefined)){
+          $scope.userSolution[instant_number].frames[frame_number].pageNumber = parseInt($scope.inputMatrix[instant_number][frame_number].match(/\d+/)[0]);
+          $scope.userSolution[instant_number].frames[frame_number].process = $scope.inputMatrix[instant_number][frame_number].match(/\D+/)[0];
+        }
+      });
+    });
+
+    //compare userSolution to results
+    var fails = 0;
+
+    angular.forEach($scope.results, function(instant, instant_number){
+      angular.forEach(instant.frames, function(frame, frame_number){
+
+        if (frame.finished) {
+          //should only check for finished in userSolution
+          $scope.userSolution[instant_number].frames[frame_number].finished ? fails = fails : fails++;
+        } else {
+          //should check entire frame
+          if(JSON.stringify(frame) == JSON.stringify($scope.userSolution[instant_number].frames[frame_number])){
+            //todo piola por ahora
+          } else {
+            //NOPE
+            fails++;
+            // console.log(frame.process + frame.pageNumber);
+          }
+        }
+
+      });
+    });
+
+    $rootScope.$broadcast('processed');
+
+    //show feedback to user
+    if (!fails) {
+      alert("The Solution is OK!");
+    } else {
+      alert("Fail. You have one or more errors.");
+    }
+
+    // console.log('inputMatrix');
+    // console.log($scope.inputMatrix);
+    // console.log('UserSolution');
+    // console.log($scope.userSolution);
+    // console.log('results');
+    // console.log($scope.results);
+  }
+
   $scope.showVictims = function(instantIndex) {
     $scope.victimsQueue = $scope.results[instantIndex].potentialVictims;
   }
 
-  $scope.frameClassFor = function(frame,p){
-
-    console.log(p);
+  $scope.frameClassFor = function(frame){
 
     if (!frame) return '';
+
+    if(frame.finished){
+        //process ended on this instant
+        return 'rtable-finished';
+    }
 
     if (frame.reservedForPageBuffering){
       //frame is async reserved
       return 'rtable-async';
-    }
-
-    if(frame.finished){
-      //page belongs to a finished process
-      if(p.requirement.process == frame.process){
-        //process ended on this instant
-        return 'rtable-finished';
-      } else {
-        return '';
-      }
     }
 
     if (frame.pageFault) {
