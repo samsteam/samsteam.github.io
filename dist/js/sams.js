@@ -1039,7 +1039,7 @@ angular.module('sams.services', [])
 */
 .factory('SchedulerService', function(ValidationService){
 
-  var algorithms = ['fifo', 'fifo2', 'lru', 'nru', 'optimal'];
+  var algorithms = ['fifo', 'fifo2', 'lru', 'optimal'];
   var modes = ['read', 'write', 'finish'];
   var assigmentPolicies = ['fixed', 'dynamic'];
   var queuePolicies = {'async-flush': false};
