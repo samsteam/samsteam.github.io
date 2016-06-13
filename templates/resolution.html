@@ -29,110 +29,117 @@
 			<!-- Rendered User Solution Table -->
 			<div class="col-sm-12" ng-hide="showSolve">
 				<!-- results memory-->
-				<table class="center-table printable">
-					<thead>
-						<!-- render nº instant-->
-						<tr>
-							<td class="rtable rtable-default">Instant #</td>
-							<td class="rtable rtable-space"></td>
-							<td class="rtable rtable-default" ng-repeat="instant in [0, instants] | makeRange">{{instant}}</td>
-						</tr>
-						<!-- specify the required page for the instant-->
-						<tr>
-							<td class="rtable rtable-default">Requirement</td>
-							<td class="rtable rtable-space"></td>
-							<td class="rtable rtable-default" ng-repeat="p in userSolution">
-								<span class="text-primary">{{ p.requirement.mode == 'read' ? p.requirement.process + p.requirement.pageNumber + ' R' : ''}}</span>
-								<span class="text-default">{{ p.requirement.mode == 'write' ? p.requirement.process + p.requirement.pageNumber + ' W' : ''}}</span>
-								<span class="text-success">{{ p.requirement.mode == 'finish' ? p.requirement.process + ' F' : '' }}</span>
-							</td>
-						</tr>
-					</thead>
-					<tbody>
-						<!-- render nº frames-->
-						<tr ng-repeat="n in [0, framesTotal] | makeRange">
-							<td class="rtable rtable-frame">Frame {{n}}</td>
-							<td class="rtable rtable-space"></td>
-							<td class="rtable rtable-frame" ng-repeat="p in userSolution"
-							ng-dblclick="showOptions(n,$index)"
-							ng-class="frameClassFor(p.frames[n])" contenteditable="true" strip-br="true"
-							ng-model="inputMatrix[$index][n]" ng-change="changeFrame(n,$index)">
-								<!-- {{(p.frames[n].reservedForPageBuffering || p.frames[n].finished) ? '' : (p.frames[n].process + p.frames[n].pageNumber)}} -->
-								{{ inputMatrix[$index][n] }}
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				<button class="btn btn-primary btn pull-left no-printable" ng-click="print()"><span class="glyphicon glyphicon-print"></span> Print</button>
-				<button class="btn btn-success btn pull-right no-printable" ng-click="checkSolution()"> Check solution <span class="glyphicon glyphicon-ok"></span></button>
+				<div class="row-fluid center-block scrollableX maxWidth">
+					<table class="center-table printable">
+						<thead>
+							<!-- render nº instant-->
+							<tr>
+								<td class="rtable rtable-default">Instant #</td>
+								<td class="rtable rtable-space"></td>
+								<td class="rtable rtable-default" ng-repeat="instant in [0, instants] | makeRange">{{instant}}</td>
+							</tr>
+							<!-- specify the required page for the instant-->
+							<tr>
+								<td class="rtable rtable-default">Requirement</td>
+								<td class="rtable rtable-space"></td>
+								<td class="rtable rtable-default" ng-repeat="p in userSolution">
+									<span class="text-primary">{{ p.requirement.mode == 'read' ? p.requirement.process + p.requirement.pageNumber + ' R' : ''}}</span>
+									<span class="text-default">{{ p.requirement.mode == 'write' ? p.requirement.process + p.requirement.pageNumber + ' W' : ''}}</span>
+									<span class="text-success">{{ p.requirement.mode == 'finish' ? p.requirement.process + ' F' : '' }}</span>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- render nº frames-->
+							<tr ng-repeat="n in [0, framesTotal] | makeRange">
+								<td class="rtable rtable-frame">Frame {{n}}</td>
+								<td class="rtable rtable-space"></td>
+								<td class="rtable rtable-frame" ng-repeat="p in userSolution"
+								ng-dblclick="showOptions(n,$index)"
+								ng-class="frameClassFor(p.frames[n])" contenteditable="true" strip-br="true"
+								ng-model="inputMatrix[$index][n]" ng-change="changeFrame(n,$index)">
+									<!-- {{(p.frames[n].reservedForPageBuffering || p.frames[n].finished) ? '' : (p.frames[n].process + p.frames[n].pageNumber)}} -->
+									{{ inputMatrix[$index][n] }}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="center-block actions">
+					<button class="btn btn-primary btn pull-left no-printable" ng-click="print()"><span class="glyphicon glyphicon-print"></span> Print</button>
+					<button class="btn btn-success btn pull-right no-printable" ng-click="checkSolution()"> Check solution <span class="glyphicon glyphicon-ok"></span></button>
+				</div>
 			</div>
 			<!-- /Rendered User Solution Table -->
 
 			<!-- Rendered Table -->
 			<div class="col-sm-12" ng-show="showSolve">
 				<!-- results memory-->
-				<table class="center-table">
-					<thead>
-						<!-- render nº instant-->
-						<tr>
-							<td class="rtable rtable-default">Instant #</td>
-							<td class="rtable rtable-space"></td>
-							<td class="rtable rtable-default" ng-repeat="instant in [0, instants] | makeRange">{{instant}}</td>
-						</tr>
-						<!-- specify the required page for the instant-->
-						<tr>
-							<td class="rtable rtable-default">Requirement</td>
-							<td class="rtable rtable-space"></td>
-							<td class="rtable rtable-default" ng-repeat="p in results">
-								<span class="text-primary">{{ p.requirement.mode == 'read' ? p.requirement.process + p.requirement.pageNumber + ' R' : ''}}</span>
-								<span class="text-default">{{ p.requirement.mode == 'write' ? p.requirement.process + p.requirement.pageNumber + ' W' : ''}}</span>
-								<span class="text-success">{{ p.requirement.mode == 'finish' ? p.requirement.process + ' F' : '' }}</span>
-							</td>
-						</tr>
-					</thead>
-					<tbody>
-						<!-- render nº frames-->
-						<tr ng-repeat="n in [0, framesTotal] | makeRange">
-							<td class="rtable rtable-frame">Frame {{n}}</td>
-							<td class="rtable rtable-space"></td>
-							<td class="rtable rtable-frame" ng-repeat="p in results"
-							ng-class="frameClassFor(p.frames[n])">
-								{{(p.frames[n].reservedForPageBuffering || p.frames[n].finished || (p.frames[n].process == "empty")) ? '' : (p.frames[n].process + p.frames[n].pageNumber)}}
-							</td>
-						</tr>
-						<!-- render page faults -->
-						<tr>
-							<td class="rtable rtable-default rtable-pf">PF</td>
-							<td class="rtable rtable-space"></td>
-							<td class="rtable rtable-default rtable-pf" ng-repeat="p in results">
-								{{ p.pageFault ? 'X' : ''}}
-							</td>
-						</tr>
-						<!-- render victim for this instant -->
-						<tr>
-							<td class="rtable rtable-default">Victim</td>
-							<td class="rtable rtable-space"></td>
-							<td class="rtable rtable-default" ng-repeat="p in results">
-								{{ {true: p.victim.process + p.victim.pageNumber, false:''}[p.victim != undefinded] }}
-							</td>
-						</tr>
-						<!-- render victims queue buttons -->
-						<tr>
-							<td class="rtable rtable-default">Victims' Queue</td>
-							<td class="rtable rtable-space"></td>
-							<td class="rtable rtable-default" ng-repeat="(i, p) in results">
-								<button ng-click="showVictims(i)" type="button" name="button" class="btn btn-info btn-lg">
-									<span class="glyphicon glyphicon-chevron-down"></span>
-								</button>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		<!-- /Rendered Table -->
+				<div class="row-fluid center-block scrollableX maxWidth">
 
-		<!-- Render victim queue -->
-			<div class="col-xs-offset-1 col-xs-10 no-printable" ng-show="showSolve">
+					<table class="center-table">
+						<thead>
+							<!-- render nº instant-->
+							<tr>
+								<td class="rtable rtable-default">Instant #</td>
+								<td class="rtable rtable-space"></td>
+								<td class="rtable rtable-default" ng-repeat="instant in [0, instants] | makeRange">{{instant}}</td>
+							</tr>
+							<!-- specify the required page for the instant-->
+							<tr>
+								<td class="rtable rtable-default">Requirement</td>
+								<td class="rtable rtable-space"></td>
+								<td class="rtable rtable-default" ng-repeat="p in results">
+									<span class="text-primary">{{ p.requirement.mode == 'read' ? p.requirement.process + p.requirement.pageNumber + ' R' : ''}}</span>
+									<span class="text-default">{{ p.requirement.mode == 'write' ? p.requirement.process + p.requirement.pageNumber + ' W' : ''}}</span>
+									<span class="text-success">{{ p.requirement.mode == 'finish' ? p.requirement.process + ' F' : '' }}</span>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- render nº frames-->
+							<tr ng-repeat="n in [0, framesTotal] | makeRange">
+								<td class="rtable rtable-frame">Frame {{n}}</td>
+								<td class="rtable rtable-space"></td>
+								<td class="rtable rtable-frame" ng-repeat="p in results"
+								ng-class="frameClassFor(p.frames[n])">
+									{{(p.frames[n].reservedForPageBuffering || p.frames[n].finished || (p.frames[n].process == "empty")) ? '' : (p.frames[n].process + p.frames[n].pageNumber)}}
+								</td>
+							</tr>
+							<!-- render page faults -->
+							<tr>
+								<td class="rtable rtable-default rtable-pf">PF</td>
+								<td class="rtable rtable-space"></td>
+								<td class="rtable rtable-default rtable-pf" ng-repeat="p in results">
+									{{ p.pageFault ? 'X' : ''}}
+								</td>
+							</tr>
+							<!-- render victim for this instant -->
+							<tr>
+								<td class="rtable rtable-default">Victim</td>
+								<td class="rtable rtable-space"></td>
+								<td class="rtable rtable-default" ng-repeat="p in results">
+									{{ {true: p.victim.process + p.victim.pageNumber, false:''}[p.victim != undefinded] }}
+								</td>
+							</tr>
+							<!-- render victims queue buttons -->
+							<tr>
+								<td class="rtable rtable-default">Victims' Queue</td>
+								<td class="rtable rtable-space"></td>
+								<td class="rtable rtable-default" ng-repeat="(i, p) in results">
+									<button ng-click="showVictims(i)" type="button" name="button" class="btn btn-info btn-lg">
+										<span class="glyphicon glyphicon-chevron-down"></span>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- /Rendered Table -->
+
+			<!-- Render victim queue -->
+			<div class="col-xs-12 no-printable" ng-show="showSolve">
 				<div class="page-header section-header">
 					<h4>Victims' Queue</h4>
 	      </div>

@@ -290,7 +290,16 @@ New classes
   Table Frames
 */
 
+.maxWidth {
+  max-width: 1200px;
+}
+
+.scrollableX {
+  overflow-x: auto;
+}
+
 .rtable {
+  min-width: 50px;
   width: 50px !important;
   height: 50px !important;
   text-align: center;
@@ -372,6 +381,10 @@ New classes
   margin-left: auto;
   margin-right: auto;
   display: table;
+}
+
+.actions {
+  margin-top: 20px;
 }
 
 #victims-queue {
